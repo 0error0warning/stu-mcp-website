@@ -1,7 +1,8 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
 import { fitGalleryCardWidth } from './gallery-fit.js';
 import { heroGroundGeometry, heroGroundY } from './hero-physics-layout.js';
+import { heroCharactersEnabled, subscribeHeroCharacters } from './hero-characters.js';
 import './reactdrops.css';
 
 // ReactDrops source: b3924b92ebfce15152cf6f04ad85301c9f343672.
@@ -28,6 +29,7 @@ function usePlayback() {
   const host = useRef(null);
   const [visible, setVisible] = useState(false);
   const [foreground, setForeground] = useState(!document.hidden);
+  const [started, setStarted] = useState(false);
   const reduced = useMedia('(prefers-reduced-motion: reduce)');
   const mobile = useMedia('(max-width: 760px)');
   useEffect(() => {
@@ -42,7 +44,9 @@ function usePlayback() {
     return () => document.removeEventListener('visibilitychange', update);
   }, []);
   const constrained = mobile || navigator.connection?.saveData || (navigator.hardwareConcurrency || 8) <= 4;
-  return { host, active: visible && foreground && !reduced, reduced, mobile, constrained };
+  const active = visible && foreground && !reduced;
+  useEffect(() => { if (active) setStarted(true); }, [active]);
+  return { host, active, started, reduced, mobile, constrained };
 }
 
 function StillContours() {
@@ -52,10 +56,10 @@ function StillContours() {
 }
 
 function TopographyIsland() {
-  const { host, active, constrained } = usePlayback();
+  const { host, started, reduced, constrained } = usePlayback();
   return <div ref={host} className="rd-island rd-topography-island" data-reactdrops="topographic-flow">
     <Suspense fallback={<StillContours />}>
-      {active ? <TopographicFlow preset="paper" height="100%" backgroundColor="#fff6ce" backgroundImage="none" gradientColors={[]} lineColor="#71602e" accentColor="#71602e" scale={560} density={constrained ? 3 : 4} opacity={0.25} speed={0.23} distortion={0.9} lineWidth={0.8} grain={0} hover={0} animateEntrance={false} /> : <StillContours />}
+      {started && !reduced && !constrained ? <TopographicFlow preset="paper" height="100%" backgroundColor="#fff6ce" backgroundImage="none" lineColor="#71602e" accentColor="#71602e" scale={560} density={4} opacity={0.25} speed={0} paused={true} distortion={0.9} lineWidth={0.8} grain={0} hover={0} animateEntrance={false} /> : <StillContours />}
     </Suspense>
   </div>;
 }
@@ -79,19 +83,17 @@ function StillShapes({ scene, count, size }) {
 }
 
 function PhysicsIsland() {
-  const { host, active, constrained, mobile, reduced } = usePlayback();
+  const { host, active, started, constrained, mobile, reduced } = usePlayback();
   const phone = useMedia('(max-width: 480px)');
   const finePointer = useMedia('(hover: hover) and (pointer: fine)');
   const count = phone ? 4 : mobile ? 6 : constrained ? 8 : 10;
   const size = phone ? 28 : mobile ? 34 : 42;
   const [scene, setScene] = useState(null);
-  const [started, setStarted] = useState(false);
   const [seed] = useState(() => {
     const value = new Uint32Array(1);
     crypto.getRandomValues(value);
     return value[0] % 100001;
   });
-  useEffect(() => { if (active) setStarted(true); }, [active]);
   useEffect(() => {
     const hero = host.current?.closest('.hero-full');
     const horizon = hero?.querySelector('.horizon');
@@ -127,6 +129,12 @@ function PhysicsIsland() {
   </div>;
 }
 
+function OptionalPhysicsIsland() {
+  const enabled = useSyncExternalStore(subscribeHeroCharacters, heroCharactersEnabled);
+  // No measurement observers, canvas, engine import, or still pile until opt-in.
+  return enabled ? <PhysicsIsland /> : null;
+}
+
 const galleryItems = [
   { src: '/art/gallery-1.svg', alt: '来源可追溯：每一条线索，都留着出处' },
   { src: '/art/gallery-2.svg', alt: '登录留本地：钥匙，握在自己手里' },
@@ -138,7 +146,7 @@ function StillGallery() {
 }
 
 function GalleryIsland() {
-  const { host, active, mobile } = usePlayback();
+  const { host, started, reduced, mobile } = usePlayback();
   const [width, setWidth] = useState(0);
   useEffect(() => {
     const element = host.current;
@@ -153,7 +161,7 @@ function GalleryIsland() {
   const cardWidth = fitGalleryCardWidth(width, mobile ? 140 : 210, lift);
   return <div ref={host} className="rd-island rd-gallery-island" data-reactdrops="fan-gallery">
     <Suspense fallback={<StillGallery />}>
-      {active && width > 0 ? <FanGallery items={galleryItems} trigger="auto" entrance="stack" cardWidth={cardWidth} aspectRatio={0.78} spacing={0.55} curve={0.2} tilt={8} lift={lift} spread={0.08} radius={20} speed={0.65} stagger={0.08} bounce={0.18} ariaLabel="三个开源原则，轻触纸页展开" /> : <StillGallery />}
+      {started && !reduced && width > 0 ? <FanGallery items={galleryItems} trigger="auto" entrance="stack" cardWidth={cardWidth} aspectRatio={0.78} spacing={0.55} curve={0.2} tilt={8} lift={lift} spread={0.08} radius={20} speed={0.65} stagger={0.08} bounce={0.18} ariaLabel="三个开源原则，轻触纸页展开" /> : <StillGallery />}
     </Suspense>
   </div>;
 }
@@ -167,10 +175,11 @@ function StillOrb() {
 }
 
 function OrbIsland() {
-  const { host, active } = usePlayback();
-  return <div ref={host} className="rd-island rd-orb-island" data-reactdrops="liquid-glass-orb">
+  const { host, active, started, reduced, constrained } = usePlayback();
+  const [engaged, setEngaged] = useState(false);
+  return <div ref={host} className="rd-island rd-orb-island" data-reactdrops="liquid-glass-orb" onPointerEnter={event => { if (event.pointerType !== 'touch') setEngaged(true); }} onPointerLeave={() => setEngaged(false)} onPointerCancel={() => setEngaged(false)}>
     <Suspense fallback={<StillOrb />}>
-      {active ? <LiquidGlassOrb size={90} preset="honey" state="idle" speed={0.25} grain={0.12} distortion={0.35} intensity={0.4} animateEntrance={false} audioLevel={0} aria-label="你的 Agent，信息流示意" /> : <StillOrb />}
+      {started && !reduced && !constrained ? <LiquidGlassOrb size={90} preset="honey" state="idle" speed={0.25} paused={!active || !engaged} grain={0.12} distortion={0.35} intensity={0.4} animateEntrance={false} audioLevel={0} aria-label="你的 Agent，信息流示意" /> : <StillOrb />}
     </Suspense>
   </div>;
 }
@@ -180,19 +189,22 @@ function copyInstall() {
 }
 
 function InstallIsland() {
-  const { host, active } = usePlayback();
+  const { host, active, started, reduced, constrained } = usePlayback();
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const engaged = hovered || focused;
   const content = <><span>复制安装指令</span><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h10v13H9zM5 9v12h10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></>;
   const fallback = <button type="button" className="rd-install-static" onClick={copyInstall}>{content}</button>;
-  return <div ref={host} className="rd-island rd-install-island" data-reactdrops="chromatic-button">
+  return <div ref={host} className="rd-island rd-install-island" data-reactdrops="chromatic-button" onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true); }} onPointerLeave={() => setHovered(false)} onPointerCancel={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={() => setFocused(false)}>
     <Suspense fallback={fallback}>
-      {active ? <ChromaticButton className="rd-install-button" colorMode="gradient-3" color="#f3d26e" color2="#ddd0ef" color3="#fff4bb" speed={0.3} intensity={0.8} grain={0.06} hoverEffect="spotlight" entrance="none" onClick={copyInstall}>{content}</ChromaticButton> : fallback}
+      {started && !reduced && !constrained ? <ChromaticButton className="rd-install-button" colorMode="gradient-3" color="#f3d26e" color2="#ddd0ef" color3="#fff4bb" speed={0.3} paused={!active || !engaged} intensity={0.8} grain={0.06} hoverEffect="spotlight" entrance="none" onClick={copyInstall}>{content}</ChromaticButton> : fallback}
     </Suspense>
   </div>;
 }
 
 const islands = {
   'rd-topography': TopographyIsland,
-  'rd-physics': PhysicsIsland,
+  'rd-physics': OptionalPhysicsIsland,
   'rd-gallery': GalleryIsland,
   'rd-orb': OrbIsland,
   'rd-cta': InstallIsland,

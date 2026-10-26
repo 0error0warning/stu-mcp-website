@@ -1,0 +1,56 @@
+/* Pause only known repeating decorations. One-shot titles, brush strokes,
+   card line drawings and section entrances keep their existing behavior. */
+[data-motion-region] { --ambient-play-state: paused; }
+[data-motion-region][data-motion-active="true"] { --ambient-play-state: running; }
+
+.hero-full .chip,
+.site-footer::after {
+  animation-play-state: var(--ambient-play-state, paused);
+}
+
+/* Keep a short label greeting, then hold the hero's native decoration still.
+   The status dot's animated shadow forces repainting, so its color stays solid. */
+.hero-full .chip { animation-iteration-count: 1; }
+.hero-full .cloud,
+.hero-full .open-sign .dot { animation: none; }
+
+/* Illustrations are still while reading. Fine-pointer hover and keyboard focus
+   resume their original loops only while that individual card is in view. */
+#ideas .idea-art svg :is(.float, .sway, .drip, .steam, .blinky, .wiggle, .cursor, .pulse, .twinkle, .beat, .shadow-pulse) {
+  animation-play-state: var(--card-play-state, paused);
+}
+#how .connection-dashes {
+  animation-play-state: var(--connection-play-state, paused);
+}
+@media (hover: hover) and (pointer: fine) {
+  #ideas .idea-card:is(:hover, :focus-within) {
+    --card-play-state: var(--ambient-play-state, paused);
+  }
+  #how .connection-scene:is(:hover, :focus-within) {
+    --connection-play-state: var(--ambient-play-state, paused);
+  }
+}
+
+/* On small screens, retain the same translucent palette without continually
+   sampling and blurring the moving content behind the header and hero labels. */
+@media (max-width: 760px) {
+  .site-header.scrolled {
+    background: oklch(.97 .008 220 / .96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero-full .hero-bar {
+    background: oklch(.99 .04 100 / .88);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero-full .open-sign {
+    background: oklch(.995 .005 100 / .96);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-region][data-motion-active] { --ambient-play-state: paused; }
+}

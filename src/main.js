@@ -4,6 +4,7 @@ import './styles.css';
 import sharedDefs from './shared-defs.html?raw';
 import { illustrations } from './illustrations.js';
 import './reactdrops.jsx';
+import './motion-regions.js';
 
 document.getElementById('shared-defs').innerHTML = sharedDefs;
 

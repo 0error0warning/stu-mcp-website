@@ -40,6 +40,13 @@ not offered here as a reusable component library, starter, or website template.
   gallery fit, 60% mouse gaze following and a responsive population of 4 / 6 /
   up to 10 larger characters. Physics stays mounted while offscreen or hidden;
   those transitions pause and resume the same world rather than replaying it.
+  Shape Physics is now disabled by default and is neither mounted nor imported
+  until explicitly enabled by the product controller. Topographic Flow is used
+  as a static rendered background, and Orb / Chromatic Button animate only
+  during interaction; constrained devices use the product's static alternatives.
+  Loaded gallery and shader islands remain mounted across viewport and
+  background changes to avoid reinitialization. These are wrapper adaptations;
+  no additional upstream renderer source was modified for this revision.
 - No upstream demonstration photographs, videos, fonts, or logos are reused.
 - No visible ReactDrops credit is required by the component license; its
   source and third-party notices must remain with permitted source copies.

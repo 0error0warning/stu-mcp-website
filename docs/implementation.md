@@ -14,3 +14,21 @@ fall from across the page top and roll outward under gravity. Use larger shapes
 and fewer bodies (4 / 6 / up to 10), with 60% gaze following. Preserve the same
 world through scrolling and backgrounding; randomize only on a fresh page load.
 Normal-motion module loading never displays a pre-settled static pile.
+
+2026-10-26 performance revision: hero characters are now opt-in and disabled
+on every fresh page. The inactive gate mounts no physics scene or observers,
+and never imports its engine. A future button can import
+`setHeroCharactersEnabled` from `src/hero-characters.js`; no public toggle is
+added yet. Enabled sessions retain the curved ground and lifecycle above.
+
+Keep the illustrated composition; reduce ambient work instead of adding a
+blocking loading screen. Topographic Flow presents a static rendered frame.
+Orb and Chromatic Button animate during interaction only; constrained devices
+use SVG/CSS alternatives. Loaded islands persist across viewport/visibility
+changes, retaining their context and focus. Card loops run only on fine-pointer
+hover or keyboard focus, and each card is observed separately. Native large
+clouds and the repainting status pulse are static, hero labels drift once,
+connection dashes play during hover/focus, and mobile header/sign/bar no longer
+sample blurred backgrounds. The external
+collector SVG retains its original self-contained animation and reduced-motion
+handling; the parent viewport controller does not control that image document.
