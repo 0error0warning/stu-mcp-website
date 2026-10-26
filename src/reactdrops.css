@@ -6,11 +6,9 @@
 .rd-topography-island .topographic-flow { width: 100%; height: 100%; background: transparent !important; }
 .rd-island > .rd-still-contours { width: 100%; height: 100%; fill: none; stroke: #71602e; stroke-width: .9; opacity: .25; }
 #rd-physics { pointer-events: none; }
-.rd-physics-island { position: relative; height: 100%; min-height: 0; pointer-events: none; }
-.rd-physics-lane { position: absolute; top: 0; bottom: 0; width: 23%; pointer-events: auto; }
-.rd-physics-left { left: 2%; }
-.rd-physics-right { right: 2%; }
+.rd-physics-island { position: absolute; inset: 0; height: 100%; min-height: 0; pointer-events: none; }
 .rd-physics-island .shape-physics { height: 100%; min-height: 0; }
+.rd-physics-island .shape-physics canvas { pointer-events: auto; }
 .rd-still-shapes { width: 100%; height: 100%; min-height: 0; }
 .rd-gallery-island { min-height: 500px; overflow: visible; isolation: isolate; }
 /* The fitter reserves space for all selected states, including side cards.
@@ -31,11 +29,13 @@
 .rd-install-button .chromatic-button-content { gap: 26px; }
 .rd-install-static:focus-visible { outline: 3px solid #7f679e; outline-offset: 5px; }
 @media (max-width: 760px) {
-  .rd-physics-lane { width: 24%; pointer-events: none; }
   .rd-gallery-island, .rd-still-gallery { min-height: 330px; }
   .rd-still-gallery { gap: 8px; padding-inline: 0; }
   .rd-still-gallery img { width: 30%; border-radius: 12px; }
   .rd-install-button.chromatic-button, .rd-install-static { min-height: 56px; font-size: 16px; }
+}
+@media (hover: none), (pointer: coarse) {
+  .rd-physics-island .shape-physics canvas { pointer-events: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .rd-island *, .rd-island *::before, .rd-island *::after { animation: none !important; transition: none !important; }

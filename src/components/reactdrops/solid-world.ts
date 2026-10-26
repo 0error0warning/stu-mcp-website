@@ -193,6 +193,14 @@ type Manifold = {
   points: [ContactPoint, ContactPoint];
   touching: boolean;
   fresh: boolean;
+  ground?: boolean;
+};
+
+export type EllipseGround = {
+  centerX: number;
+  centerY: number;
+  radiusX: number;
+  radiusY: number;
 };
 
 export type SolidWorldSettings = {
@@ -745,6 +753,7 @@ export function createSolidWorld() {
     height = 0;
   /** Which side is open for spawning: 1 = top (gravity down), -1 = bottom, 0 = none. */
   let spawnSide = 1;
+  let ground: EllipseGround | null = null;
   let dragged: {
     body: SolidBody;
     localX: number;
@@ -756,6 +765,7 @@ export function createSolidWorld() {
   const take = () => {
     const m = pool.pop() ?? makeManifold();
     m.fresh = true;
+    m.ground = false;
     return m;
   };
 
@@ -852,8 +862,28 @@ export function createSolidWorld() {
       ignoreBottom = !body.entered && spawnSide === -1;
     for (let i = 0; i < body.parts.length; i++) {
       const part = body.parts[i];
+      if (ground && part.cy < ground.centerY) {
+        // The visible yellow horizon is the upper half of this ellipse.
+        // Its tangent plane supplies the actual solver normal: gravity then
+        // accelerates bodies down either slope, without a scripted sideways force.
+        const u = (part.cx - ground.centerX) / ground.radiusX;
+        if (Math.abs(u) < 0.999) {
+          const rise = Math.sqrt(1 - u * u);
+          const y = ground.centerY - ground.radiusY * rise;
+          const slope = ground.radiusY * u / (ground.radiusX * rise);
+          const inverseLength = 1 / Math.hypot(slope, 1);
+          const nx = -slope * inverseLength;
+          const ny = inverseLength;
+          const m = take();
+          const count = collideWall(part, nx, ny, nx * part.cx + ny * y, margin, m);
+          if (count) {
+            m.ground = true;
+            addManifold(m, body, null, key(body, null, i, 4), count);
+          } else pool.push(m);
+        }
+      }
       const walls = [
-        part.cy + part.bound + margin >= height && !ignoreBottom ? 0 : -1,
+        part.cy + part.bound + margin >= height && !ignoreBottom && !ground ? 0 : -1,
         part.cy - part.bound - margin <= 0 && !ignoreTop ? 1 : -1,
         part.cx - part.bound - margin <= 0 ? 2 : -1,
         part.cx + part.bound + margin >= width ? 3 : -1,
@@ -947,11 +977,22 @@ export function createSolidWorld() {
     for (const m of solved) if (!kept.has(m)) pool.push(m);
 
     // 3. Prepare contacts.
+    const sliding = new Set<SolidBody>();
+    const sideSupported = new Set<SolidBody>();
     for (const body of bodies) body.touching = false;
     for (const m of manifolds) {
       if (m.touching) {
         m.a.touching = true;
         if (m.b) m.b.touching = true;
+        if (m.ground && Math.abs(m.nx) > 0.008) sliding.add(m.a);
+        else if (!m.b && Math.abs(m.nx) > 0.99) sideSupported.add(m.a);
+        // A neighbor farther down the slope can support a banked pile just as
+        // the outer wall can. Let that settled island sleep instead of keeping
+        // a row of motionless ground contacts running the solver forever.
+        if (ground && m.b) {
+          if (Math.sign(m.a.x - ground.centerX) * m.nx > 0.25) sideSupported.add(m.a);
+          if (-Math.sign(m.b.x - ground.centerX) * m.nx > 0.25) sideSupported.add(m.b);
+        }
       }
       const a = m.a,
         b = m.b;
@@ -1194,7 +1235,7 @@ export function createSolidWorld() {
             vBx = b ? b.vx - b.w * p.by : 0,
             vBy = b ? b.vy + b.w * p.bx : 0;
           const vt = (vBx - vAx) * tx + (vBy - vAy) * ty;
-          const limit = friction * p.normalImpulse;
+          const limit = (m.ground ? Math.min(friction, 0.018) : friction) * p.normalImpulse;
           let impulse = -p.tangentMass * vt;
           const total = Math.max(-limit, Math.min(limit, p.tangentImpulse + impulse));
           impulse = total - p.tangentImpulse;
@@ -1212,7 +1253,7 @@ export function createSolidWorld() {
         }
         // Rolling resistance keeps spheres from creeping forever on a pile.
         if (totalNormal > 0) {
-          const limit = 0.004 * totalNormal * Math.min(a.radius, b ? b.radius : a.radius);
+          const limit = (m.ground ? 0.0002 : 0.004) * totalNormal * Math.min(a.radius, b ? b.radius : a.radius);
           const relative = (b ? b.w : 0) - a.w;
           const k = iA + iB;
           if (k > 0) {
@@ -1275,7 +1316,8 @@ export function createSolidWorld() {
         body.turned ||
         body.pitchRate !== 0 ||
         body.yawRate !== 0;
-      body.sleepTime = speed < sleepVelocity && !pinned ? body.sleepTime + dt : 0;
+      const stillSliding = sliding.has(body) && !sideSupported.has(body);
+      body.sleepTime = speed < sleepVelocity && !pinned && !stillSliding ? body.sleepTime + dt : 0;
       const root = findRoot(body);
       islandSleep.set(root, Math.min(islandSleep.get(root) ?? Infinity, body.sleepTime));
     }
@@ -1315,10 +1357,11 @@ export function createSolidWorld() {
     get contactCount() {
       return manifolds.length;
     },
-    setBounds(nextWidth: number, nextHeight: number, side: number) {
+    setBounds(nextWidth: number, nextHeight: number, side: number, nextGround: EllipseGround | null = null) {
       width = nextWidth;
       height = nextHeight;
       spawnSide = side;
+      ground = nextGround;
     },
     add(body: SolidBody) {
       updateSolidTransform(body);

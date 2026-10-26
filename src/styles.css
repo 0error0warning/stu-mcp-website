@@ -30,8 +30,9 @@ button:disabled { cursor: wait; }
 .text-link { display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; text-decoration: none; border-bottom: 1px solid transparent; padding-block: 5px; }
 .text-link:hover { border-bottom-color: currentColor; }
 .hero-stage { height: 300px; margin-top: 0; max-width: 1200px; }
-.hero-stage .collector { height: 100%; width: 100%; object-fit: contain; position: relative; pointer-events: none; z-index: 1; }
-#rd-physics { position: absolute; inset: 0; z-index: 2; }
+.horizon { width: max(2600px, calc(100vw + 1160px)); margin-left: 0; transform: translateX(-50%); }
+.hero-stage .collector { height: 100%; width: 100%; object-fit: contain; position: relative; pointer-events: none; z-index: 2; }
+#rd-physics { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .hero-stage .chip { z-index: 3; font-size: 13px; pointer-events: none; }
 .hero-stage .chip-a { left: 17%; top: 16%; }
 .hero-stage .chip-b { right: 12%; top: 51%; }
@@ -210,6 +211,7 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .hero-full .primary-button .ico { width: 30px; height: 30px; }
   .hero-footnote { font-size: 10px; margin-top: 17px; }
   .hero-stage { height: 212px; width: calc(100% + 0px); margin: 7px 0 0; }
+  .horizon { width: max(1200px, calc(100vw + 600px)); margin-left: 0; transform: translateX(-50%); }
   .hero-stage .collector { width: 165%; max-width: none; margin-left: -32.5%; object-fit: contain; }
   .hero-stage .chip { font-size: 9px; padding: .65em .9em; gap: 5px; border-radius: 10px; }
   .hero-stage .chip-a { left: 5%; top: 6%; }

@@ -96,6 +96,7 @@ non-waivable. No other permissions are granted by implication.
 */
 
 import { solidKinds, solidPalette, type SolidKind } from './solid-shapes';
+import type { EllipseGround } from './solid-world';
 
 /** Real 3D tumbling volumes, or the same figures kept flat. */
 export type ShapeDepth = '3d' | '2d';
@@ -104,6 +105,8 @@ export type ShapeVariant = 'solids';
 export type ShapeKind = 'mixed' | SolidKind;
 
 export type ShapeSettings = {
+  /** Local adaptation: upper ellipse matching the visible hero horizon. */
+  ground: EllipseGround | null;
   /** @deprecated Ignored; Shape Physics always renders projected solids. */
   variant: ShapeVariant;
   shape: ShapeKind;
@@ -131,6 +134,7 @@ export type ShapeSettings = {
 };
 
 export const shapeDefaults: ShapeSettings = {
+  ground: null,
   variant: 'solids',
   shape: 'mixed',
   depth: '3d',
@@ -165,6 +169,7 @@ export const shapeClamp = (n: number, lo: number, hi: number, fallback: number) 
 export function normalizeShapeSettings(input: ShapeSettings): ShapeSettings {
   return {
     ...input,
+    ground: input.ground && [input.ground.centerX, input.ground.centerY, input.ground.radiusX, input.ground.radiusY].every(Number.isFinite) && input.ground.radiusX > 1 && input.ground.radiusY > 1 ? { ...input.ground } : null,
     variant: 'solids',
     shape:
       input.shape === 'mixed' || (solidKinds as readonly string[]).includes(input.shape)

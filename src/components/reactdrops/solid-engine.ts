@@ -192,6 +192,7 @@ export function createSolidEngine(
     clock = 0,
     birthClock = 0,
     automaticBirths = 0,
+    emissionPhase = 0,
     nextId = 1,
     costAverage = 0,
     costFrames = 0;
@@ -343,7 +344,17 @@ export function createSolidEngine(
       const direction = side();
       let x = 0,
         y = 0;
-      if (direction) {
+      if (settings.ground && direction === 1) {
+        // Stratified, jittered bins cover the whole hero instead of two lanes.
+        // Repeating this low-discrepancy sequence also spreads manual additions.
+        const count = Math.max(1, settings.count);
+        const index = (emissionPhase + nextId * 0.61803398875 + random() * (0.35 / count)) % 1;
+        const left = -shape.left * radius + 2;
+        const right = width - shape.right * radius - 2;
+        if (right < left) continue;
+        x = left + index * (right - left);
+        y = -shape.bottom * radius - 2;
+      } else if (direction) {
         const lane = findLane(planned.kind, radius);
         if (!lane) continue;
         ({ x, y } = lane);
@@ -468,7 +479,8 @@ export function createSolidEngine(
     gazeTarget = gazePointer ? point(gazePointer) : null;
     if (settings.followCursor && gazeTarget && (!gaze || settings.paused || motion.matches))
       gaze = { ...gazeTarget, weight: 1 };
-    dirty = true;
+    // Eye changes are tracked by render()'s dirty rectangles; no full-screen
+    // repaint is needed for a pointer move across the large hero canvas.
   };
   const gazeSettled = () =>
     !gaze ||
@@ -940,6 +952,7 @@ export function createSolidEngine(
     stop();
     world.clear();
     random = shapeRandom(settings.seed);
+    emissionPhase = settings.ground ? random() : 0;
     bag = [];
     colorTurns.clear();
     planned = null;
@@ -983,7 +996,7 @@ export function createSolidEngine(
     }
     width = nextWidth;
     height = nextHeight;
-    world.setBounds(width, height, side());
+    world.setBounds(width, height, side(), settings.ground);
     canvas.dataset.shapeRatio = String(ratio);
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
@@ -1079,8 +1092,15 @@ export function createSolidEngine(
     wake();
   };
 
+  const gazeInView = () => {
+    if (document.hidden) return false;
+    if (visible) return true;
+    // Also handle the first event before IntersectionObserver has delivered.
+    const rect = canvas.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < innerHeight && rect.right > 0 && rect.left < innerWidth;
+  };
   const trackGaze = (event: PointerEvent) => {
-    if (disposed || !['mouse', 'pen'].includes(event.pointerType)) return;
+    if (disposed || !['mouse', 'pen'].includes(event.pointerType) || !gazeInView()) return;
     gazePointer = { clientX: event.clientX, clientY: event.clientY };
     refreshGaze();
     if (!settings.followCursor) return;
@@ -1096,7 +1116,7 @@ export function createSolidEngine(
     wake();
   };
   const scrollGaze = () => {
-    if (!gazePointer) return;
+    if (!gazePointer || !gazeInView()) return;
     refreshGaze();
     if (!running()) render(true);
     wake();
@@ -1216,7 +1236,7 @@ export function createSolidEngine(
         reset();
         return;
       }
-      world.setBounds(width, height, side());
+      world.setBounds(width, height, side(), settings.ground);
       const shapeChanged = settings.shape !== previous.shape;
       for (const f of figures) {
         if (shapeChanged && settings.shape !== 'mixed') {

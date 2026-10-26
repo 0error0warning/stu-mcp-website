@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { fitGalleryCardWidth } from './gallery-fit.js';
+import { heroGroundGeometry, heroGroundY } from './hero-physics-layout.js';
 import './reactdrops.css';
 
 // ReactDrops source: b3924b92ebfce15152cf6f04ad85301c9f343672.
@@ -59,28 +60,69 @@ function TopographyIsland() {
   </div>;
 }
 
-function StillShapes() {
-  return <svg className="rd-still-shapes" viewBox="0 0 960 340" aria-hidden="true">
-    <g stroke="#263b49" strokeWidth="3" strokeLinejoin="round">
-      <rect x="88" y="235" width="70" height="70" rx="16" fill="#d9c6ed" transform="rotate(-12 123 270)" />
-      <path d="M206 275c-21-7-24-36-4-46 1-26 36-36 50-13 26-8 42 20 25 37-4 22-42 27-71 22Z" fill="#fff2b3" />
-      <path d="M773 220c-5 19-33 47-33 64a31 31 0 0 0 62 0c0-18-24-45-29-64Z" fill="#cadcc9" />
-      <rect x="842" y="253" width="55" height="55" rx="12" fill="#eed5b9" transform="rotate(15 870 280)" />
-    </g>
-    <g fill="#263b49"><circle cx="113" cy="263" r="3"/><circle cx="132" cy="259" r="3"/><circle cx="762" cy="281" r="3"/><circle cx="782" cy="281" r="3"/></g>
+function StillShapes({ scene, count, size }) {
+  if (!scene) return null;
+  const colors = ['#d4bfeb', '#e8cbad', '#f1d46d', '#c8d9b8', '#bfcbd9'];
+  return <svg className="rd-still-shapes" viewBox={`0 0 ${scene.width} ${scene.height}`} preserveAspectRatio="none" aria-hidden="true">
+    {Array.from({ length: count }, (_, i) => {
+      const fraction = i < count / 2 ? 0.04 + i / count * 0.6 : 0.66 + (i - count / 2) / count * 0.6;
+      const x = Math.max(size, Math.min(scene.width - size, scene.width * fraction));
+      const y = heroGroundY(scene.ground, x) - size;
+      return <g key={i} transform={`translate(${x} ${y}) scale(${size / 30})`}>
+        {i % 3 === 0 ? <rect x="-29" y="-29" width="58" height="58" rx="13" fill={colors[i % colors.length]} />
+          : i % 3 === 1 ? <circle r="29" fill={colors[i % colors.length]} />
+          : <path d="M-20 25C-42 13-36-12-20-15-18-40 13-38 19-19 42-22 42 10 27 16 22 34-6 32-20 25Z" fill={colors[i % colors.length]} />}
+        <g stroke="#263b49" strokeWidth="5" strokeLinecap="round"><path d="M-8-3v8M8-3v8" /></g>
+      </g>;
+    })}
   </svg>;
 }
 
 function PhysicsIsland() {
-  const { host, active, constrained, mobile } = usePlayback();
+  const { host, active, constrained, mobile, reduced } = usePlayback();
   const phone = useMedia('(max-width: 480px)');
-  const count = phone ? 3 : mobile ? 4 : constrained ? 5 : 7;
-  const size = phone ? 22 : mobile ? 27 : 34;
-  return <div ref={host} className="rd-island rd-physics-island" data-reactdrops="shape-physics">
-    <Suspense fallback={<StillShapes />}>
-      {active ? ['left', 'right'].map((side, i) => <div key={side} className={`rd-physics-lane rd-physics-${side}`}>
-        <ShapePhysics height="100%" count={count} size={size} sizeVariation={0.16} shape="mixed" depth="3d" colors={['#d4bfeb', '#e8cbad', '#f1d46d', '#c8d9b8', '#bfcbd9']} background="transparent" faceColor="#263b49" gravity={420} restitution={0.48} friction={0.55} spin={0.45} spawnRate={4} appearanceDuration={0.55} followCursor={true} cursorFollowRatio={1} interactive={!mobile} seed={1477 + i} aria-label={mobile ? '会轻轻落下、用眼睛跟随鼠标的几何小角色' : `${i === 0 ? '左' : '右'}侧几何小角色：眼睛跟随鼠标，可拖动；按 Enter 添加，按 R 重新排列`} />
-      </div>) : <StillShapes />}
+  const finePointer = useMedia('(hover: hover) and (pointer: fine)');
+  const count = phone ? 4 : mobile ? 6 : constrained ? 8 : 10;
+  const size = phone ? 28 : mobile ? 34 : 42;
+  const [scene, setScene] = useState(null);
+  const [started, setStarted] = useState(false);
+  const [seed] = useState(() => {
+    const value = new Uint32Array(1);
+    crypto.getRandomValues(value);
+    return value[0] % 100001;
+  });
+  useEffect(() => { if (active) setStarted(true); }, [active]);
+  useEffect(() => {
+    const hero = host.current?.closest('.hero-full');
+    const horizon = hero?.querySelector('.horizon');
+    if (!hero || !horizon) return;
+    let frame = 0;
+    let disposed = false;
+    const measure = () => {
+      frame = 0;
+      if (disposed) return;
+      const width = hero.clientWidth;
+      const height = hero.clientHeight;
+      const ground = heroGroundGeometry(hero.getBoundingClientRect(), horizon.getBoundingClientRect(), width, height);
+      if (!ground) return;
+      const next = { width, height, ground };
+      setScene(previous => JSON.stringify(previous) === JSON.stringify(next) ? previous : next);
+    };
+    const schedule = () => { if (!frame && !disposed) frame = requestAnimationFrame(measure); };
+    const observer = new ResizeObserver(schedule);
+    observer.observe(hero);
+    observer.observe(horizon);
+    window.addEventListener('resize', schedule);
+    document.fonts.ready.then(schedule);
+    schedule();
+    return () => { disposed = true; observer.disconnect(); cancelAnimationFrame(frame); window.removeEventListener('resize', schedule); };
+  }, [host]);
+  // A still scene is only a reduced-motion alternative. Never flash a settled
+  // pile while the live physics module is loading or the tab is backgrounded.
+  const still = reduced ? <StillShapes scene={scene} count={count} size={size} /> : null;
+  return <div ref={host} className="rd-island rd-physics-island" data-reactdrops="shape-physics" data-physics-ground={scene ? JSON.stringify(scene.ground) : undefined} data-scene-count={count} data-scene-size={size} data-scene-seed={seed}>
+    <Suspense fallback={still}>
+      {started && scene && !reduced ? <ShapePhysics height="100%" count={count} size={size} ground={scene.ground} paused={!active} sizeVariation={0.12} shape="mixed" depth="3d" colors={['#d4bfeb', '#e8cbad', '#f1d46d', '#c8d9b8', '#bfcbd9']} background="transparent" faceColor="#263b49" gravity={370} restitution={0.32} friction={0.4} spin={0.38} spawnRate={2.2} appearanceDuration={0.45} followCursor={true} cursorFollowRatio={0.6} interactive={finePointer} seed={seed} aria-label="从顶部落下、沿黄色弧面滚动的小角色：部分角色的眼睛跟随鼠标，可拖动" /> : still}
     </Suspense>
   </div>;
 }
