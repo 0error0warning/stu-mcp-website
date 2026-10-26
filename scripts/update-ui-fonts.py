@@ -229,6 +229,16 @@ def main() -> None:
             (ROOT / entry["licensePath"]).write_bytes(license_bytes)
         metadata_path.write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         faces_path.write_text(faces, encoding="utf-8")
+        # Preloads must use the very same fingerprinted URL as the font-face;
+        # otherwise a font update downloads the old and new subset separately.
+        html_path = ROOT / "index.html"
+        html = html_path.read_text(encoding="utf-8")
+        for entry, _, _ in built:
+            pattern = r'(<link\b[^>]*\brel="preload"[^>]*\bhref=")[^"\n]*/' + re.escape(entry["file"]) + r'(?:\?[^"\n]*)?("[^>]*>)'
+            html, count = re.subn(pattern, lambda match: match.group(1) + entry["localUrl"] + match.group(2), html)
+            if count != 1:
+                raise RuntimeError(f"Expected one font preload for {entry['file']}, found {count}")
+        html_path.write_text(html, encoding="utf-8")
         if args.outline_gallery:
             outline_gallery()
     print(json.dumps([{

@@ -361,7 +361,8 @@ h3, .faq-list summary, .story blockquote, .marquee-track span { letter-spacing: 
 .eyebrow, .stage-when, .plan-badge { letter-spacing: 0.18em; }
 
 /* reveal */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 900ms var(--ease), transform 900ms var(--ease); }
+.reveal { transition: opacity 900ms var(--ease), transform 900ms var(--ease); }
+.reveal.will-reveal { opacity: 0; transform: translateY(28px); }
 .reveal.in { opacity: 1; transform: none; }
 .reveal.d1 { transition-delay: 90ms; } .reveal.d2 { transition-delay: 180ms; } .reveal.d3 { transition-delay: 270ms; }
 

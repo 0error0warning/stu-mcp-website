@@ -84,14 +84,26 @@ dialog.addEventListener('click', e => {
   if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) dialog.close();
 });
 
-const io = new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    if (!entry.isIntersecting) continue;
-    entry.target.classList.add('in');
-    io.unobserve(entry.target);
-  }
-}, { threshold: .08, rootMargin: '0px 0px -20px 0px' });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+// Content is visible by default. Only elements initially outside the viewport
+// are prepared for a scroll reveal, so first paint and no-JS remain readable.
+if ('IntersectionObserver' in window && !motionQuery.matches) {
+  const io = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  }, { threshold: .08, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.bottom > 0 && rect.top < window.innerHeight) {
+      el.classList.add('in');
+    } else {
+      el.classList.add('will-reveal');
+      io.observe(el);
+    }
+  });
+}
 
 function renderScenarios(filter = 'all') {
   const visible = scenarios.filter(s => filter === 'all' || s.category === filter);

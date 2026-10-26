@@ -81,6 +81,9 @@ html { scroll-padding-top: 92px; }
 .theme-toggle { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid #263b4922; border-radius: 50%; background: #fffef5db; color: #263b49; transition: background-color 160ms, border-color 160ms; }
 .theme-toggle:hover { background: #f8ecb9; border-color: #263b4940; }
 .theme-toggle > svg { width: 19px; height: 19px; stroke-width: 1.75; }
+.theme-toggle-fallback .theme-fallback-sun,
+html[data-theme="dark"] .theme-toggle-fallback .theme-fallback-moon { display: none; }
+html[data-theme="dark"] .theme-toggle-fallback .theme-fallback-sun { display: block; }
 @media (min-width: 1600px) { .hero-full { padding-top: 126px; } }
 @media (max-width: 900px) and (min-width: 641px) {
   .site-header .header-inner { gap: 12px; }

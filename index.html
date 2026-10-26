@@ -10,6 +10,8 @@
   <script>try{const t=localStorage.getItem("stu-theme")==="dark"?"dark":"light";document.documentElement.dataset.theme=t}catch{}</script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="/fonts/gloock-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/noto-sans-sc-ui-400-700.woff2?v=000773880cd9" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/noto-serif-sc-ui-400-700.woff2?v=b8aaffeda2fb" as="font" type="font/woff2" crossorigin>
 </head>
 <body id="top">
   <a class="skip-link" href="#ideas">跳到使用场景</a>
@@ -19,8 +21,13 @@
   <header class="site-header" id="header" data-section="nav">
     <div class="wrap header-inner">
       <a class="brand" href="#top" aria-label="STU-MCP 首页"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 7h17l5 6v21H10zM27 7v7h5M16 20h10M16 26h6"/><path d="M6 12v23h20" opacity=".35"/></svg><span>STU-MCP<span class="brand-sub">A LITTLE MORE CONNECTED.</span></span></a>
-      <nav id="md-dock" class="nav" aria-label="页面导航"><a href="#ideas">能做什么</a><a href="#how">如何工作</a><a href="#progress-section">项目进展</a><a href="#faq">常见问题</a></nav>
-      <div class="header-actions"><div id="md-theme"></div><a class="quest-link" href="https://github.com/0error0warning/stu-mcp" target="_blank" rel="noreferrer"><span>GitHub</span><span class="nav-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a></div>
+      <nav id="md-dock" class="nav" aria-label="页面导航"><div class="magic-dock">
+        <a class="magic-dock-link" href="#ideas" aria-label="能做什么"><span class="magic-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v16"/><path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"/></svg></span><span class="magic-dock-tooltip" aria-hidden="true">能做什么</span></a>
+        <a class="magic-dock-link" href="#how" aria-label="如何工作"><span class="magic-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg></span><span class="magic-dock-tooltip" aria-hidden="true">如何工作</span></a>
+        <a class="magic-dock-link" href="#progress-section" aria-label="项目进展"><span class="magic-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 6a9 9 0 0 0-9 9V3"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/></svg></span><span class="magic-dock-tooltip" aria-hidden="true">项目进展</span></a>
+        <a class="magic-dock-link" href="#faq" aria-label="常见问题"><span class="magic-dock-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span><span class="magic-dock-tooltip" aria-hidden="true">常见问题</span></a>
+      </div></nav>
+      <div class="header-actions"><div id="md-theme"><span class="theme-toggle theme-toggle-fallback" aria-hidden="true"><svg class="theme-fallback-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg><svg class="theme-fallback-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg></span></div><a class="quest-link" href="https://github.com/0error0warning/stu-mcp" target="_blank" rel="noreferrer"><span>GitHub</span><span class="nav-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></span></a></div>
     </div>
   </header>
 
@@ -33,8 +40,8 @@
       <span class="open-sign"><span class="dot" aria-hidden="true"></span>一个独立开发的开源小工具 <span class="sign-version">v0.7.1</span></span>
       <h1 id="hero-title"><span class="hero-product">STU-MCP</span><span class="hero-sentence">散落的信息，<em>交给你的 Agent。<svg class="brush" viewBox="0 0 500 65" preserveAspectRatio="none" aria-hidden="true"><path class="b1" pathLength="1" d="M10 50Q230 25 485 48"/><path class="b2" pathLength="1" d="M28 60Q265 40 470 58"/></svg></em></span></h1>
       <p class="lede">通知、课程、作业和附件。少翻几个入口，多留一点时间给自己。</p>
-      <div class="hero-actions"><div id="rd-hero-cta"><a class="primary-button" href="#install">试着接入</a></div><a class="hero-secondary" href="#ideas"><span class="hero-action-label">浏览使用场景</span><span class="hero-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7v10H7"/></svg></span></a></div>
-      <p class="hero-footnote" data-text-animate>你用自己的 Agent，它来帮你找有出处的信息。</p>
+      <div class="hero-actions"><div id="rd-hero-cta"><div class="rd-island rd-install-island rd-hero-cta" data-reactdrops="chromatic-button"><a class="product-chromatic rd-install-static" href="#install" style="text-decoration:none"><span class="hero-action-content"><span class="hero-action-label">试着接入</span><span class="hero-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></svg></span></span></a></div></div><a class="hero-secondary" href="#ideas"><span class="hero-action-label">浏览使用场景</span><span class="hero-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7v10H7"/></svg></span></a></div>
+      <p class="hero-footnote">你用自己的 Agent，它来帮你找有出处的信息。</p>
     </div>
     <div class="hero-stage">
       <span class="horizon" aria-hidden="true"></span>
