@@ -1,0 +1,90 @@
+<!doctype html>
+<!-- Side Quest Adoption Center Page · INSTALANDING.AI (MIT) · https://instalanding.ai/prompt/side-quest-adoption-center-page -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7e69b">
+  <meta name="description" content="STU-MCP 是一个独立开源的信息连接工具。检索通知、读取附件、整理课程与作业，把有出处的信息交给你自己的 Agent。">
+  <title>STU-MCP — 让散落的信息，找到你。</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/gloock-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body id="top">
+  <a class="skip-link" href="#ideas">跳到使用场景</a>
+  <div id="shared-defs" aria-hidden="true"></div>
+  <div class="scroll-progress" id="progress" aria-hidden="true"></div>
+
+  <header class="site-header" id="header" data-section="nav">
+    <div class="wrap header-inner">
+      <a class="brand" href="#top" aria-label="STU-MCP 首页"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 7h17l5 6v21H10zM27 7v7h5M16 20h10M16 26h6"/><path d="M6 12v23h20" opacity=".35"/></svg><span>STU-MCP<span class="brand-sub">A LITTLE MORE CONNECTED.</span></span></a>
+      <nav class="nav" aria-label="页面导航"><a href="#ideas">能做什么</a><a href="#how">如何工作</a><a href="#progress-section">项目进展</a><a href="#faq">常见问题</a></nav>
+      <a class="quest-link" href="https://github.com/0error0warning/stu-mcp" target="_blank" rel="noreferrer"><span>GitHub</span><span class="nav-arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <section class="hero-full" aria-labelledby="hero-title" data-section="hero">
+    <div id="rd-topography" aria-hidden="true"></div>
+    <span class="cloud c1" aria-hidden="true"></span><span class="cloud c2" aria-hidden="true"></span><span class="cloud c5" aria-hidden="true"></span>
+    <div class="wrap hero-copy">
+      <span class="open-sign"><span class="dot" aria-hidden="true"></span>一个独立开发的开源小工具 <span class="sign-version">v0.7.1</span></span>
+      <h1 id="hero-title"><span class="hero-product">STU-MCP</span><span class="hero-sentence">散落的信息，<em>交给你的 Agent。<svg class="brush" viewBox="0 0 500 65" preserveAspectRatio="none" aria-hidden="true"><path class="b1" pathLength="1" d="M10 50Q230 25 485 48"/><path class="b2" pathLength="1" d="M28 60Q265 40 470 58"/></svg></em></span></h1>
+      <p class="lede">通知、课程、作业和附件。少翻几个入口，多留一点时间给自己。</p>
+      <div class="hero-actions"><a class="primary-button magnetic" href="#install">试着接入 <span class="ico" aria-hidden="true">↗</span></a><a class="text-link" href="#ideas">先看看能做什么 <span aria-hidden="true">↓</span></a></div>
+      <p class="hero-footnote">你用自己的 Agent，它来帮你找有出处的信息。</p>
+    </div>
+    <div class="hero-stage">
+      <span class="horizon" aria-hidden="true"></span>
+      <div id="rd-physics" aria-label="可以拖拽的纸色形状"></div>
+      <img class="hero-drawing collector" src="/art/hero-collector.svg" width="1200" height="370" alt="一个收集纸页的小角色，把散落的通知、日程和附件装进圆环装置。">
+      <span class="chip chip-a"><span class="sw" style="background:oklch(.85 .09 300)"></span>信息有出处</span>
+      <span class="chip chip-b"><span class="sw" style="background:oklch(.86 .1 160)"></span>Agent，由你选择</span>
+      <span class="play-hint">小形状可以拖一拖 <span aria-hidden="true">↗</span></span>
+    </div>
+    <div class="hero-bar wrap" aria-label="项目特点"><span class="hero-bar-item"><span aria-hidden="true">✳</span> 你的 Agent</span><span class="hero-bar-item"><span aria-hidden="true">↗</span> 真实来源</span><span class="hero-bar-item"><span aria-hidden="true">⌁</span> 本地配置</span><span class="hero-bar-item"><span aria-hidden="true">♡</span> 独立开源</span></div>
+    <div class="hero-pad"></div>
+  </section>
+
+  <main>
+    <div class="wrap facts-strip reveal" role="list" data-section="stats"><div role="listitem"><strong>50</strong><span>MCP 工具</span></div><div role="listitem"><strong>v0.7.1</strong><span>学生预览版</span></div><div role="listitem"><strong>MIT</strong><span>自由探索，欢迎共建</span></div><div role="listitem" class="facts-release-link"><a href="https://github.com/0error0warning/stu-mcp/blob/main/docs/releases/v0.7.1.md" target="_blank" rel="noreferrer">看看这一版 <span aria-hidden="true">↗</span></a></div></div>
+
+    <section class="wrap section" id="ideas" aria-labelledby="ideas-title" data-section="ideas">
+      <div class="section-head"><div class="reveal"><span class="eyebrow">A FEW GOOD QUESTIONS</span><h2 class="section-title" id="ideas-title">从一句「帮我查查」开始。</h2><p class="section-lede">挑一个小问题，交给接入后的 Agent。</p></div><span class="availability reveal">六种真实使用场景</span></div>
+      <div class="board-toolbar"><div class="filters" role="group" aria-label="场景筛选"><i class="pill" aria-hidden="true"></i><button type="button" data-filter="all" aria-pressed="true">所有场景</button><button type="button" data-filter="study" aria-pressed="false">学习与信息</button><button type="button" data-filter="life" aria-pressed="false">日常小事</button></div><span class="tiny-note">复制问句 → 发给你的 Agent</span></div>
+      <div class="ideas-grid" id="ideas-grid"></div>
+      <p class="scenario-note">这里提供提问示例；实际结果取决于接入状态、来源权限和信息更新时间。</p>
+    </section>
+
+    <section class="wrap section" id="how" aria-labelledby="how-title" data-section="how-it-works">
+      <div class="section-head"><div class="reveal"><span class="eyebrow">THE MISSING CONNECTION</span><h2 class="section-title" id="how-title">入口有很多。<br>你只需要好好提问。</h2></div><p class="section-lede reveal">STU-MCP 找信息、读信息；<br>理解和整理，交给你自己的 Agent。</p></div>
+      <div class="connection-scene reveal" aria-label="多个信息来源经由 STU-MCP 检索和读取，附带出处和时间，再交给用户自己的 Agent">
+        <svg class="connection-lines" viewBox="0 0 1100 320" preserveAspectRatio="none" aria-hidden="true"><g class="connection-base"><path d="M130 55C330 55 310 160 550 160"/><path d="M130 160H550"/><path d="M130 265C330 265 310 160 550 160"/><path d="M550 160H960"/></g><g class="connection-dashes"><path d="M130 55C330 55 310 160 550 160"/><path d="M130 160H550"/><path d="M130 265C330 265 310 160 550 160"/><path d="M550 160H960"/></g></svg>
+        <div class="source-stack"><span class="source-piece"><span aria-hidden="true">▤</span> 通知 · 附件</span><span class="source-piece"><span aria-hidden="true">▦</span> 课程 · 作业</span><span class="source-piece"><span aria-hidden="true">☷</span> 社区 · 日常</span></div>
+        <div class="connection-hub"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 11h23l6 8v34H20zM43 11v9h6M27 30h14M27 38h10"/><path d="M13 19v38h28" opacity=".35"/></svg><strong>STU-MCP</strong><span>检索 · 读取 · 保留出处</span></div>
+        <div class="agent-node"><div id="rd-orb" aria-hidden="true"></div><strong>Your Agent</strong><span>理解 · 整理 · 回答</span></div>
+      </div>
+      <div class="steps connection-steps"><article class="step reveal"><span class="step-num">01</span><h3>去来源里找</h3><p>按问题检索已接入的信息入口。</p></article><article class="step reveal d1"><span class="step-num">02</span><h3>把信息带回来</h3><p>读正文和附件，保留来源与缓存时间。</p></article><article class="step reveal d2"><span class="step-num">03</span><h3>由 Agent 帮你理清</h3><p>排个时间表、整理要点，再回到原文核对。</p></article></div>
+    </section>
+
+    <section class="wrap dark" id="lifecycle" aria-labelledby="life-title" data-section="lifecycle">
+      <div class="reveal"><span class="eyebrow">A LITTLE TRAIL OF EVIDENCE</span><h2 class="section-title" id="life-title">一个答案，<br>也该有来时的路。</h2><p class="section-lede">让信息可以追溯，让「还不确定」也被看见。</p></div>
+      <div class="timeline" id="timeline"><div class="stage" style="transition-delay:100ms"><span class="stage-when">FIND</span><h3>发现信息</h3><p>查找相关条目</p></div><div class="stage" style="transition-delay:250ms"><span class="stage-when">READ</span><h3>读取原文</h3><p>正文与附件</p></div><div class="stage" style="transition-delay:400ms"><span class="stage-when">TRACE</span><h3>留下出处</h3><p>原始链接可追溯</p></div><div class="stage" style="transition-delay:550ms"><span class="stage-when">CHECK</span><h3>看看时间</h3><p>标记刷新和缓存</p></div><div class="stage" style="transition-delay:700ms"><span class="stage-when">CONTEXT</span><h3>交给 Agent</h3><p>结合你的问题</p></div><div class="stage" style="transition-delay:850ms"><span class="stage-when">VERIFY</span><h3>回到来源</h3><p>重要事项再核对</p></div></div>
+      <div class="evidence-foot"><span class="evidence-dot" aria-hidden="true"></span><p>没查到，可能是这次没取全。需要最新信息时，让 Agent 先刷新。</p><a href="https://github.com/0error0warning/stu-mcp/blob/main/docs/verification.md" target="_blank" rel="noreferrer">读取范围与验证记录 ↗</a></div>
+    </section>
+
+    <section class="wrap section principles" aria-labelledby="principles-title" data-section="principles"><div class="principles-copy reveal"><span class="eyebrow">SMALL TOOL. YOUR RULES.</span><h2 class="section-title" id="principles-title">工具小一点。<br>选择多一点。</h2><p class="section-lede">最初，只是想少来回复制几次。<br>现在，也想把这个连接分享给你。</p><ul class="principles-list"><li><span>01</span><strong>Agent，你自己选。</strong><p>无需先装 Hermes，也不用为本工具另配模型 API Key。</p></li><li><span>02</span><strong>认证，在你本地。</strong><p>本人在私密设置页或终端完成，认证信息不发给 Agent。</p></li><li><span>03</span><strong>能做多少，就说多少。</strong><p>来源有边界，功能还在慢慢补。开放源码，也开放问题。</p></li></ul></div><div class="principles-art reveal d1"><div id="rd-gallery" aria-label="三张记录自主选择、本地认证和开源原则的插画纸页"></div><span class="gallery-hint">鼠标移过来，翻翻这几张纸。</span></div></section>
+
+    <section class="wrap section" id="progress-section" aria-labelledby="progress-title" data-section="activity"><div class="section-head"><div class="reveal"><span class="eyebrow">A WORK IN PROGRESS</span><h2 class="section-title" id="progress-title">一点一点，连接起来。</h2><p class="section-lede">这是 STU-MCP 仓库的真实提交记录。</p></div><a class="text-link reveal" href="https://github.com/0error0warning/stu-mcp/commits/main/" target="_blank" rel="noreferrer">去 GitHub 看看 ↗</a></div><div class="activity-panel reveal"><div class="activity-header"><strong id="activity-summary">读取提交记录…</strong><span>该仓库提交 · main · UTC</span></div><div class="activity-scroll" tabindex="0" role="region" aria-label="过去一年仓库提交日历，可横向滚动"><div id="activity-calendar"></div></div><div class="activity-footer"><span id="activity-updated"></span><div class="calendar-legend" aria-label="颜色越深，当天提交越多"><span>少</span><i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><span>多</span></div></div><p id="activity-detail" aria-live="polite">点一个方格，看看那一天。</p></div><div class="release-line reveal"><span class="release-badge">LATEST DOCUMENTED</span><strong>v0.7.1</strong><span>理论课表与一卡通只读查询</span><a href="https://github.com/0error0warning/stu-mcp/blob/main/docs/releases/v0.7.1.md" target="_blank" rel="noreferrer">读读更新记录 ↗</a></div></section>
+
+    <section class="wrap section" id="install" aria-labelledby="install-title" data-section="installation"><div class="section-head"><div class="reveal"><span class="eyebrow">MAKE THE CONNECTION</span><h2 class="section-title" id="install-title">下一句，<br>就问你的 Agent 吧。</h2></div><p class="section-lede reveal">找一个能在你电脑上执行命令的 Agent，<br>把下面这段话交给它。</p></div><div class="install-sheet reveal"><div class="sheet-top"><span><i aria-hidden="true"></i> 给你的 Agent 的一张小纸条</span><button type="button" class="copy-mini" data-copy-install aria-label="复制安装指令">复制 ↗</button></div><pre id="install-prompt">帮我安装 STU MCP：https://github.com/0error0warning/stu-mcp
+按 docs/install.md 接入当前客户端，保留已有配置并验证公开查询。按安装版本说明登录；认证信息由我本人输入，不发给 agent。</pre><div class="install-actions"><div id="rd-cta"><button class="primary-button" type="button" data-copy-install>复制安装指令 <span aria-hidden="true">↗</span></button></div><a class="text-link" href="https://github.com/0error0warning/stu-mcp/blob/main/docs/install.md" target="_blank" rel="noreferrer">我想自己动手 ↗</a></div></div><div class="steps install-steps"><article class="step reveal"><span class="step-num">01</span><h3>连接客户端</h3><p>按安装文档接入你常用的 MCP 客户端。</p></article><article class="step reveal d1"><span class="step-num">02</span><h3>本人完成认证</h3><p>按需要，在本地设置页或终端连接来源。</p></article><article class="step reveal d2"><span class="step-num">03</span><h3>试着问一个问题</h3><p>从公开查询开始，再慢慢探索。</p></article></div></section>
+
+    <section class="wrap section faq-grid" id="faq" aria-labelledby="faq-title" data-section="faq"><div class="reveal"><span class="eyebrow">BEFORE YOU START</span><h2 class="section-title" id="faq-title">还有一点<br>小问题？</h2><p class="section-lede">如果这里没回答到，<br>欢迎去 GitHub 留个 issue。</p><a class="text-link faq-docs" href="https://github.com/0error0warning/stu-mcp/tree/main/docs" target="_blank" rel="noreferrer">打开文档 ↗</a></div><div class="faq-list reveal d1"><details><summary>它是一个新的聊天机器人吗？</summary><p>STU-MCP 是 MCP 信息连接工具，负责检索、读取和返回有出处的信息。你继续使用自己的 Agent，由它来理解和整理。</p></details><details><summary>需要 Hermes 或额外的模型 API Key 吗？</summary><p>不需要先安装 Hermes，也不需要为 STU-MCP 单独配置模型 API Key。你所用 Agent 自身的模型和订阅要求，取决于该客户端。</p></details><details><summary>账号密码应该在哪里输入？</summary><p>本人在本地私密设置页或终端完成认证。介绍站不接收账号密码，也不要把认证信息发给 Agent。不同来源可能需要单独登录，具体按安装与认证文档操作。</p></details><details><summary>为什么有时查不到，或者信息不够新？</summary><p>来源权限、网络、已接入范围和缓存都会影响结果。查不到不等于没有这条信息。让 Agent 检查来源及缓存时间，需要最新信息时先刷新，重要要求以原文为准。</p></details><details><summary>可以替我提交作业、付款或自动报修吗？</summary><p>不要把读取信息理解成自动办事。一卡通只读，不充值或挂失。宿舍报修需完整预览、本人明确确认后才可提交；当前真实 HTTP 预览已验证，正式新提交仍待真实验收。它不支持万能自动提交。</p></details><details><summary>这是官方服务吗？适用范围是什么？</summary><p>这是个人独立开发的开源项目，非汕头大学官方服务。适配范围围绕仓库列出的实际来源；公开讨论也不代表官方要求。使用前请查看功能说明和验证记录。</p></details></div></section>
+  </main>
+
+  <footer class="wrap site-footer reveal" data-section="footer"><div class="footer-cta"><span class="eyebrow">LESS SEARCHING. MORE LIVING.</span><h2>把时间，留给更想做的事。</h2><a class="primary-button magnetic" href="https://github.com/0error0warning/stu-mcp" target="_blank" rel="noreferrer">去源码里逛逛 <span class="ico" aria-hidden="true">↗</span></a><svg class="footer-doodle" viewBox="0 0 120 100" aria-hidden="true"><path d="M25 20h55l14 17v46H25zM80 20v18h14M43 49v8m22-8v8M46 69q9 8 18 0M10 40 1 37m107 14 10-3M22 7l-4-6"/></svg></div><div class="footer-bottom"><a class="brand" href="#top">STU-MCP<span class="brand-sub">A LITTLE MORE CONNECTED.</span></a><nav aria-label="项目链接"><a href="https://github.com/0error0warning/stu-mcp" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://github.com/0error0warning/stu-mcp/blob/main/docs/install.md" target="_blank" rel="noreferrer">安装文档 ↗</a><a href="https://github.com/0error0warning/stu-mcp/blob/main/CHANGELOG.md" target="_blank" rel="noreferrer">更新记录 ↗</a><a href="https://github.com/0error0warning/stu-mcp/blob/main/LICENSE" target="_blank" rel="noreferrer">MIT ↗</a></nav></div><p class="footer-disclaimer">个人独立开源项目，非汕头大学官方服务。介绍站不提供在线登录或信息查询。</p><div class="footer-colophon"><span>MADE WITH CURIOSITY & A FEW LITTLE CONNECTIONS.</span><a href="#top">回到顶部 ↑</a></div></footer>
+  <div class="toast" id="status" role="status" aria-live="polite"></div>
+  <dialog id="copy-dialog" aria-labelledby="copy-dialog-title"><h2 id="copy-dialog-title">复制这段话给你的 Agent</h2><p>浏览器未允许自动复制，你可以选中文字后复制。</p><textarea id="copy-fallback" readonly aria-label="待复制内容"></textarea><button class="primary-button" type="button" id="close-copy-dialog">完成</button></dialog>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">纸页收集员</title>
+  <desc id="desc">原创纸页小角色站在奶油黄工作台上，柔和的圆环把左右散落的纸张与信号连接起来。</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fffff6"/><stop offset="1" stop-color="#f0e8d1"/></linearGradient>
+    <linearGradient id="butter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffec9a"/><stop offset="1" stop-color="#efcb55"/></linearGradient>
+    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5d7ff"/><stop offset="1" stop-color="#b29ada"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5eff6"/><stop offset="1" stop-color="#a6c8d6"/></linearGradient>
+    <linearGradient id="ring" x1="500" y1="40" x2="730" y2="285" gradientUnits="userSpaceOnUse"><stop stop-color="#ebe1fc"/><stop offset=".5" stop-color="#cdb7ed"/><stop offset="1" stop-color="#a08ebc"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e2edcf"/><stop offset="1" stop-color="#a9c1a0"/></linearGradient>
+    <filter id="shadow" x="-50%" y="-100%" width="200%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+  </defs>
+  <style>
+    .ink{stroke:#263747;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+    .fine{stroke:#263747;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+    .float-a{animation:float 6s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+    .float-b{animation:float 7s -3s ease-in-out infinite alternate-reverse;transform-box:fill-box;transform-origin:center}
+    .wave{animation:wave 4s ease-in-out infinite;transform-origin:665px 180px}
+    .signal{stroke-dasharray:6 13;animation:signal 14s linear infinite}
+    @keyframes float{to{transform:translateY(-9px) rotate(2deg)}}
+    @keyframes wave{0%,50%,100%{transform:rotate(0)}60%,80%{transform:rotate(-9deg)}70%,90%{transform:rotate(2deg)}}
+    @keyframes signal{to{stroke-dashoffset:-190}}
+    @media(prefers-reduced-motion:reduce){.float-a,.float-b,.wave,.signal{animation:none}}
+  </style>
+  <!-- A low, wide paper workbench. -->
+  <ellipse cx="600" cy="339" rx="472" ry="12" fill="#b58f3f" opacity=".15" filter="url(#shadow)"/>
+  <path d="M92 316q508-16 1016 0l-47 25H141Z" fill="#eac66b" stroke="#263747" stroke-width="3"/>
+  <path d="M92 305q508-21 1016 0v12q-508-17-1016 0Z" fill="url(#butter)" stroke="#263747" stroke-width="3"/>
+  <path d="M114 305q486-17 972 0" stroke="#fff6cd" stroke-width="4" stroke-linecap="round"/>
+  <!-- Hand-drawn routes deliberately stay light behind the character. -->
+  <path d="M225 142C336 81 374 224 493 174M277 248C368 292 403 189 495 203M710 170c120-81 141 21 254-23M711 210c111 76 172-3 224 42" stroke="#9d8ca1" stroke-width="2" opacity=".45"/>
+  <path class="signal" d="M225 142C336 81 374 224 493 174M277 248C368 292 403 189 495 203M710 170c120-81 141 21 254-23M711 210c111 76 172-3 224 42" stroke="#705e83" stroke-width="2.5" opacity=".6"/>
+  <!-- Abstract book-ring: a little device rather than a literal landmark. -->
+  <ellipse cx="614" cy="162" rx="115" ry="113" fill="#c3a9d9" stroke="#263747" stroke-width="4"/>
+  <ellipse cx="605" cy="155" rx="115" ry="113" fill="url(#ring)" stroke="#263747" stroke-width="4"/>
+  <ellipse cx="605" cy="155" rx="91" ry="89" fill="#fff1bc" stroke="#263747" stroke-width="3.5"/>
+  <path d="M528 74c19-17 44-27 72-28" stroke="#fff4ff" stroke-width="5" stroke-linecap="round"/>
+  <path d="m677 73 13-8m5 28 14-6m-7 29 15-3m-13 30 17 1m-18 27 16 4m-23 23 16 7m-26 20 13 10m-30 12 10 13m-32 5 6 15m-33-3 2 16" class="fine" opacity=".25"/>
+  <ellipse cx="607" cy="292" rx="110" ry="12" fill="#554937" opacity=".15" filter="url(#shadow)"/>
+  <!-- The paper collector: layered paper body, a folded ear, tab arms and ink boots. -->
+  <path d="m548 196-31 15-16-17" class="ink" stroke-width="10"/>
+  <path d="m548 196-31 15-16-17" stroke="#f4e9cf" stroke-width="5" stroke-linecap="round"/>
+  <path d="M557 246v36l-14 11" class="ink" stroke-width="12"/>
+  <path d="M633 246v37l16 10" class="ink" stroke-width="12"/>
+  <path d="M537 289c-10 0-18 5-18 11h41v-11Z" fill="#263747"/>
+  <path d="M638 289c12-2 27 4 27 11h-39v-9Z" fill="#263747"/>
+  <path d="M548 102h84l28 29v115a13 13 0 0 1-13 13h-99a13 13 0 0 1-13-13V115a13 13 0 0 1 13-13Z" fill="#c8c0ac" class="ink"/>
+  <path d="M540 96h84l28 29v115a13 13 0 0 1-13 13h-99a13 13 0 0 1-13-13V109a13 13 0 0 1 13-13Z" fill="url(#paper)" class="ink"/>
+  <path d="M624 96v21a8 8 0 0 0 8 8h20Z" fill="url(#butter)" class="ink"/>
+  <path d="M537 111v112" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M548 123h53M548 136h38" class="fine" opacity=".38"/>
+  <circle cx="565" cy="170" r="6" fill="#263747"/>
+  <circle cx="609" cy="170" r="6" fill="#263747"/>
+  <circle cx="561" cy="167" r="1.7" fill="#fff"/>
+  <circle cx="605" cy="167" r="1.7" fill="#fff"/>
+  <ellipse cx="550" cy="183" rx="9" ry="5" fill="#e6b59d" opacity=".6"/>
+  <ellipse cx="624" cy="183" rx="9" ry="5" fill="#e6b59d" opacity=".6"/>
+  <path d="M574 189q13 16 27 0" class="ink"/>
+  <path d="M550 216h76M550 229h51" class="fine" opacity=".25"/>
+  <g class="wave">
+    <path d="m652 182 29 2 12-30" class="ink" stroke-width="10"/>
+    <path d="m652 182 29 2 12-30" stroke="#f4e9cf" stroke-width="5" stroke-linecap="round"/>
+    <path d="M691 156c-6-3-9-10-7-13 2-2 5 2 7 3l-1-13c0-5 5-5 6-1l3 11 2-10c1-4 5-3 5 1l-1 14 5-5c3-2 6 1 3 5l-8 11q-8 6-14-3Z" fill="url(#paper)" class="fine"/>
+  </g>
+  <!-- Upper left: a source page with a tiny folded corner. -->
+  <g class="float-a">
+    <g transform="rotate(-12 213 135)">
+      <path d="M184 77h47l19 19v91a8 8 0 0 1-8 8h-58a8 8 0 0 1-8-8V85a8 8 0 0 1 8-8Z" fill="#beb29c" class="ink"/>
+      <path d="M178 71h47l19 19v91a8 8 0 0 1-8 8h-58a8 8 0 0 1-8-8V79a8 8 0 0 1 8-8Z" fill="url(#paper)" class="ink"/>
+      <path d="M225 71v19h19" fill="url(#blue)" class="ink"/>
+      <path d="M184 105h45M184 117h33M184 129h41" class="fine" opacity=".55"/>
+      <circle cx="193" cy="154" r="3.5" fill="#263747"/><circle cx="216" cy="154" r="3.5" fill="#263747"/>
+      <path d="M199 164q6 5 12 0" class="fine"/>
+    </g>
+  </g>
+  <!-- Lower left: an envelope and a fresh note. -->
+  <g class="float-b">
+    <g transform="rotate(9 306 245)">
+      <rect x="259" y="222" width="87" height="63" rx="8" fill="url(#violet)" class="ink"/>
+      <path d="M273 226v-36a6 6 0 0 1 6-6h49a6 6 0 0 1 6 6v36" fill="url(#paper)" class="ink"/>
+      <path d="M285 199h36M285 211h25" class="fine" opacity=".5"/>
+      <path d="m261 230 41 29 42-29M260 281l29-23M345 281l-28-23" class="fine"/>
+      <circle cx="302" cy="259" r="11" fill="url(#butter)" class="fine"/>
+      <path d="m297 259 4 4 7-8" class="fine"/>
+    </g>
+  </g>
+  <!-- Right: an open, friendly discussion bubble. -->
+  <g class="float-b">
+    <g transform="rotate(8 967 137)">
+      <path d="M923 97h80a12 12 0 0 1 12 12v50a12 12 0 0 1-12 12h-40l-23 19 4-19h-21a12 12 0 0 1-12-12v-50a12 12 0 0 1 12-12Z" fill="#9db69a" class="ink"/>
+      <path d="M916 90h80a12 12 0 0 1 12 12v50a12 12 0 0 1-12 12h-40l-23 19 4-19h-21a12 12 0 0 1-12-12v-50a12 12 0 0 1 12-12Z" fill="url(#mint)" class="ink"/>
+      <path d="M918 99h75" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+      <circle cx="941" cy="125" r="4" fill="#263747"/><circle cx="971" cy="125" r="4" fill="#263747"/>
+      <path d="M947 138q9 8 18 0" class="fine"/>
+    </g>
+  </g>
+  <!-- A small stack of source slips on the other side of the workbench. -->
+  <g transform="rotate(-7 911 275)">
+    <path d="m861 255 85 9 12 28-94-8Z" fill="#bea57d" class="ink"/>
+    <path d="m860 247 85 9 12 28-94-8Z" fill="url(#paper)" class="ink"/>
+    <path d="m865 237 85 9 12 28-94-8Z" fill="url(#blue)" class="ink"/>
+    <path d="m876 248 61 6M881 257l33 3" class="fine" opacity=".45"/>
+  </g>
+  <!-- Paperclip, curved signal and foil stars. -->
+  <g transform="rotate(23 414 250)"><path d="M415 218v49a13 13 0 0 1-26 0v-42a9 9 0 0 1 18 0v39a5 5 0 0 1-10 0v-34" stroke="#7e7096" stroke-width="5" stroke-linecap="round"/></g>
+  <path d="M800 221a17 17 0 0 1 17 17m-17-30a30 30 0 0 1 30 30" class="fine"/><circle cx="800" cy="238" r="4" fill="#263747"/>
+  <g fill="url(#paper)" class="fine"><path d="m376 90 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"/><path d="m822 61 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"/><path d="m1057 217 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/></g>
+  <path d="m144 243 3 6 6 3-6 3-3 6-3-6-6-3 6-3ZM755 268l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#263747"/>
+  <circle cx="323" cy="66" r="3" fill="#263747" opacity=".6"/><circle cx="1060" cy="110" r="3" fill="#263747" opacity=".6"/>
+</svg>

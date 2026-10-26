@@ -1,0 +1,41 @@
+/* Product-specific wrappers; upstream source CSS is retained in components/reactdrops. */
+.rd-island { width: 100%; min-width: 0; }
+/* The retained template gives every svg a 24px icon style. Reset only island artwork. */
+.rd-island > svg { display: block; max-width: none; fill: none; stroke: none; stroke-width: 0; }
+.rd-topography-island { height: 100%; pointer-events: none; opacity: .3; }
+.rd-topography-island .topographic-flow { width: 100%; height: 100%; background: transparent !important; }
+.rd-island > .rd-still-contours { width: 100%; height: 100%; fill: none; stroke: #71602e; stroke-width: .9; opacity: .25; }
+#rd-physics { pointer-events: none; }
+.rd-physics-island { position: relative; height: 100%; min-height: 260px; pointer-events: none; }
+.rd-physics-lane { position: absolute; top: 0; bottom: 0; width: 23%; pointer-events: auto; }
+.rd-physics-left { left: 2%; }
+.rd-physics-right { right: 2%; }
+.rd-physics-island .shape-physics { min-height: 260px; }
+.rd-still-shapes { width: 100%; height: 100%; min-height: 260px; }
+.rd-gallery-island { min-height: 500px; overflow: clip; isolation: isolate; }
+.rd-gallery-island .fan-gallery { padding: 30px 0; }
+.rd-gallery-island .fan-gallery-card { background: #fffcf2; box-shadow: 0 5px 10px #263b4910, 0 22px 40px -20px #263b4940; }
+.rd-gallery-island .fan-gallery-card img { object-fit: contain; }
+.rd-still-gallery { display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 500px; padding: 30px 15px; }
+.rd-still-gallery img { display: block; width: min(27%, 245px); height: auto; border-radius: 20px; box-shadow: 0 14px 30px -16px #263b4950; }
+.rd-still-gallery img:first-child { transform: rotate(-8deg) translateY(12px); }
+.rd-still-gallery img:last-child { transform: rotate(8deg) translateY(12px); }
+.rd-orb-island { width: 90px; height: 90px; display: grid; place-items: center; }
+.rd-still-orb { display: block; width: 90px; height: 90px; }
+.rd-install-island { display: flex; justify-content: center; }
+.rd-install-button.chromatic-button, .rd-install-static { font: inherit; display: inline-flex; align-items: center; justify-content: center; gap: 26px; min-height: 60px; padding: 17px 27px; border: 1px solid #263b4940; border-radius: 999px; color: #263b49; font-weight: 700; font-size: 17px; cursor: pointer; box-shadow: 0 9px 25px -14px #263b4970; }
+.rd-install-static { background: linear-gradient(115deg, #f3d26e, #eee1f3 65%, #fff4bb); }
+.rd-install-button.chromatic-button svg, .rd-install-static svg { width: 20px; height: 20px; flex: none; }
+.rd-install-button .chromatic-button-content { gap: 26px; }
+.rd-install-static:focus-visible { outline: 3px solid #7f679e; outline-offset: 5px; }
+@media (max-width: 600px) {
+  .rd-physics-island, .rd-physics-island .shape-physics, .rd-still-shapes { min-height: 190px; }
+  .rd-physics-lane { width: 24%; pointer-events: none; }
+  .rd-gallery-island, .rd-still-gallery { min-height: 330px; }
+  .rd-still-gallery { gap: 8px; padding-inline: 0; }
+  .rd-still-gallery img { width: 30%; border-radius: 12px; }
+  .rd-install-button.chromatic-button, .rd-install-static { min-height: 56px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rd-island *, .rd-island *::before, .rd-island *::after { animation: none !important; transition: none !important; }
+}

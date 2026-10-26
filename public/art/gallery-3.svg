@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 384">
+  <defs><linearGradient id="p" x2="1" y2="1"><stop stop-color="#f5f8ed"/><stop offset="1" stop-color="#e1e8d3"/></linearGradient><linearGradient id="a" x2="0" y2="1"><stop stop-color="#fff4b9"/><stop offset="1" stop-color="#e1c56d"/></linearGradient></defs>
+  <rect x="1" y="1" width="298" height="382" rx="24" fill="url(#p)" stroke="#cdd7c3"/>
+  <path d="M24 47h252" stroke="#cad4bf"/><text x="25" y="31" fill="#627167" font-family="Arial,sans-serif" font-size="10" letter-spacing="2">A LITTLE PRINCIPLE / 03</text>
+  <g stroke="#263b49" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <ellipse cx="151" cy="256" rx="81" ry="10" fill="#b7c6a7" opacity=".4" stroke="none"/>
+    <path d="M80 187q-27-3-35-22M223 186q27-3 33-25" fill="none"/><path d="m42 152 3 13 13-3M245 160l11 1 4-12" fill="none"/>
+    <rect x="84" y="114" width="139" height="112" rx="23" fill="#c4adcf"/><rect x="77" y="107" width="139" height="112" rx="23" fill="#fffef3"/>
+    <path d="M146 107V91"/><circle cx="146" cy="83" r="9" fill="url(#a)"/>
+    <rect x="96" y="137" width="101" height="55" rx="15" fill="#d0ddc7"/>
+    <circle cx="123" cy="161" r="6" fill="#263b49" stroke="none"/><circle cx="169" cy="161" r="6" fill="#263b49" stroke="none"/><path d="M138 176q8 7 17 0"/>
+    <path d="M105 220v18M186 220v18"/><path d="m238 93 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z" fill="url(#a)"/><circle cx="57" cy="98" r="5" fill="#c3acd8"/>
+  </g>
+  <text x="150" y="307" text-anchor="middle" fill="#263b49" font-family="'Microsoft YaHei','PingFang SC',sans-serif" font-size="23" font-weight="600">Agent 由你选</text>
+  <text x="150" y="337" text-anchor="middle" fill="#637268" font-family="'Microsoft YaHei','PingFang SC',sans-serif" font-size="13">连接你的工作方式</text>
+</svg>
