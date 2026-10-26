@@ -1,5 +1,12 @@
 # Implementation direction
 
+Latest refinement: the night hero uses genuine React Bits Gradient ASCII with a
+cool arc/artwork palette; light colors remain unchanged. Hero labels themselves
+are centered, the night footer owns a readable dark surface, and the old six-stage
+timeline is replaced by three parallel real capability groups. Border Beam loops
+only while visible. Source/verification: [night refinement](night-refinement-2026-10-26.md).
+Local/VPS flow views are deferred in [the roadmap](roadmap.md); `#how` is unchanged.
+
 ## Current composition
 
 Visual thesis: a warm illustrated paper workshop, with clear ink marks, a quiet
@@ -7,7 +14,7 @@ icon-only Dock and one surface per interaction. Preserve the cream/yellow hero,
 original paper illustrations and lavender accents of the retained Side Quest
 Adoption Center baseline.
 
-Content: product poster → six real question prompts → source-to-Agent beams →
+Content: product poster → a selection of real question prompts → source-to-Agent beams →
 evidence → principles → repository activity → editable Agent installation Prompt
 → FAQ and source links.
 
@@ -37,8 +44,9 @@ colored band travels between actual measured ports instead of across the
 entire SVG viewport, making short connections visible throughout the cycle.
 The network uses smooth routes and separate hub input/output ports; the Agent
 port is centered on its node surface. Offscreen, background and reduced-motion
-states stop playback. Border Beam and selected Text Animate entrances remain
-finite. Internal artwork can lift on hover without moving the wire ports.
+states stop playback. The capability-card Border Beam loops while visible and
+resumes its stored phase; selected Text Animate entrances remain finite.
+Internal artwork can lift on hover without moving the wire ports.
 
 Topographic Flow remains a static rendered frame. The hero Chromatic Button
 uses a bright lavender/blue material with an optional shader brightness floor;
@@ -87,7 +95,7 @@ metrics are copied. Magic UI remains pinned at
 and licenses are in `THIRD_PARTY_NOTICES.md`.
 
 The four feature symbols are SVG icons rather than font glyphs. Chinese UI text
-uses self-hosted Noto Sans SC and Noto Serif SC subsets containing 471 requested
+uses self-hosted Noto Sans SC and Noto Serif SC subsets containing 481 requested
 characters, with real 400–700 weights, actual CDP font verification, source URLs,
 hashes and OFL notices retained. Hero lede/actions use Serif, ordinary UI uses
 Sans, and external gallery lettering uses OFL outlines. The original paper

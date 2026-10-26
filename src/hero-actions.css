@@ -1,0 +1,62 @@
+/* The labels, rather than a label-plus-arrow flex box, sit on the button axis.
+   Equal space at both ends keeps the text centered in WebGL and still modes. */
+.hero-actions .rd-hero-cta .product-chromatic {
+  position: relative;
+}
+.hero-actions .rd-hero-cta .chromatic-button-content {
+  display: contents;
+}
+.hero-actions .hero-action-content {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  pointer-events: none;
+}
+.hero-actions .hero-action-label {
+  display: block;
+  white-space: nowrap;
+}
+.hero-actions .hero-action-icon {
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-50%);
+}
+.hero-actions .hero-action-icon svg {
+  display: block;
+}
+.hero-actions .hero-secondary {
+  position: relative;
+  /* Preserve the former six-character label + icon + gap + padding width. */
+  width: calc(6em + 76px);
+  padding-inline: 30px;
+}
+.hero-actions .hero-secondary .hero-action-icon {
+  right: 13px;
+  width: 18px;
+  height: 18px;
+}
+.hero-actions .hero-secondary .hero-action-label {
+  /* Noto Serif SC's 14px six-character ink sits half a pixel below its line box. */
+  transform: translateY(-.5px);
+}
+@media (max-width: 760px) {
+  .hero-actions .rd-hero-cta .hero-action-icon { right: 13px; }
+  .hero-actions .rd-hero-cta .hero-action-label { transform: translateY(-.4px); }
+  .hero-actions .hero-secondary {
+    width: calc(6em + 60px);
+    padding-inline: 25px;
+  }
+  .hero-actions .hero-secondary .hero-action-icon {
+    right: 9px;
+    width: 16px;
+    height: 16px;
+  }
+  .hero-actions .hero-secondary .hero-action-label { transform: translateY(1px); }
+}

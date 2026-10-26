@@ -5,6 +5,7 @@ import { AnimatedBeam } from './components/magicui/animated-beam';
 import { BorderBeam } from './components/magicui/border-beam';
 import { TextAnimate } from './components/magicui/text-animate';
 import './magic-sections.css';
+import './product-story.css';
 
 // Product wrappers for Magic UI's MIT registry components, pinned at
 // efe76fc5755eca1142dd4f74c1d6f0ace2887e3c. Components retain source notices.
@@ -35,24 +36,6 @@ function usePlayback() {
     return () => document.removeEventListener('visibilitychange', change);
   }, []);
   return { host, active: visible && foreground && !reduced, reduced };
-}
-
-// One short greeting on first view. Offscreen/background changes stop the
-// motion controller; returning never creates an endless repeating animation.
-function useGreeting(active, duration) {
-  const seen = useRef(false);
-  const [playing, setPlaying] = useState(false);
-  useEffect(() => {
-    if (!active || seen.current) return;
-    seen.current = true;
-    setPlaying(true);
-  }, [active]);
-  useEffect(() => {
-    if (!playing) return;
-    const timer = setTimeout(() => setPlaying(false), duration);
-    return () => clearTimeout(timer);
-  }, [playing, duration]);
-  return active && playing;
 }
 
 // Composition follows the inspected UI Layouts hover card and ReUI stat card
@@ -113,9 +96,8 @@ function Connection() {
 
 function EvidenceBorder() {
   const { host, active } = usePlayback();
-  const playing = useGreeting(active, 6500);
   return <div ref={host} className="mb-border-layer" data-magicui="border-beam" aria-hidden="true">
-    <BorderBeam playing={playing} size={180} duration={6} borderWidth={1.5} colorFrom="#ecd783" colorTo="#bda0df" />
+    <BorderBeam playing={active} size={160} duration={6} borderWidth={2} colorFrom="#8adce8" colorTo="#c9b8f7" />
   </div>;
 }
 

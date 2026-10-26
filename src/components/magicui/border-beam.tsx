@@ -1,13 +1,13 @@
 /**
  * Magic UI · MIT License · Copyright (c) Magic UI.
  * Source: https://github.com/magicuidesign/magicui/tree/efe76fc5755eca1142dd4f74c1d6f0ace2887e3c/apps/www/registry/magicui
- * Local adaptation: product CSS, finite playback and reduced-motion support.
+ * Local adaptation: scoped CSS and resumable viewport/background/media playback.
  * Full license is retained in licenses/Magic-UI-MIT.txt.
  */
 "use client"
 
-import { motion, useAnimationControls, useReducedMotion, type MotionStyle, type Transition } from "motion/react"
-import { useEffect } from "react"
+import { animate, motion, useMotionValue, type MotionStyle, type Transition } from "motion/react"
+import { useEffect, useRef } from "react"
 
 import { cn } from "./utils"
 
@@ -73,21 +73,48 @@ export const BorderBeam = ({
   borderWidth = 1,
   playing = true,
 }: BorderBeamProps) => {
-  const controls = useAnimationControls()
-  const reduced = useReducedMotion()
+  const frame = useRef<HTMLDivElement>(null)
+  const playingRef = useRef(playing)
+  playingRef.current = playing
+  const syncPlayback = useRef<(() => void) | null>(null)
+  const offsetDistance = useMotionValue(`${initialOffset}%`)
+
   useEffect(() => {
-    if (!playing || reduced) { controls.stop(); return }
-    controls.start({
-      offsetDistance: reverse
-        ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
-        : [`${initialOffset}%`, `${100 + initialOffset}%`],
-    }, { repeat: 0, ease: "linear", duration, delay: -delay, ...transition })
-    return () => controls.stop()
-  }, [controls, playing, reduced, reverse, initialOffset, duration, delay, transition])
-  if (reduced) return null
+    const media = matchMedia("(prefers-reduced-motion: reduce)")
+    // Preserve the upstream offset-path/gradient technique. A playback handle,
+    // rather than a one-shot animation controller, can resume the same phase.
+    const animation = animate(offsetDistance, reverse
+      ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
+      : [`${initialOffset}%`, `${100 + initialOffset}%`],
+    { ease: "linear", duration, delay: -delay, ...transition, repeat: Infinity })
+    animation.pause()
+    const sync = () => {
+      const active = playingRef.current && !document.hidden && !media.matches
+      if (active) animation.play()
+      else animation.pause()
+      if (frame.current) frame.current.dataset.playing = String(active)
+    }
+    syncPlayback.current = sync
+    // Listen directly: runtime preference changes must not depend on Motion's
+    // cached reduced-motion hook or a parent React render catching up.
+    document.addEventListener("visibilitychange", sync)
+    media.addEventListener("change", sync)
+    sync()
+    return () => {
+      syncPlayback.current = null
+      document.removeEventListener("visibilitychange", sync)
+      media.removeEventListener("change", sync)
+      animation.stop()
+    }
+  }, [offsetDistance, reverse, initialOffset, duration, delay, transition])
+
+  useEffect(() => { syncPlayback.current?.() }, [playing])
+
   return (
     <div
+      ref={frame}
       className="mui-border-beam"
+      data-playing="false"
       aria-hidden="true"
       style={
         {
@@ -103,14 +130,13 @@ export const BorderBeam = ({
         style={
           {
             width: size,
-            offsetPath: `rect(0 auto auto 0 round ${size}px)`,
+            offsetPath: "rect(0 auto auto 0 round var(--beam-corner, 28px))",
+            offsetDistance,
             "--color-from": colorFrom,
             "--color-to": colorTo,
             ...style,
           } as MotionStyle
         }
-        initial={{ offsetDistance: `${initialOffset}%` }}
-        animate={controls}
       />
     </div>
   )

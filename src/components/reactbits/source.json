@@ -1,0 +1,11 @@
+{
+  "repository": "DavidHDev/react-bits",
+  "commit": "e12c22192ac7b4b452c5e2feb9b586d74765d696",
+  "component": "Gradient ASCII",
+  "reference": "https://www.reactbits.dev/backgrounds/gradient-ascii",
+  "files": ["src/content/Backgrounds/GradientASCII/GradientASCII.jsx", "src/content/Backgrounds/GradientASCII/GradientASCII.css"],
+  "upstreamJsSha256": "b065d3fbe09905616ce66ca07382e9c72daa59ad57d4cd60059c517b9cbcac91",
+  "license": "MIT + Commons Clause",
+  "licenseFile": "licenses/React-Bits-LICENSE.md",
+  "adaptations": ["paused and maximum draw-rate props", "WebGL loss stop and ready marker", "Product dark-only lazy wrapper, viewport/document gating, constrained-device static fallback", "DPR 1, no halo passes, reduced animation speed and no click waves"]
+}

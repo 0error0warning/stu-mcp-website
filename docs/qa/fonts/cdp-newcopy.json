@@ -1,0 +1,158 @@
+[
+  {
+    "selector": "#ideas .section-title",
+    "text": "从一句「帮我查查」开始。",
+    "fonts": [
+      {
+        "familyName": "Noto Serif SC ExtraLight",
+        "postScriptName": "Noto-Serif-SC-ExtraLight",
+        "isCustomFont": true,
+        "glyphCount": 12
+      }
+    ]
+  },
+  {
+    "selector": "#ideas .section-lede .mui-text-segment",
+    "text": "比如，你可以这样问。",
+    "fonts": [
+      {
+        "familyName": "Noto Sans SC Thin",
+        "postScriptName": "Noto-Sans-SC-Thin",
+        "isCustomFont": true,
+        "glyphCount": 10
+      }
+    ]
+  },
+  {
+    "selector": "#scenario-03",
+    "text": "课表，问清下一节。",
+    "fonts": [
+      {
+        "familyName": "Noto Serif SC ExtraLight",
+        "postScriptName": "Noto-Serif-SC-ExtraLight",
+        "isCustomFont": true,
+        "glyphCount": 9
+      }
+    ]
+  },
+  {
+    "selector": "#scenario-03 + .idea-description",
+    "text": "「查我本学期的理论课表，按星期整理课程、上课周次、节次和教室。」",
+    "fonts": [
+      {
+        "familyName": "Noto Sans SC Thin",
+        "postScriptName": "Noto-Sans-SC-Thin",
+        "isCustomFont": true,
+        "glyphCount": 32
+      }
+    ]
+  },
+  {
+    "selector": "#lifecycle .section-title",
+    "text": "课表、作业和校园小事，现在可以一起问。",
+    "fonts": [
+      {
+        "familyName": "Noto Serif SC ExtraLight",
+        "postScriptName": "Noto-Serif-SC-ExtraLight",
+        "isCustomFont": true,
+        "glyphCount": 19
+      }
+    ]
+  },
+  {
+    "selector": "#lifecycle .section-lede",
+    "text": "查学校里的信息，也记下你自己的待办。",
+    "fonts": [
+      {
+        "familyName": "Noto Sans SC Thin",
+        "postScriptName": "Noto-Sans-SC-Thin",
+        "isCustomFont": true,
+        "glyphCount": 18
+      }
+    ]
+  },
+  {
+    "selector": ".capability-item:nth-child(1) h3",
+    "text": "上课安排，不用来回找。",
+    "fonts": [
+      {
+        "familyName": "Noto Serif SC ExtraLight",
+        "postScriptName": "Noto-Serif-SC-ExtraLight",
+        "isCustomFont": true,
+        "glyphCount": 11
+      }
+    ]
+  },
+  {
+    "selector": ".capability-item:nth-child(1) p",
+    "text": "查本人理论课表、成绩和考试安排，读 MySTU 作业与课程资料。",
+    "fonts": [
+      {
+        "familyName": "Schibsted Grotesk",
+        "postScriptName": "Schibsted-Grotesk",
+        "isCustomFont": true,
+        "glyphCount": 6
+      },
+      {
+        "familyName": "Noto Sans SC Thin",
+        "postScriptName": "Noto-Sans-SC-Thin",
+        "isCustomFont": true,
+        "glyphCount": 25
+      }
+    ]
+  },
+  {
+    "selector": ".capability-item:nth-child(2) h3",
+    "text": "余额、插座，问完再出发。",
+    "fonts": [
+      {
+        "familyName": "Noto Serif SC ExtraLight",
+        "postScriptName": "Noto-Serif-SC-ExtraLight",
+        "isCustomFont": true,
+        "glyphCount": 12
+      }
+    ]
+  },
+  {
+    "selector": ".capability-item:nth-child(2) p",
+    "text": "查一卡通余额与历史流水，看看已接入充电设备的插座状态。",
+    "fonts": [
+      {
+        "familyName": "Noto Sans SC Thin",
+        "postScriptName": "Noto-Sans-SC-Thin",
+        "isCustomFont": true,
+        "glyphCount": 27
+      }
+    ]
+  },
+  {
+    "selector": ".capability-item:nth-child(3) h3",
+    "text": "想到的事，顺手记下来。",
+    "fonts": [
+      {
+        "familyName": "Noto Serif SC ExtraLight",
+        "postScriptName": "Noto-Serif-SC-ExtraLight",
+        "isCustomFont": true,
+        "glyphCount": 11
+      }
+    ]
+  },
+  {
+    "selector": ".capability-item:nth-child(3) p",
+    "text": "在本地记下待办、学院和兴趣，让 Agent 按你提供的背景帮忙整理。",
+    "fonts": [
+      {
+        "familyName": "Schibsted Grotesk",
+        "postScriptName": "Schibsted-Grotesk",
+        "isCustomFont": true,
+        "glyphCount": 6
+      },
+      {
+        "familyName": "Noto Sans SC Thin",
+        "postScriptName": "Noto-Sans-SC-Thin",
+        "isCustomFont": true,
+        "glyphCount": 27
+      }
+    ]
+  }
+]

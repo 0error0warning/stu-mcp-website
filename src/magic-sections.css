@@ -50,8 +50,9 @@ html[data-theme="dark"] .mb-hub { border-color: #fff8d421; }
 #lifecycle { position: relative; isolation: isolate; }
 #magic-border { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1; }
 .mb-border-layer { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
-.mui-border-beam { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; border: var(--border-beam-width, 1px) solid transparent; mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0) border-box; mask-composite: exclude; }
-.mui-border-light { position: absolute; aspect-ratio: 1; background: linear-gradient(to left, var(--color-from), var(--color-to), transparent); }
+.mui-border-beam { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; border: var(--border-beam-width, 1px) solid transparent; mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0) border-box; mask-composite: exclude; opacity: 0; }
+.mui-border-beam[data-playing="true"] { opacity: 1; }
+.mui-border-light { position: absolute; aspect-ratio: 1; background: linear-gradient(90deg, transparent, var(--color-from) 42%, var(--color-to) 75%, transparent); }
 
 @media (max-width: 1000px) and (min-width: 681px) {
   .mb-network { grid-template-columns: minmax(145px, 170px) minmax(164px, 190px) minmax(164px, 190px); gap: 30px; padding-inline: 4px; }
@@ -77,6 +78,7 @@ html[data-theme="dark"] .mb-hub { border-color: #fff8d421; }
   .mb-hub-in, .mb-agent-in { top: -4px; left: calc(50% - 4px); }
 }
 @media (prefers-reduced-motion: reduce) {
+  .mui-border-beam { opacity: 0 !important; }
   .mui-text-animate, .mui-text-segment { opacity: 1 !important; transform: none !important; }
   .mb-node:hover .mb-node-art { transform: none; }
 }

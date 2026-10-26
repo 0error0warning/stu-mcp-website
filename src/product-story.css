@@ -1,0 +1,20 @@
+/* Three parallel product capabilities share one surface; no nested cards. */
+#lifecycle > .reveal { position: relative; z-index: 2; }
+#lifecycle .section-title { max-width: none; }
+.capability-grid { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 45px; }
+.capability-item { min-width: 0; padding-top: 24px; border-top: 1px solid #dce4ee33; }
+.capability-kicker { display: block; font: 500 10px/1.5 var(--font-body); letter-spacing: .1em; color: #a8d1d5; }
+.capability-item h3 { margin: 12px 0 0; color: inherit; font: 400 24px/1.45 var(--font-heading); letter-spacing: -.025em; }
+.capability-item p { margin: 14px 0 0; color: #bac9cf; font: 400 12px/1.9 var(--font-body); max-width: 28ch; }
+html[data-theme="dark"] #lifecycle .capability-item { border-color: #b2c5dc29; }
+html[data-theme="dark"] #lifecycle .capability-kicker { color: #a7d7df; }
+html[data-theme="dark"] #lifecycle .capability-item p { color: #b6c7cf; }
+@media (max-width: 1000px) { .capability-grid { gap: 24px; } .capability-item h3 { font-size: 21px; } }
+@media (max-width: 680px) {
+  #lifecycle { --beam-corner: 22px; }
+  #lifecycle .section-title { font-size: clamp(24px, 6.7vw, 31px); }
+  .capability-grid { grid-template-columns: 1fr; gap: 24px; margin-top: 30px; }
+  .capability-item { padding-top: 20px; }
+  .capability-item h3 { font-size: 23px; margin-top: 9px; }
+  .capability-item p { max-width: none; font-size: 12px; margin-top: 10px; }
+}

@@ -195,7 +195,9 @@ function ProductButtonIsland({ install = false }) {
   const [focused, setFocused] = useState(false);
   const engaged = hovered || focused;
   const onClick = install ? copyInstall : () => { window.location.hash = 'install'; };
-  const content = <><span>{install ? '复制安装指令' : '试着接入'}</span>{install ? <Copy aria-hidden="true" size={20} strokeWidth={1.8} /> : <ArrowUpRight aria-hidden="true" size={21} strokeWidth={1.8} />}</>;
+  const content = install
+    ? <><span>复制安装指令</span><Copy aria-hidden="true" size={20} strokeWidth={1.8} /></>
+    : <span className="hero-action-content"><span className="hero-action-label">试着接入</span><span className="hero-action-icon"><ArrowUpRight aria-hidden="true" size={21} strokeWidth={1.8} /></span></span>;
   const fallback = <button type="button" className="product-chromatic rd-install-static" onClick={onClick}>{content}</button>;
   return <div ref={host} className={`rd-island rd-install-island ${install ? 'rd-install-cta' : 'rd-hero-cta'}`} data-reactdrops="chromatic-button" onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true); }} onPointerLeave={() => setHovered(false)} onPointerCancel={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={() => setFocused(false)}>
     <Suspense fallback={fallback}>

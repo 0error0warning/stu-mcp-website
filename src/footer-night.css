@@ -1,0 +1,61 @@
+/* Footer owns its night palette: the global yellow accent is not a surface. */
+html[data-theme="dark"] .site-footer {
+  --footer-ink: #f1effb;
+  --footer-soft: #c5c7de;
+  --footer-line: #737da5;
+  color: var(--footer-ink);
+  background: #20243d;
+  border-color: var(--footer-line);
+}
+html[data-theme="dark"] .site-footer::before {
+  background-image: radial-gradient(#a7b5f12b 1.2px, transparent 1.2px);
+}
+html[data-theme="dark"] .site-footer::after {
+  background: radial-gradient(circle, #5967a733, transparent 65%);
+  opacity: 1;
+  animation: none;
+}
+html[data-theme="dark"] .site-footer :is(.footer-cta h2, .brand, .brand-sub, .footer-bottom nav a) {
+  color: var(--footer-ink);
+}
+html[data-theme="dark"] .site-footer :is(.eyebrow, .footer-disclaimer, .footer-colophon, .footer-colophon a) {
+  color: var(--footer-soft);
+}
+html[data-theme="dark"] .site-footer .footer-bottom {
+  border-color: var(--footer-line);
+}
+html[data-theme="dark"] .site-footer .footer-doodle {
+  color: #b8b9ef;
+}
+html[data-theme="dark"] .site-footer .primary-button {
+  color: #20243d;
+  background: #d1cafa;
+  border: 1px solid #e1dcff;
+  box-shadow: 0 7px 20px -14px #080d29;
+}
+html[data-theme="dark"] .site-footer .primary-button .ico {
+  color: #e3dcff;
+  background: #353b65;
+}
+html[data-theme="dark"] .site-footer .primary-button:hover {
+  color: #20243d;
+  background: #e2dcff;
+  border-color: #f0eaff;
+}
+html[data-theme="dark"] .site-footer .primary-button:hover .ico {
+  color: #f5efff;
+  background: #444b79;
+}
+html[data-theme="dark"] .site-footer :is(.footer-bottom nav a, .footer-colophon a):hover {
+  color: #e4d7ff;
+  text-decoration: underline;
+  text-underline-offset: .3em;
+}
+html[data-theme="dark"] .site-footer a:focus-visible {
+  outline: 2px solid #d7cbff;
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+html[data-theme="dark"] .site-footer .primary-button:focus-visible {
+  border-radius: 999px;
+}

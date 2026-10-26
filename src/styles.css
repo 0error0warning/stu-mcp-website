@@ -11,7 +11,7 @@ button:disabled { cursor: wait; }
 .nav a { padding-inline: 1em; }
 .nav-arrow { display: grid; place-items: center; width: 28px; height: 28px; background: var(--color-accent); color: var(--color-text); border-radius: 50%; font-size: 19px; }
 .quest-link::before { content: none; }
-.hero-full { padding-top: 122px; }
+.hero-full { padding-top: 122px; overflow: clip; }
 #rd-topography { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
 .hero-copy { position: relative; z-index: 3; }
 .open-sign { font-size: 12px; letter-spacing: .015em; }

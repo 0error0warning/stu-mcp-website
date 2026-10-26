@@ -86,7 +86,9 @@ The MIT license is retained in `licenses/Magic-UI-MIT.txt` and source notices.
   magnification, and concentric corner geometry. Theme persistence uses circular
   View Transitions with reduced-motion support. Information beams continuously
   sweep the real measured endpoint range while visible, and stop offscreen,
-  in the background or for reduced motion; border/text entrances stay finite.
+  in the background or for reduced motion. The capability card Border Beam now
+  loops while visible, hides its light when paused and resumes its phase;
+  text entrances stay finite.
 - Terminal source remains for the historical integration but is no longer
   imported or mounted by the current installation section. The page now presents
   an editable Prompt composer and copies its current text to the user's Agent;
@@ -155,6 +157,29 @@ in `docs/agent-catalog-2026-10-26.md`; no account-specific availability is claim
 Reference inspection, the final local verification scope and current screenshots
 are recorded in [the reference refinement record](docs/reference-refinement-2026-10-26.md).
 
+## React Bits Gradient ASCII
+
+The night-only hero background incorporates the genuine Gradient ASCII component
+from David Haz's React Bits, pinned at
+`e12c22192ac7b4b452c5e2feb9b586d74765d696`:
+https://github.com/DavidHDev/react-bits/tree/e12c22192ac7b4b452c5e2feb9b586d74765d696/src/content/Backgrounds/GradientASCII.
+The actual preview at https://www.reactbits.dev/backgrounds/gradient-ascii was
+inspected. Its code uses **MIT + Commons Clause**, not plain MIT; the full terms
+and copyright are retained in `licenses/React-Bits-LICENSE.md` and the source
+notice. Provenance and the upstream source hash are in
+`src/components/reactbits/source.json`.
+
+Local component changes add pause/draw-rate control, a ready marker, context-loss
+stop and early pointer-event gating. The product wrapper uses a cool palette,
+DPR 1, a maximum 24 draw frames per second and no halo passes. It lazy-loads only
+for an active desktop night hero, stops offscreen/hidden/in light mode, and uses
+a static character field on mobile, reduced motion and unsupported WebGL. This
+is part of the finished private website, not a component library or template.
+
+`public/art/hero-collector-night.svg` is a palette-only variant of the project's
+original hero illustration, preserving its geometry and motion. The light
+illustration is unchanged; the theme chooses which image is displayed.
+
 ## Self-hosted fonts
 
 Gloock regular (Latin), Schibsted Grotesk variable 400–700 (Latin), and
@@ -169,7 +194,7 @@ Serif heading asset is retained as inactive historical evidence.
 
 The Chinese interface additionally uses a self-hosted Noto Sans SC variable
 subset (CSS weights 400–700). Its OFL is in `licenses/font-notosanssc-OFL.txt`.
-The 471 requested UI characters, actual coverage, axes, source URLs and SHA-256
+The 481 requested UI characters, actual coverage, axes, source URLs and SHA-256
 are appended to `public/fonts/sources.json`. `scripts/update-ui-fonts.py`
 rebuilds both subsets from explicitly listed product UI files. The same OFL
 Schibsted/Noto outlines supply nine text groups in the external gallery SVGs;

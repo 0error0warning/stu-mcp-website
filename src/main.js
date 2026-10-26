@@ -9,18 +9,23 @@ import './activity.js';
 import { mountHeader } from './site-header.jsx';
 import { mountMagicSections } from './magic-sections.jsx';
 import { mountAgentInstall } from './agent-install.jsx';
+import { mountNightHero } from './night-hero.jsx';
 import './feedback.css';
 import './theme.css';
+import './night-hero.css';
+import './hero-actions.css';
+import './footer-night.css';
 
 document.getElementById('shared-defs').innerHTML = sharedDefs;
 mountHeader();
 mountMagicSections();
 mountAgentInstall();
+mountNightHero();
 
 const scenarios = [
   { id: '01', key: 'notice', category: 'study', name: '通知，连附件一起。', source: '通知 · PDF', color: 'oklch(.92 .065 96)', prompt: '帮我查最近相关的通知，读一下 PDF 附件，把重点和原文链接一起给我。' },
   { id: '02', key: 'homework', category: 'study', name: '作业，心里有个底。', source: 'MySTU · 课程', color: 'oklch(.91 .055 295)', prompt: '整理一下 MySTU 接下来两周的作业，按截止时间排一排，并保留来源。' },
-  { id: '03', key: 'competition', category: 'study', name: '好机会，别错过。', source: '通知检索 · 原文', color: 'oklch(.91 .07 65)', prompt: '查查已有通知里有哪些适合我报名的竞赛，把截止时间和原文找出来。' },
+  { id: '03', key: 'timetable', category: 'study', name: '课表，问清下一节。', source: '教务 · 理论课表', color: 'oklch(.91 .07 65)', prompt: '查我本学期的理论课表，按星期整理课程、上课周次、节次和教室。' },
   { id: '04', key: 'community', category: 'life', name: '听听，大家怎么说。', source: '狐友 · 公开讨论', color: 'oklch(.92 .05 155)', prompt: '狐友里有人聊过这门选修课吗？搜一下公开帖子和评论，给我讨论出处。' },
   { id: '05', key: 'card', category: 'life', name: '余额，查一下就好。', source: '一卡通 · 只读', color: 'oklch(.91 .055 240)', prompt: '查一下我已连接的一卡通余额和最近七天的消费流水，只读查询。' },
   { id: '06', key: 'repair', category: 'life', name: '报修，先看清再确认。', source: '宿舍报修 · 预览', color: 'oklch(.92 .055 15)', prompt: '帮我准备宿舍报修，先完整预览表单，不要提交，等我本人明确确认。' },
@@ -86,7 +91,7 @@ const io = new IntersectionObserver(entries => {
     io.unobserve(entry.target);
   }
 }, { threshold: .08, rootMargin: '0px 0px -20px 0px' });
-document.querySelectorAll('.reveal, #timeline').forEach(el => io.observe(el));
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 function renderScenarios(filter = 'all') {
   const visible = scenarios.filter(s => filter === 'all' || s.category === filter);

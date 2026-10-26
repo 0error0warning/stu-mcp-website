@@ -115,6 +115,9 @@ def build_font(family: str, slug: str, filename: str, characters: str) -> tuple[
         "subsetSources": UI_SOURCES, "generatedUILabels": GENERATED_UI_TEXT, "uiSymbols": UI_SYMBOLS,
         "verification": {"woff2Signature": True, "apiWeightRange": "400 700", "cmapMissingCharacters": 0, "variableAxes": axes},
     }
+    # Chromium can retain a decoded font across a CSS/HMR update when its URL
+    # stays identical. Tie the local URL to bytes so new copy uses its new cmap.
+    entry["localUrl"] = f"/fonts/{filename}?v={entry['sha256'][:12]}"
     return entry, font_bytes, license_bytes
 
 
@@ -214,7 +217,7 @@ def main() -> None:
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url(/fonts/{entry['file']}) format('woff2');
+  src: url({entry['localUrl']}) format('woff2');
   unicode-range: {unicode_ranges(characters)};
 }}
 {end}"""

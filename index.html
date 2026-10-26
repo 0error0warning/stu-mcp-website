@@ -25,6 +25,7 @@
   </header>
 
   <section class="hero-full" aria-labelledby="hero-title" data-section="hero">
+    <div id="night-gradient" aria-hidden="true"></div>
     <div id="rd-topography" aria-hidden="true"></div>
     <div id="rd-physics"></div>
     <span class="cloud c1" aria-hidden="true"></span><span class="cloud c2" aria-hidden="true"></span><span class="cloud c5" aria-hidden="true"></span>
@@ -32,12 +33,13 @@
       <span class="open-sign"><span class="dot" aria-hidden="true"></span>一个独立开发的开源小工具 <span class="sign-version">v0.7.1</span></span>
       <h1 id="hero-title"><span class="hero-product">STU-MCP</span><span class="hero-sentence">散落的信息，<em>交给你的 Agent。<svg class="brush" viewBox="0 0 500 65" preserveAspectRatio="none" aria-hidden="true"><path class="b1" pathLength="1" d="M10 50Q230 25 485 48"/><path class="b2" pathLength="1" d="M28 60Q265 40 470 58"/></svg></em></span></h1>
       <p class="lede">通知、课程、作业和附件。少翻几个入口，多留一点时间给自己。</p>
-      <div class="hero-actions"><div id="rd-hero-cta"><a class="primary-button" href="#install">试着接入</a></div><a class="hero-secondary" href="#ideas">浏览使用场景<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7v10H7"/></svg></a></div>
+      <div class="hero-actions"><div id="rd-hero-cta"><a class="primary-button" href="#install">试着接入</a></div><a class="hero-secondary" href="#ideas"><span class="hero-action-label">浏览使用场景</span><span class="hero-action-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7v10H7"/></svg></span></a></div>
       <p class="hero-footnote" data-text-animate>你用自己的 Agent，它来帮你找有出处的信息。</p>
     </div>
     <div class="hero-stage">
       <span class="horizon" aria-hidden="true"></span>
       <img class="hero-drawing collector" src="/art/hero-collector.svg" width="1200" height="370" alt="一个收集纸页的小角色，把散落的通知、日程和附件装进圆环装置。">
+      <img class="collector collector-night" src="/art/hero-collector-night.svg" width="1200" height="370" alt="" aria-hidden="true">
       <span class="chip chip-a"><span class="sw" style="background:oklch(.85 .09 300)"></span>信息有出处</span>
       <span class="chip chip-b"><span class="sw" style="background:oklch(.86 .1 160)"></span>Agent，由你选择</span>
     </div>
@@ -49,7 +51,7 @@
     <div class="wrap facts-strip reveal" role="list" data-section="stats"><div role="listitem"><strong>50</strong><span>MCP 工具</span></div><div role="listitem"><strong>v0.7.1</strong><span>学生预览版</span></div><div role="listitem"><strong>MIT</strong><span>自由探索，欢迎共建</span></div><div role="listitem" class="facts-release-link"><a href="https://github.com/0error0warning/stu-mcp/blob/main/docs/releases/v0.7.1.md" target="_blank" rel="noreferrer">看看这一版 <span aria-hidden="true">↗</span></a></div></div>
 
     <section class="wrap section" id="ideas" aria-labelledby="ideas-title" data-section="ideas">
-      <div class="section-head"><div class="reveal"><span class="eyebrow">A FEW GOOD QUESTIONS</span><h2 class="section-title" id="ideas-title">从一句「帮我查查」开始。</h2><p class="section-lede" data-text-animate>挑一个小问题，交给接入后的 Agent。</p></div><span class="availability reveal">六种真实使用场景</span></div>
+      <div class="section-head"><div class="reveal"><span class="eyebrow">A FEW GOOD QUESTIONS</span><h2 class="section-title" id="ideas-title">从一句「帮我查查」开始。</h2><p class="section-lede" data-text-animate>比如，你可以这样问。</p></div></div>
       <div class="board-toolbar"><div class="filters" role="group" aria-label="场景筛选"><i class="pill" aria-hidden="true"></i><button type="button" data-filter="all" aria-pressed="true">所有场景</button><button type="button" data-filter="study" aria-pressed="false">学习与信息</button><button type="button" data-filter="life" aria-pressed="false">日常小事</button></div></div>
       <div class="ideas-grid" id="ideas-grid"></div>
     </section>
@@ -61,8 +63,12 @@
     </section>
 
     <section class="wrap dark" id="lifecycle" aria-labelledby="life-title" data-section="lifecycle">
-      <div class="reveal"><span class="eyebrow">A LITTLE TRAIL OF EVIDENCE</span><h2 class="section-title" id="life-title">一个答案，<br>也该有来时的路。</h2><p class="section-lede">让信息可以追溯，让「还不确定」也被看见。</p></div>
-      <div class="timeline" id="timeline"><div class="stage" style="transition-delay:100ms"><span class="stage-when">FIND</span><h3>发现信息</h3><p>查找相关条目</p></div><div class="stage" style="transition-delay:250ms"><span class="stage-when">READ</span><h3>读取原文</h3><p>正文与附件</p></div><div class="stage" style="transition-delay:400ms"><span class="stage-when">TRACE</span><h3>留下出处</h3><p>原始链接可追溯</p></div><div class="stage" style="transition-delay:550ms"><span class="stage-when">CHECK</span><h3>看看时间</h3><p>标记刷新和缓存</p></div><div class="stage" style="transition-delay:700ms"><span class="stage-when">CONTEXT</span><h3>交给 Agent</h3><p>结合你的问题</p></div><div class="stage" style="transition-delay:850ms"><span class="stage-when">VERIFY</span><h3>回到来源</h3><p>重要事项再核对</p></div></div>
+      <div class="reveal"><span class="eyebrow">MORE OF YOUR CAMPUS DAY</span><h2 class="section-title" id="life-title">课表、作业和校园小事，<br>现在可以一起问。</h2><p class="section-lede">查学校里的信息，也记下你自己的待办。</p></div>
+      <div class="capability-grid">
+        <article class="capability-item reveal"><span class="capability-kicker">课程与教务</span><h3>上课安排，<br>不用来回找。</h3><p>查本人理论课表、成绩和考试安排，读 MySTU 作业与课程资料。</p></article>
+        <article class="capability-item reveal"><span class="capability-kicker">校园生活</span><h3>余额、插座，<br>问完再出发。</h3><p>查一卡通余额与历史流水，看看已接入充电设备的插座状态。</p></article>
+        <article class="capability-item reveal"><span class="capability-kicker">待办与偏好</span><h3>想到的事，<br>顺手记下来。</h3><p>在本地记下待办、学院和兴趣，让 Agent 按你提供的背景帮忙整理。</p></article>
+      </div>
       <div id="magic-border" aria-hidden="true"></div>
     </section>
 

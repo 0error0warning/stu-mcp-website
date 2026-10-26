@@ -12,10 +12,10 @@ All fonts are official Google Fonts downloads, licensed SIL OFL 1.1. Exact reque
 | --- | ---: | --- | --- | --- |
 | `gloock-latin-400.woff2` | 26,356 | 400 | Static | Existing Latin subset |
 | `schibsted-grotesk-latin-400-700.woff2` | 46,752 | 400–700 | 400–900 | Existing Latin subset |
-| `noto-sans-sc-ui-400-700.woff2` | 131,984 | 400–700 | 100–900 | 471 / 0 |
-| `noto-serif-sc-ui-400-700.woff2` | 168,748 | 400–700 | 200–900 | 471 / 0 |
+| `noto-sans-sc-ui-400-700.woff2` | 134,908 | 400–700 | 100–900 | 481 / 0 |
+| `noto-serif-sc-ui-400-700.woff2` | 172,172 | 400–700 | 200–900 | 481 / 0 |
 
-The four active assets total 373,840 bytes. Font URLs are local `/fonts/` URLs; the reduced-motion request trace requested all four locally and had no font failures. The larger Serif face supplies real weights and current UI characters rather than relying on synthesis. Font display remains `swap`, and the existing `font-synthesis: none` remains in effect.
+The four active assets total 380,188 bytes after the final product-copy pass. Font URLs are local `/fonts/` URLs; the reduced-motion request trace requested all four locally and had no font failures. The larger Serif face supplies real weights and current UI characters rather than relying on synthesis. Font display remains `swap`, and the existing `font-synthesis: none` remains in effect. Generated Noto URLs include a byte-hash query parameter so Chromium cannot retain a decoded older subset after a source/HMR update; the unversioned file names remain stable on disk.
 
 Regenerate with `python scripts/update-ui-fonts.py`. It requires fontTools and checks both actual cmap coverage and the `wght` axis before replacing production artifacts. Its source whitelist includes `src/agent-catalog.js` and `src/components/liquid-agent-input.jsx`, as well as the public page and dynamically generated labels. `--preview-dir output/playwright/font-preview` downloads and verifies without changing production fonts. These are page-specific subsets, not complete Chinese font files; new UI copy must be included and rebuilt. Arbitrary user-entered text outside the subset can use the configured fallback families.
 
@@ -23,7 +23,7 @@ The internal variable-family names reported by CDP contain “Thin” for Sans a
 
 ## Gallery typography
 
-The three external SVG illustrations used Arial and Microsoft YaHei/PingFang text elements. External image SVGs cannot inherit the page's webfonts. Nine text elements are now paths produced from the local OFL Schibsted Grotesk and Noto Sans SC faces, at the original sizes, 400/600 weights, x/y positions, colors, letter spacing and text anchoring. No system-font outlines were read or copied. Accessible strings remain as `aria-label` on each outlined group.
+The three external SVG illustrations used Arial and Microsoft YaHei/PingFang text elements. External image SVGs cannot inherit the page's webfonts. Nine text elements are now paths produced from the local OFL Schibsted Grotesk and Noto Sans SC faces, at the original sizes, 400/600 weights, x/y positions, colors, letter spacing and text anchoring. No system-font outlines were read or copied. Accessible strings remain as `aria-label` on each outlined group. The conversion used the 471-character Noto Sans stage (`db491733ac81eb68f7b0167d056c661e99e44c36a667747788465be9778fdfa3`) and unchanged Schibsted asset; later subset expansion does not rewrite existing SVG outlines.
 
 `python scripts/update-ui-fonts.py --outline-gallery` also converts remaining `<text>` elements; subsequent runs leave existing paths intact. To change an outlined string, restore/edit its text element before converting it again. Original source text remains in Git history. The verification JSON compares all non-text markup against the prior revision; illustration geometry is unchanged. The only visual font replacement is within the original text areas.
 
@@ -41,6 +41,8 @@ Used a separate local Chromium session on `http://127.0.0.1:5173/`. Each run scr
 
 The total includes seven initial records without glyphs: six closed FAQ answers, subsequently verified open, and the textarea host, subsequently verified through its shadow editor. All actual rendered records used custom fonts. No missing images appeared in these runs. Menus were opened using pointer clicks and dismissed with Escape. This audit does not replace the parent task's broader keyboard/touch interaction tests.
 
+The five full-page stages above used the 471-character font stage, before the last product-copy changes. After the final #ideas wording, scenario 03 theory-timetable example, and three-group #lifecycle replacement, both fonts were rebuilt to 481 characters with zero actual cmap omissions. An additional 821px CDP pass inspected 12 rendered nodes across those changed areas, including each capability heading and description: all 12 used custom fonts with zero system fallback. The text-animated #ideas lede was queried at its rendered segment, rather than its empty wrapper. Results are preserved separately as `qa/fonts/cdp-newcopy.json`. This is a focused final-copy check, not a claim that the entire five-stage sweep was repeated.
+
 An additional 390px reduced-motion run confirmed the same three Hero font selections, no horizontal overflow, and no clipping in either CTA or lede. Motion emits its expected reduced-motion informational warning. A navigation-related aborted `/api/activity` request was recorded in that extra trace; no font request failed. An earlier standalone SVG screenshot stage produced a `/favicon.ico` 404; the final full-page runs had no page errors.
 
 ## Evidence
@@ -51,3 +53,4 @@ Persistent snapshots and raw CDP results are under `docs/qa/fonts/`. The complet
 - [Agent menu](qa/fonts/menu-agent-light-390.png), [model menu](qa/fonts/menu-model-dark-390.png).
 - [Gallery before](qa/fonts/gallery-before.png), [gallery OFL outlines](qa/fonts/gallery-after.png).
 - [Full CDP records](qa/fonts/cdp-final.json), [reduced-motion font/reflow trace](qa/fonts/cdp-reduced.json), [gallery geometry verification](qa/fonts/gallery-verification.json).
+- [Final product-copy CDP check](qa/fonts/cdp-newcopy.json).
