@@ -1,0 +1,86 @@
+{
+  "focused": [
+    {
+      "selector": ".hero-full .lede",
+      "fonts": [
+        {
+          "familyName": "Noto Serif SC ExtraLight",
+          "postScriptName": "Noto-Serif-SC-ExtraLight",
+          "isCustomFont": true,
+          "glyphCount": 29
+        }
+      ]
+    },
+    {
+      "selector": "#rd-hero-cta button span",
+      "fonts": [
+        {
+          "familyName": "Noto Serif SC ExtraLight",
+          "postScriptName": "Noto-Serif-SC-ExtraLight-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 4
+        }
+      ]
+    },
+    {
+      "selector": ".hero-secondary",
+      "fonts": [
+        {
+          "familyName": "Noto Serif SC ExtraLight",
+          "postScriptName": "Noto-Serif-SC-ExtraLight-SemiBold",
+          "isCustomFont": true,
+          "glyphCount": 6
+        }
+      ]
+    }
+  ],
+  "reflow": [
+    {
+      "selector": ".hero-full .lede",
+      "rect": {
+        "left": 79.703125,
+        "right": 310.296875,
+        "width": 230.59375,
+        "height": 49.375
+      },
+      "scrollWidth": 231,
+      "clientWidth": 231
+    },
+    {
+      "selector": "#rd-hero-cta button",
+      "rect": {
+        "left": 51,
+        "right": 196,
+        "width": 145,
+        "height": 52
+      },
+      "scrollWidth": 143,
+      "clientWidth": 143
+    },
+    {
+      "selector": ".hero-secondary",
+      "rect": {
+        "left": 207,
+        "right": 339,
+        "width": 132,
+        "height": 52
+      },
+      "scrollWidth": 130,
+      "clientWidth": 130
+    }
+  ],
+  "fontRequests": [
+    "http://127.0.0.1:5173/fonts/gloock-latin-400.woff2",
+    "http://127.0.0.1:5173/fonts/schibsted-grotesk-latin-400-700.woff2",
+    "http://127.0.0.1:5173/fonts/noto-sans-sc-ui-400-700.woff2",
+    "http://127.0.0.1:5173/fonts/noto-serif-sc-ui-400-700.woff2"
+  ],
+  "failures": [
+    {
+      "url": "http://127.0.0.1:5173/api/activity",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "width": 390,
+  "scrollWidth": 390
+}

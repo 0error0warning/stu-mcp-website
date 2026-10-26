@@ -50,13 +50,20 @@ document.
 
 ## Installation semantics
 
-The default and only on-page installation interaction is a single editable
-Prompt surface. It follows the inspected public Wensity Liquid Multimodal Input
-preview: a frosted surface, growing text area and lower action rail. Wensity's
-component source is sign-in gated and was not directly transplanted. File upload,
-model selection and a fake send/execute action are omitted. The real action
-copies the full current text into the visitor's clipboard for Codex, Claude Code
-or another Agent. The documented installation link remains available separately.
+The installation interaction is a single editable Prompt surface adapted from
+the complete MIT Wensity Liquid Multimodal Input source supplied by the owner.
+Its matte surface, noise, masked inner edge, textarea, toolbar and portal menu
+structure are retained with scoped CSS. A 10-brand Lobe Icons loop occupies the
+upper-right mascot position seen in the UI Factory reference. The toolbar offers
+eight coding Agents and one verified high-capability model per provider, across
+eight providers. Choosing them records a target/preference in the copied Prompt;
+it does not invoke an API or claim every model is available in every client.
+The genuine ReactDrops circular up-arrow button copies the current text and
+preferences. The complete editable text stays available after copying. IME-safe
+Enter submits, Shift+Enter inserts a newline, and clipboard failure uses the
+existing manual-copy dialog. Logo motion stops offscreen, hidden or reduced.
+There is no attachment feature because the destination is a text clipboard.
+Provenance, behavior and verification are in [the input record](liquid-agent-input-2026-10-26.md).
 
 There is no outer installation card around the composer, no terminal chrome,
 and no Agent/shell tab switch. The earlier Magic UI Terminal source is retained
@@ -80,8 +87,10 @@ metrics are copied. Magic UI remains pinned at
 and licenses are in `THIRD_PARTY_NOTICES.md`.
 
 The four feature symbols are SVG icons rather than font glyphs. Chinese UI text
-uses a self-hosted Noto Sans SC subset containing 444 requested characters, with
-font coverage, source URLs, hashes and OFL notices retained. The original paper
+uses self-hosted Noto Sans SC and Noto Serif SC subsets containing 471 requested
+characters, with real 400–700 weights, actual CDP font verification, source URLs,
+hashes and OFL notices retained. Hero lede/actions use Serif, ordinary UI uses
+Sans, and external gallery lettering uses OFL outlines. The original paper
 smile explicitly has no fill to avoid an unintended closed black shape.
 
 ## Retained optional physics and historical evidence

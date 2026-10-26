@@ -1,0 +1,23 @@
+[
+  {
+    "file": "public/art/gallery-1.svg",
+    "nonTextMarkupUnchanged": true,
+    "beforeSha256": "5914afe6fb860c1ee6b02006c03f4f4442f469a39bc8c6d823950b73ff2a0d38",
+    "afterSha256": "b1aecbff3b5d1bd170b9bbd641e6b5dab7025fa17bb73746c60292f7db36b849",
+    "outlinedTexts": 3
+  },
+  {
+    "file": "public/art/gallery-2.svg",
+    "nonTextMarkupUnchanged": true,
+    "beforeSha256": "a5945dc2159e7d0ec2bb8fc45d0f2ea2c06d953885897e7b9519efeb7bfd37f8",
+    "afterSha256": "8f4e00489f3bbc5def598abada7f7160b8cc12d8e2a23025ef7894528c9d510f",
+    "outlinedTexts": 3
+  },
+  {
+    "file": "public/art/gallery-3.svg",
+    "nonTextMarkupUnchanged": true,
+    "beforeSha256": "3451c5af767b29d1e67f8f43bf08fdc55a897099f12da8576500d1eb7b0ad9cf",
+    "afterSha256": "aed4d58cdc14d6f378ebe21b405cf418cc0f36a9c9a90e35fa5df5c71cec20ef",
+    "outlinedTexts": 3
+  }
+]

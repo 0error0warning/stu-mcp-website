@@ -12,7 +12,7 @@ used under the MIT license. The original HTML attribution is retained.
 
 Source distributions for five genuine ReactDrops components are retained in
 this finished STU-MCP product website. The current page mounts Topographic Flow,
-Fan Gallery and the hero Chromatic Button. Shape Physics is opt-in; the Liquid
+Fan Gallery, the hero Chromatic Button and the installation send-shaped Chromatic Button. Shape Physics is opt-in; the Liquid
 Glass Orb and former installation-button island are not mounted. These files are **not MIT-licensed** and are
 not offered here as a reusable component library, starter, or website template.
 
@@ -127,34 +127,54 @@ https://21st.dev/@sean0205/components/statistics-card-2 informed the flat surfac
 caption/title/divider hierarchy. No ReUI component code, sample metrics or
 demonstration data was copied.
 
-Wensity Labs' Liquid Multimodal Input preview at
-https://21st.dev/@wensity/components/liquid-multimodal-input informed the single
-frosted Prompt surface, growing text area and lower action rail. The public
-preview was inspected; component source requires signing in and was not directly
-ported. `src/agent-install.jsx` is a product-specific implementation. Upload and
-model controls are omitted because this site copies a Prompt into an external
-Agent, rather than providing an online inference or file-upload service.
+Wensity Labs' Liquid Multimodal Input at
+https://21st.dev/@wensity/components/liquid-multimodal-input is listed under the
+MIT license. In the subsequent input revision, the owner supplied its complete
+source directly. `src/components/liquid-agent-input.jsx` now adapts that source's
+surface/noise/inner-edge/textarea/toolbar/portal-menu structure, using the existing
+Motion and Lucide dependencies with scoped CSS. Its provenance and changes are in
+`src/components/liquid-agent-input.source.json`; attribution and MIT terms are in
+`licenses/Wensity-Liquid-Multimodal-Input-MIT.txt`. The earlier preview-only
+implementation is superseded. The input copies an edited Prompt with Agent/model
+preferences through a genuine ReactDrops send-shaped Chromatic Button; it makes
+no chat or model request. Attachment controls are omitted because the destination
+is a text clipboard. UI Factory's https://uithefactory.com/ai-mascot-input was
+inspected only for the populated-input mascot position and motion; no UI Factory
+source is included or relicensed.
+
+The 16 local brand SVGs in `public/brands/agents/` come unchanged from Lobe Icons,
+MIT, Copyright (c) 2023 LobeHub, pinned at
+`8b7bbc433d38437fa2b0cca58ae896917162b812`. The full license is retained in
+`licenses/Lobe-Icons-MIT.txt` and the public `/brands/LICENSE-Lobe-Icons.txt`.
+`public/brands/source.json` records exact asset URLs, hashes and verification
+sources. Brand names and logos belong to their respective owners; the code/icon
+license does not transfer trademark rights or imply endorsement. Model names
+were checked against their providers' official public documentation, as recorded
+in `docs/agent-catalog-2026-10-26.md`; no account-specific availability is claimed.
 
 Reference inspection, the final local verification scope and current screenshots
 are recorded in [the reference refinement record](docs/reference-refinement-2026-10-26.md).
 
 ## Self-hosted fonts
 
-Gloock regular (Latin), Schibsted Grotesk variable 400–700 (Latin), and a
-Noto Serif SC regular subset are served locally from `public/fonts/`.
-All three are distributed under the SIL Open Font License 1.1, retained in
+Gloock regular (Latin), Schibsted Grotesk variable 400–700 (Latin), and
+Noto Serif SC / Noto Sans SC variable 400–700 UI subsets are served locally
+from `public/fonts/`. They are distributed under the SIL Open Font License 1.1, retained in
 `licenses/font-gloock-OFL.txt`, `licenses/font-schibstedgrotesk-OFL.txt`, and
-`licenses/font-notoserifsc-OFL.txt`. The Noto Serif SC subset was supplied by
-Google Fonts' official `text=` API and covers the Chinese characters and
-full-width punctuation in the current HTML headings, FAQ summaries and six
-dynamic scenario titles. It is not a full Chinese font; other characters use
-the system fallback. All faces use `font-display: swap`.
+`licenses/font-notoserifsc-OFL.txt`. Both Chinese subsets are supplied by
+Google Fonts' official `text=` API. They are page-specific subsets, not full
+Chinese font files; arbitrary user-entered characters outside the subsets may
+use configured fallbacks. All faces use `font-display: swap`. The former static
+Serif heading asset is retained as inactive historical evidence.
 
 The Chinese interface additionally uses a self-hosted Noto Sans SC variable
 subset (CSS weights 400–700). Its OFL is in `licenses/font-notosanssc-OFL.txt`.
-The 444 requested UI characters, actual coverage, axes, source URLs and SHA-256
+The 471 requested UI characters, actual coverage, axes, source URLs and SHA-256
 are appended to `public/fonts/sources.json`. `scripts/update-ui-fonts.py`
-rebuilds the subset from explicitly listed product UI files.
+rebuilds both subsets from explicitly listed product UI files. The same OFL
+Schibsted/Noto outlines supply nine text groups in the external gallery SVGs;
+their other illustration geometry is unchanged. Full actual-font verification
+is recorded in `docs/font-audit-2026-10-26.md`.
 
 Fonts were retrieved from the official Google Fonts CSS API and its returned
 `fonts.gstatic.com` URLs. Exact source URLs, subset characters, SHA-256 hashes,

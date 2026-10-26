@@ -1,0 +1,107 @@
+/* Wensity Liquid Multimodal Input, owner-supplied source, scoped CSS adaptation.
+   Raised brand mascot: visual/interaction reference, UI Factory AI Mascot Input. */
+.liquid-input {
+  --liquid-ink:#263b49; --liquid-line:#00000014;
+  position:relative; min-width:0; padding-top:24px;
+}
+.liquid-input-label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.liquid-mascot-row { position:relative; height:0; z-index:2; }
+.liquid-mascot {
+  position:absolute; right:28px; bottom:-7px; display:grid; place-items:center; width:68px; height:64px;
+  border:1px solid #ffffffd1; border-radius:22px 22px 18px 18px;
+  background:linear-gradient(145deg,#fffef5,#eae6f5); box-shadow:inset 0 1px 2px #fff,0 6px 15px -8px #263b4970;
+  transform:rotate(5deg); overflow:hidden; pointer-events:none;
+}
+.liquid-mascot::after { content:''; position:absolute; inset:4px; border:1px solid #263b4908; border-radius:17px 17px 13px 13px; pointer-events:none; }
+.liquid-mascot-logo { display:grid; place-items:center; width:100%; height:100%; }
+.liquid-mascot .liquid-brand-mark { width:36px; height:36px; }
+.liquid-mascot-copy { position:relative; top:-35px; padding-left:2px; font:500 18px/1.5 var(--font-heading); color:var(--color-text); }
+.liquid-input[data-has-value="false"] { padding-top:66px; }
+.liquid-input[data-has-value="false"] .liquid-mascot { right:18px; }
+.liquid-input-surface {
+  position:relative; isolation:isolate; width:100%; min-width:0; display:flex; flex-direction:column; gap:8px; padding:20px 16px 12px;
+  border:1px solid var(--liquid-line); border-radius:28px; overflow:hidden; color:var(--liquid-ink);
+  background:radial-gradient(ellipse 90% 70% at 50% -10%,#fff 0%,#f4f4f5 72%);
+  box-shadow:0 1px 2px #0000000f,0 8px 24px -12px #00000014;
+  transition:border-color 150ms,box-shadow 150ms;
+}
+.liquid-input-surface:hover { border-color:#0000001f; }
+.liquid-input-surface:focus-within { border-color:#9f87be70; box-shadow:0 1px 2px #0000000f,0 8px 24px -12px #00000014,0 0 0 3px #bca2e114; }
+.liquid-matte-noise { position:absolute; inset:0; pointer-events:none; opacity:.035; mix-blend-mode:multiply; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.65' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.liquid-input-surface::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(to bottom,#00000006,transparent 30%,transparent 72%,#00000007); }
+.liquid-inner-edge { position:absolute; inset:0; z-index:1; padding:1px; border-radius:inherit; pointer-events:none; opacity:.3; background:conic-gradient(from var(--liquid-angle,0deg),transparent 65%,#ab8fca99 80%,#efcda0 95%,transparent); -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0); -webkit-mask-composite:xor; mask-composite:exclude; transition:opacity 160ms; }
+@property --liquid-angle { syntax:'<angle>'; initial-value:0deg; inherits:false; }
+@keyframes liquid-edge-turn { to { --liquid-angle:360deg; } }
+.liquid-input[data-logo-playing="true"] .liquid-input-surface:focus-within .liquid-inner-edge { opacity:.8; animation:liquid-edge-turn 4s linear infinite; }
+.liquid-input-text { position:relative; z-index:2; width:100%; min-width:0; }
+.liquid-input .agent-prompt-input { display:block; width:100%; min-width:0; min-height:92px; max-height:280px; padding:6px 10px 0; margin:0; resize:none; border:0; border-radius:0; outline:none; color:var(--liquid-ink); background:none; font:400 15px/1.85 var(--font-body); letter-spacing:0; overflow-wrap:anywhere; white-space:pre-wrap; scrollbar-width:thin; }
+.liquid-input .agent-prompt-input:focus-visible { outline:none; }
+.liquid-input .agent-prompt-input::selection { background:#d8caeb; color:#263b49; }
+.liquid-input-toolbar { position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; min-width:0; padding:10px 0 0 2px; }
+.liquid-toolbar-end { display:flex; align-items:center; justify-content:flex-end; min-width:0; gap:8px; }
+.liquid-brand-mark { display:block; flex:none; width:22px; height:22px; object-fit:contain; }
+.liquid-selector { position:relative; min-width:0; }
+.liquid-selector-trigger { display:flex; align-items:center; gap:7px; height:40px; max-width:230px; padding:0 9px; border:0; border-radius:999px; color:#526170; background:transparent; font:500 12px/1.4 var(--font-body); transition:background 150ms,color 150ms; }
+.liquid-selector-trigger > span:not(.liquid-selector-chevron) { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.liquid-selector-trigger .liquid-brand-mark { width:19px; height:19px; }
+.liquid-selector-trigger:hover,.liquid-selector-trigger[aria-expanded="true"] { background:#263b4909; color:#263b49; }
+.liquid-selector-trigger:focus-visible { outline:2px solid #a38abe; outline-offset:2px; }
+.liquid-selector-chevron { display:inline-flex; flex:none; opacity:.7; }
+.liquid-send-wrap { display:grid; place-items:center; flex:none; width:44px; height:44px; }
+.liquid-send-button,.liquid-send-button.chromatic-button {
+  display:grid; place-items:center; width:44px; min-width:44px; max-width:44px; height:44px; min-height:44px; padding:0; gap:0; border:1px solid #8f79ad4d; border-radius:50%; color:#263b49; font-family:var(--font-body); cursor:pointer;
+  background:linear-gradient(135deg,#c5b8f0,#a9cfea 65%,#ead9f1); box-shadow:inset 0 1px 1px #ffffffb3,0 3px 8px -4px #73668570;
+}
+.liquid-send-button .chromatic-button-content { display:grid; place-items:center; gap:0; }
+.liquid-send-button svg { width:21px; height:21px; }
+.liquid-send-button:disabled { opacity:.4; cursor:default; box-shadow:none; }
+.liquid-send-button:focus-visible { outline:2px solid #9b80bc; outline-offset:4px; }
+.liquid-send-static { transition:transform 150ms,filter 150ms; }
+.liquid-send-static:hover:not(:disabled) { filter:brightness(1.05); }
+.liquid-send-static:active:not(:disabled) { transform:scale(.94); }
+
+/* Portal menu retains the source's matte surface and shared-layout highlight. */
+.liquid-option-menu { position:fixed; z-index:140; isolation:isolate; overflow:auto; overscroll-behavior:contain; padding:6px; border:1px solid #00000014; border-radius:18px; color:#263b49; background:radial-gradient(ellipse 90% 70% at 50% -10%,#fff,#f4f4f5 72%); box-shadow:0 1px 2px #0000000f,0 24px 60px -18px #00000038; scrollbar-width:thin; }
+.liquid-menu-caption { padding:9px 11px 7px; color:#8b8792; font:500 10px/1.5 var(--font-body); letter-spacing:.02em; }
+.liquid-option-list { position:relative; }
+.liquid-option { position:relative; display:flex; width:100%; align-items:center; gap:11px; padding:10px; border:0; border-radius:12px; background:transparent; color:inherit; text-align:left; outline:none; }
+.liquid-option-highlight { position:absolute; inset:0; border-radius:12px; background:#e7e4ec; box-shadow:inset 0 0 0 1px #00000006; }
+.liquid-option-icon { position:relative; z-index:1; flex:none; display:grid; place-items:center; width:34px; height:34px; border-radius:10px; background:#ffffffbf; border:1px solid #00000005; }
+.liquid-option-icon .liquid-brand-mark { width:22px; height:22px; }
+.liquid-option-copy { position:relative; z-index:1; min-width:0; flex:1; }
+.liquid-option-copy strong { display:block; font:600 13px/1.5 var(--font-body); }
+.liquid-option-copy > span { display:block; margin-top:2px; color:#80818c; font:400 11px/1.5 var(--font-body); }
+.liquid-option-check { position:relative; z-index:1; flex:none; color:#7b609a; }
+.liquid-option:focus-visible { outline:2px solid #a38abe; outline-offset:-2px; }
+
+html[data-theme="dark"] .liquid-input { --liquid-ink:#ede9df; --liquid-line:#ffffff13; }
+html[data-theme="dark"] .liquid-input-surface { background:radial-gradient(ellipse 90% 70% at 50% -10%,#30363d,#20292c 72%); box-shadow:0 1px 2px #0006,0 8px 24px -12px #0009; }
+html[data-theme="dark"] .liquid-input-surface:hover { border-color:#ffffff25; }
+html[data-theme="dark"] .liquid-input-surface:focus-within { border-color:#c4afe475; box-shadow:0 1px 2px #0006,0 8px 24px -12px #0009,0 0 0 3px #bca2e114; }
+html[data-theme="dark"] .liquid-matte-noise { opacity:.03; mix-blend-mode:screen; }
+html[data-theme="dark"] .liquid-selector-trigger { color:#c2c6c9; }
+html[data-theme="dark"] .liquid-selector-trigger:hover,html[data-theme="dark"] .liquid-selector-trigger[aria-expanded="true"] { background:#ffffff0b; color:#fff4df; }
+html[data-theme="dark"] .liquid-selector-trigger .liquid-brand-mark { padding:2px; border-radius:5px; background:#f2eee7; }
+html[data-theme="dark"] .liquid-option-menu { color:#ede9df; border-color:#ffffff15; background:radial-gradient(ellipse 90% 70% at 50% -10%,#30363d,#20292c 72%); box-shadow:0 1px 2px #0006,0 24px 60px -16px #000b; }
+html[data-theme="dark"] .liquid-option-highlight { background:#ffffff0b; box-shadow:inset 0 0 0 1px #ffffff08; }
+html[data-theme="dark"] .liquid-option-copy > span,html[data-theme="dark"] .liquid-menu-caption { color:#a0a9b0; }
+html[data-theme="dark"] .liquid-option-check { color:#d0b6e9; }
+
+@media (max-width:600px) {
+  .liquid-input-surface { padding:18px 11px 10px; }
+  .liquid-mascot { right:20px; bottom:-6px; width:58px; height:56px; border-radius:19px 19px 16px 16px; }
+  .liquid-mascot .liquid-brand-mark { width:31px; height:31px; }
+  .liquid-input .agent-prompt-input { padding:5px 6px 0; font-size:14px; line-height:1.85; }
+  .liquid-input-toolbar { gap:4px; padding-left:0; }
+  .liquid-toolbar-end { gap:4px; flex:1; }
+  .liquid-selector-trigger { gap:5px; padding:0 6px; height:44px; font-size:10px; max-width:135px; }
+  .liquid-selector-agent { max-width:113px; }
+  .liquid-selector-agent .liquid-selector-trigger { max-width:113px; }
+  .liquid-selector-trigger .liquid-brand-mark { width:17px; height:17px; }
+  .liquid-selector-chevron svg { width:11px; height:11px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .liquid-input *, .liquid-option-menu * { transition:none !important; }
+  .liquid-inner-edge { animation:none !important; }
+  .liquid-send-static:active:not(:disabled) { transform:none; }
+}

@@ -1,0 +1,23 @@
+{
+  "component": "LiquidMultimodalInput",
+  "author": "Wensity Labs",
+  "source": "https://21st.dev/@wensity/components/liquid-multimodal-input",
+  "sourceDelivery": "Complete component source supplied directly by the owner in this task",
+  "providedAt": "2026-10-26",
+  "publicLicense": "MIT",
+  "licenseFile": "licenses/Wensity-Liquid-Multimodal-Input-MIT.txt",
+  "adaptations": [
+    "Retain matte/noise/masked inner-edge/textarea/toolbar/portal-menu composition with scoped CSS in place of Tailwind",
+    "Use existing motion/react and Lucide imports instead of duplicate Framer Motion and Tabler packages",
+    "Replace demo speed tiers with separately verified Agent and model preferences",
+    "Replace the mascot with a visible-only loop of original local Lobe Icons assets",
+    "Use genuine ReactDrops Chromatic Button as the send-shaped copy action, with static constrained-device fallback",
+    "Keep the current editable Prompt after copying; no chat or model request is sent",
+    "Omit attachment controls because this interaction copies text into an external Agent",
+    "Add keyboard menu focus, viewport placement, IME-safe submission and clipboard failure fallback"
+  ],
+  "additionalVisualReference": {
+    "source": "https://uithefactory.com/ai-mascot-input",
+    "scope": "Filled-input mascot at the upper-right edge; no UI Factory component code copied"
+  }
+}

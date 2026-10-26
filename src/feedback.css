@@ -9,6 +9,11 @@ html { --font-body: 'Schibsted Grotesk', 'Noto Sans SC', 'Microsoft YaHei', 'Pin
 .hero-actions { gap: 22px; }
 .hero-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; color: #3d4d51; border: 1px solid #263b4925; border-radius: 999px; min-height: 56px; padding: 14px 23px; font-size: 14px; font-weight: 500; background: #fffdf226; transition: background 180ms, border-color 180ms, transform 180ms; }
 .hero-secondary svg { width: 18px; height: 18px; }
+/* Hero copy shares the display type; ordinary UI stays in the body family.
+   Noto Serif SC supplies real variable 400/600 Chinese outlines. */
+.hero-full .hero-copy > .lede { font-family: var(--font-heading); font-weight: 400; }
+.hero-full .hero-copy .hero-actions .product-chromatic,
+.hero-full .hero-copy .hero-actions .hero-secondary { font-family: var(--font-heading); font-weight: 600; }
 .hero-secondary:hover { background: #fffdf284; border-color: #263b4950; transform: translateY(-1px); }
 .rd-island .product-chromatic,
 .product-chromatic.chromatic-button:has([data-renderer='webgl']) {

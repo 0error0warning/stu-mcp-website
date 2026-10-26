@@ -52,17 +52,24 @@ async function copyText(text, success, button) {
         if (label) label.textContent = '复制问句';
       }, 2600);
     }
+    return true;
   } catch {
     const textarea = document.getElementById('copy-fallback');
     textarea.value = text;
     dialog.showModal();
     textarea.focus();
     textarea.select();
+    return false;
   }
 }
 
 const installPrompt = document.getElementById('install-prompt').textContent.trim();
-const copyInstall = event => copyText(event?.detail?.text ?? installPrompt, '安装 Prompt 已复制。');
+const copyInstall = async event => {
+  const copied = await copyText(event?.detail?.text ?? installPrompt, '安装 Prompt 已复制。');
+  if (event?.detail?.requestId) window.dispatchEvent(new CustomEvent('stu:install-copy-result', {
+    detail: { requestId: event.detail.requestId, copied },
+  }));
+};
 document.querySelectorAll('[data-copy-install]').forEach(button => button.addEventListener('click', copyInstall));
 window.addEventListener('stu:copy-install', copyInstall);
 document.getElementById('close-copy-dialog').addEventListener('click', () => dialog.close());
