@@ -4,76 +4,79 @@
 .mui-text-segment { display: inline-block; max-width: 100%; white-space: normal; }
 .mui-text-line { display: block; }
 
-#magic-connection.connection-scene { height: auto; min-height: 360px; display: block; padding: 0; background: radial-gradient(ellipse at 50% 60%, color-mix(in oklch, var(--color-accent) 12%, transparent), transparent 68%); }
+/* UI Layouts Creative Hover Card: lift/crossfade only internal artwork,
+   keeping measured wire ports stationary. ReUI Stat Card 2: flat tone, concise
+   label/title and quiet geometric background. Sources recorded in notices. */
+#magic-connection.connection-scene { display: block; height: auto; min-height: 322px; padding: 0; background: none; }
 #magic-connection.connection-scene::before { content: none; }
-.mb-network { position: relative; isolation: isolate; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; justify-items: center; width: 100%; min-width: 0; min-height: 360px; padding: 28px 35px; gap: 50px; }
-.mb-network .mui-animated-beam { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; pointer-events: none; stroke: none; stroke-width: 0; z-index: -1; overflow: visible; }
-.mb-source-grid { display: grid; align-content: space-between; gap: 28px; min-width: 0; justify-self: start; }
-.mb-source { display: flex; align-items: center; gap: 15px; min-height: 66px; padding: 17px 22px; border: 1px solid var(--color-line); border-radius: 17px; background: var(--color-surface); color: var(--color-text); box-shadow: 0 4px 13px -8px #263b4935; font-size: 14px; font-weight: 500; white-space: nowrap; }
-.mb-source svg { flex: none; width: 24px; height: 24px; }
-.mb-source-lavender { background: color-mix(in oklch, var(--color-violet) 17%, var(--color-surface)); }
-.mb-source-sage { background: color-mix(in oklch, #c8d9b8 30%, var(--color-surface)); }
-.mb-hub { min-width: 198px; padding: 25px 24px 21px; display: flex; flex-direction: column; align-items: center; text-align: center; background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 28px; box-shadow: 0 10px 30px -17px #263b4935; }
-.mb-hub-icon { display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 15px; background: color-mix(in oklch, var(--color-accent) 30%, var(--color-surface)); border-radius: 18px; }
-.mb-hub-icon svg { width: 35px; height: 35px; }
-.mb-hub strong { font-family: var(--font-heading); font-size: 29px; font-weight: 400; letter-spacing: -.035em; }
-.mb-hub > span, .mb-agent > span { margin-top: 10px; color: var(--color-muted); font-size: 11px; white-space: nowrap; }
-.mb-agent { justify-self: end; display: flex; flex-direction: column; align-items: center; min-width: 150px; }
-.mb-agent-icon { width: 100px; height: 100px; display: grid; place-items: center; border-radius: 50%; color: var(--color-text); border: 1px solid color-mix(in oklch, var(--color-violet) 65%, var(--color-line)); background: radial-gradient(circle at 28% 20%, var(--color-surface), color-mix(in oklch, var(--color-violet) 50%, var(--color-surface))); box-shadow: inset 0 0 0 7px color-mix(in oklch, var(--color-surface) 40%, transparent), 0 10px 30px -20px #263b4970; }
-.mb-agent-icon svg { width: 50px; height: 50px; }
-.mb-agent strong { margin-top: 17px; font-family: var(--font-heading); font-weight: 400; font-size: 27px; letter-spacing: -.025em; }
-
-#magic-terminal { min-width: 0; margin: 27px 0; }
-.mb-terminal-wrap { position: relative; }
-.mb-install-tabs { display: inline-flex; align-items: center; gap: 4px; margin-bottom: 15px; padding: 4px; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-line-soft); }
-.mb-install-tabs button { min-height: 38px; padding: 8px 17px; border: 0; border-radius: 9px; color: var(--color-muted); background: transparent; font-size: 12px; font-weight: 500; transition: background .2s, color .2s, box-shadow .2s; }
-.mb-install-tabs button[aria-selected="true"] { color: var(--color-text); background: var(--color-surface); box-shadow: 0 2px 5px #263b4910; }
-.mb-install-tabs button:focus-visible { outline: 2px solid var(--color-violet); outline-offset: 3px; }
-.mui-terminal { width: 100%; overflow: hidden; border: 1px solid #ffffff18; border-radius: 15px; background: #1d2d38; color: #f8f6ed; box-shadow: 0 12px 24px -18px #14253370; }
-.mui-terminal-chrome { position: relative; display: flex; align-items: center; justify-content: center; gap: 20px; min-height: 48px; padding: 12px 20px; border-bottom: 1px solid #ffffff12; color: #bcc5cb; font-family: var(--font-body); font-size: 11px; letter-spacing: .035em; }
-.mui-terminal-dots { display: flex; gap: 7px; position: absolute; left: 20px; }
-.mui-terminal-dots i { width: 8px; height: 8px; border-radius: 50%; background: #d8a09a; }
-.mui-terminal-dots i:nth-child(2) { background: #dfca84; }
-.mui-terminal-dots i:nth-child(3) { background: #aec7a0; }
-.mui-terminal-screen { min-height: 138px; padding: 24px 27px 27px; margin: 0; font: 14px/1.9 var(--font-body); white-space: pre-wrap; overflow-wrap: anywhere; }
-.mui-terminal-code { display: grid; gap: 7px; font: inherit; white-space: inherit; }
-.mui-terminal-typing, .mui-terminal-span { font: inherit; white-space: pre-wrap; }
-.mb-install-prompt { color: #f6edca; min-height: 82px; }
-.mb-install-command { font-family: ui-monospace, 'Cascadia Code', 'SFMono-Regular', Consolas, monospace; font-size: .94em; color: #d7e8c7; }
-
+.mb-network { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(145px, 180px) minmax(170px, 220px) minmax(170px, 220px); justify-content: space-between; align-items: center; gap: clamp(30px, 5vw, 92px); width: 100%; min-width: 0; min-height: 322px; padding: 20px 10px; }
+.mb-network .mui-animated-beam { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; overflow: visible; pointer-events: none; stroke: none; stroke-width: 0; z-index: -1; }
+.mb-source-grid { display: grid; gap: 16px; width: 100%; }
+.mb-source { position: relative; display: flex; align-items: center; gap: 13px; width: 100%; min-height: 76px; padding: 15px 16px; border: 1px solid #263b491a; border-radius: 13px; background: #fffcf2; color: #293f49; box-shadow: 0 3px 9px -6px #263b492b; transition: border-color 240ms, box-shadow 240ms; }
+.mb-source > svg { flex: none; width: 24px; height: 24px; color: #43545a; }
+.mb-source-copy { display: flex; flex-direction: column; min-width: 0; gap: 5px; }
+.mb-source-copy strong { font-size: 13px; font-weight: 600; white-space: nowrap; }
+.mb-source-copy > span { color: #6b7372; font-size: 10px; white-space: nowrap; }
+.mb-source-lavender { background: #efebf7; }
+.mb-source-sage { background: #eaf0e5; }
+.mb-source:hover { border-color: var(--node-color); box-shadow: 0 7px 17px -13px var(--node-color); }
+.mb-node { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; width: 100%; height: 184px; min-width: 0; padding: 23px; border: 1px solid transparent; border-radius: 18px; overflow: visible; isolation: isolate; }
+.mb-hub { background: #253842; color: #fffaf0; box-shadow: 0 12px 25px -19px #263b4970; }
+.mb-agent { background: #e0d6ee; color: #354052; border-color: #cbbadb; box-shadow: 0 10px 24px -22px #6e558b66; }
+.mb-node-caption { position: absolute; left: 23px; top: 22px; font-family: var(--font-body); font-size: 11px; letter-spacing: .015em; opacity: .72; z-index: 1; }
+.mb-hub > strong { font-family: var(--font-heading); font-weight: 400; font-size: 30px; line-height: 1.2; letter-spacing: -.035em; z-index: 1; }
+.mb-agent > strong { font-family: var(--font-body); font-weight: 600; font-size: 24px; line-height: 1.3; letter-spacing: -.035em; z-index: 1; }
+.mb-node-detail { font-family: var(--font-body); font-size: 11px; margin-top: 12px; padding-top: 12px; border-top: 1px solid currentColor; border-color: #ffffff29; opacity: .8; width: 100%; white-space: nowrap; z-index: 1; }
+.mb-agent .mb-node-detail { border-color: #35405226; }
+.mb-brand-mark, .mb-agent-mark { position: absolute; top: 37px; right: 20px; width: 36px; height: 36px; opacity: .72; stroke-width: 1.6; }
+.mb-node .mb-node-art { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; border-radius: inherit; overflow: hidden; fill: #fff; stroke: #fff; stroke-width: 1; pointer-events: none; z-index: -1; opacity: .075; transition: transform 500ms ease, opacity 500ms ease; }
+.mb-node-art circle { stroke: none; }
+.mb-node-art path { fill: none; }
+.mb-agent .mb-node-art { fill: #685389; stroke: #685389; opacity: .06; }
+.mb-node:hover .mb-node-art { transform: translateY(-6px); opacity: .15; }
+.mb-port { position: absolute; width: 8px; height: 8px; border: 1.5px solid #b9b0c3; border-radius: 50%; background: #fffdf5; pointer-events: none; z-index: 2; }
+.mb-source-port { right: -4px; top: calc(50% - 4px); border-color: var(--node-color); }
+.mb-hub-in, .mb-agent-in { left: -4px; top: calc(50% - 4px); }
+.mb-hub-out { right: -4px; top: calc(50% - 4px); }
+.mb-hub .mb-port { border-color: #cfb674; background: #fff6d5; }
+.mb-agent .mb-port { border-color: #a88fc2; background: #f2e9ff; }
+html[data-theme="dark"] .mb-source { background: #29363a; border-color: #64706b66; color: #f0ecdf; }
+html[data-theme="dark"] .mb-source-copy > span { color: #aebbb4; }
+html[data-theme="dark"] .mb-source > svg { color: #d6ded2; }
+html[data-theme="dark"] .mb-source-lavender { background: #34303e; }
+html[data-theme="dark"] .mb-source-sage { background: #2a3b33; }
+html[data-theme="dark"] .mb-agent { background: #bba6cf; color: #25333c; }
+html[data-theme="dark"] .mb-hub { border-color: #fff8d421; }
 #lifecycle { position: relative; isolation: isolate; }
 #magic-border { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1; }
 .mb-border-layer { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
 .mui-border-beam { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; border: var(--border-beam-width, 1px) solid transparent; mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0) border-box; mask-composite: exclude; }
 .mui-border-light { position: absolute; aspect-ratio: 1; background: linear-gradient(to left, var(--color-from), var(--color-to), transparent); }
 
-@media (max-width: 1000px) and (min-width: 761px) {
-  .mb-network { padding-inline: 10px; gap: 25px; }
-  .mb-source { padding-inline: 17px; gap: 10px; font-size: 12px; }
-  .mb-hub { min-width: 178px; padding-inline: 19px; }
-  .mb-agent { min-width: 130px; }
+@media (max-width: 1000px) and (min-width: 681px) {
+  .mb-network { grid-template-columns: minmax(145px, 170px) minmax(164px, 190px) minmax(164px, 190px); gap: 30px; padding-inline: 4px; }
+  .mb-source { padding-inline: 13px; gap: 10px; }
+  .mb-node { padding: 19px; height: 174px; }
+  .mb-node-caption { left: 19px; top: 20px; }
+  .mb-hub > strong { font-size: 28px; }
+  .mb-agent > strong { font-size: 22px; }
 }
-@media (max-width: 760px) {
-  #magic-connection.connection-scene { min-height: 500px; }
-  .mb-network { min-height: 500px; grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap: 55px; padding: 15px 0; }
-  .mb-source-grid { width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); justify-self: stretch; gap: 9px; }
-  .mb-source { padding: 13px 4px; min-height: 73px; flex-direction: column; gap: 7px; justify-content: center; border-radius: 14px; font-size: 10px; }
-  .mb-source svg { width: 23px; height: 23px; }
-  .mb-hub { min-width: 178px; padding: 18px 20px 17px; border-radius: 23px; }
-  .mb-hub-icon { width: 49px; height: 49px; border-radius: 15px; margin-bottom: 10px; }
-  .mb-hub-icon svg { width: 29px; height: 29px; }
-  .mb-hub strong { font-size: 26px; }
-  .mb-agent { justify-self: center; }
-  .mb-agent-icon { width: 81px; height: 81px; }
-  .mb-agent-icon svg { width: 42px; height: 42px; }
-  .mb-agent strong { font-size: 25px; margin-top: 11px; }
-  .mb-hub > span, .mb-agent > span { font-size: 10px; margin-top: 8px; }
-  .mui-terminal-chrome { min-height: 43px; padding-inline: 15px; font-size: 9px; }
-  .mui-terminal-dots { left: 15px; gap: 5px; }
-  .mui-terminal-dots i { width: 6px; height: 6px; }
-  .mui-terminal-screen { min-height: 216px; padding: 20px 18px 22px; font-size: 12px; line-height: 1.9; }
-  .mb-install-prompt { min-height: 172px; }
+@media (max-width: 680px) {
+  #magic-connection.connection-scene { min-height: 510px; }
+  .mb-network { grid-template-columns: 1fr; min-height: 510px; gap: 54px; padding: 12px 0; justify-items: center; }
+  .mb-source-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .mb-source { min-height: 84px; flex-direction: column; gap: 8px; padding: 12px 4px; text-align: center; }
+  .mb-source-copy strong { font-size: 11px; }
+  .mb-source-copy > span { display: none; }
+  .mb-source > svg { width: 23px; height: 23px; }
+  .mb-node { height: 150px; width: min(250px, 75%); padding: 22px; border-radius: 17px; }
+  .mb-node-caption { top: 19px; left: 22px; }
+  .mb-brand-mark, .mb-agent-mark { top: 22px; right: 23px; width: 34px; height: 34px; }
+  .mb-node-detail { margin-top: 10px; padding-top: 10px; }
+  .mb-source-port, .mb-hub-out { top: auto; bottom: -4px; right: auto; left: calc(50% - 4px); }
+  .mb-hub-in, .mb-agent-in { top: -4px; left: calc(50% - 4px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .mui-text-animate, .mui-text-segment { opacity: 1 !important; transform: none !important; }
+  .mb-node:hover .mb-node-art { transform: none; }
 }

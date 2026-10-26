@@ -2,11 +2,12 @@
  * Magic UI Dock — MIT, Copyright (c) Magic UI.
  * Source: magicuidesign/magicui/apps/www/registry/magicui/dock.tsx
  * Pinned upstream: efe76fc5755eca1142dd4f74c1d6f0ace2887e3c.
- * Product adaptation: scoped CSS; distance/spring sizing stays inside fixed
- * navigation slots so the centered header and keyboard targets never reflow.
- * Full terms: licenses/MagicUI-MIT.txt.
+ * Product adaptation: icon-only links, scoped CSS, tooltips, reduced motion.
+ * The original distance → transform → spring sizing acts on the full icon
+ * container. The Dock's width expands while its height and center stay fixed.
+ * Full terms: licenses/Magic-UI-MIT.txt.
  */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, type MotionValue } from 'motion/react';
 
 type DockProps = React.PropsWithChildren<{
@@ -20,8 +21,8 @@ type DockProps = React.PropsWithChildren<{
 export const Dock = React.forwardRef<HTMLDivElement, DockProps>(function Dock({
   children,
   className = '',
-  iconSize = 35,
-  iconMagnification = 45,
+  iconSize = 40,
+  iconMagnification = 52,
   iconDistance = 120,
   disableMagnification = false,
 }, ref) {
@@ -49,18 +50,22 @@ export interface DockIconProps {
   mouseX?: MotionValue<number>;
 }
 
-export function DockIcon({ children, href, label, active, size = 35, magnification = 45, distance = 120, disableMagnification, mouseX }: DockIconProps) {
+export function DockIcon({ children, href, label, active, size = 40, magnification = 52, distance = 120, disableMagnification, mouseX }: DockIconProps) {
   const ref = useRef<HTMLAnchorElement>(null);
   const defaultMouseX = useMotionValue(Infinity);
   const distanceCalc = useTransform(mouseX ?? defaultMouseX, value => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
     return value - bounds.x - bounds.width / 2;
   });
-  const targetSize = disableMagnification ? size : magnification;
-  const sizeTransform = useTransform(distanceCalc, [-distance, 0, distance], [size, targetSize, size]);
+  const sizeTransform = useTransform(distanceCalc, [-distance, 0, distance], [size, disableMagnification ? size : magnification, size]);
   const scaleSize = useSpring(sizeTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-  return <a ref={ref} href={href} className="magic-dock-link" aria-current={active ? 'location' : undefined}>
-    <span className="magic-dock-icon-space" aria-hidden="true"><motion.span className="magic-dock-icon" style={{ width: scaleSize, height: scaleSize }}>{children}</motion.span></span>
-    <span className="magic-dock-label">{label}</span>
-  </a>;
+  useEffect(() => {
+    if (disableMagnification) scaleSize.jump(size);
+  }, [disableMagnification, scaleSize, size]);
+  return <motion.a ref={ref} href={href} className="magic-dock-link"
+    aria-label={label} aria-current={active ? 'location' : undefined}
+    style={{ width: disableMagnification ? size : scaleSize, height: disableMagnification ? size : scaleSize }}>
+    <span className="magic-dock-icon" aria-hidden="true">{children}</span>
+    <span className="magic-dock-tooltip" aria-hidden="true">{label}</span>
+  </motion.a>;
 }

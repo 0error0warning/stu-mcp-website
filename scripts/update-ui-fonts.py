@@ -25,7 +25,10 @@ UI_SOURCES = [
     "src/site-header.jsx",
     "src/magic-sections.jsx",
     "src/reactdrops.jsx",
+    "src/agent-install.jsx",
+    "src/components/community/arc-activity/activity-heatmap.tsx",
 ]
+GENERATED_UI_TEXT = "星期一二三四五六日周月年少多零"
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
@@ -57,7 +60,7 @@ def unicode_ranges(characters: str) -> str:
 
 
 def main() -> None:
-    content = "\n".join((ROOT / path).read_text(encoding="utf-8") for path in UI_SOURCES)
+    content = "\n".join((ROOT / path).read_text(encoding="utf-8") for path in UI_SOURCES) + GENERATED_UI_TEXT
     # Chinese UI text, CJK/full-width punctuation, common typographic punctuation
     # and digits. Latin glyphs continue to come from Schibsted Grotesk.
     characters = "".join(sorted(set(re.findall(
@@ -120,6 +123,7 @@ def main() -> None:
         "subsetText": characters,
         "subsetGlyphCount": len(characters),
         "subsetSources": UI_SOURCES,
+        "generatedUILabels": GENERATED_UI_TEXT,
         "verification": verification,
     }
     metadata_path = ROOT / "public/fonts/sources.json"

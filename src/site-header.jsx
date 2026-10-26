@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BookOpen, GitBranch, HelpCircle, Workflow } from 'lucide-react';
-import { useReducedMotion } from 'motion/react';
 import { Dock, DockIcon } from './components/magicui/dock';
 import { AnimatedThemeToggler } from './components/magicui/animated-theme-toggler';
 import './site-header.css';
@@ -14,12 +13,18 @@ const links = [
 ];
 
 function HeaderDock() {
-  const reduced = useReducedMotion();
+  const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [finePointer, setFinePointer] = useState(() => matchMedia('(hover: hover) and (pointer: fine)').matches);
   const [active, setActive] = useState('');
   useEffect(() => {
     const media = matchMedia('(hover: hover) and (pointer: fine)');
     const update = () => setFinePointer(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  useEffect(() => {
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduced(media.matches);
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);
   }, []);

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Files, BookOpen, MessagesSquare, Bot } from 'lucide-react';
+import { FileText, BookOpen, MessagesSquare, Sparkles } from 'lucide-react';
 import { AnimatedBeam } from './components/magicui/animated-beam';
 import { BorderBeam } from './components/magicui/border-beam';
-import { Terminal, TypingAnimation } from './components/magicui/terminal';
 import { TextAnimate } from './components/magicui/text-animate';
 import './magic-sections.css';
 
@@ -56,93 +55,59 @@ function useGreeting(active, duration) {
   return active && playing;
 }
 
-function Connection() {
-  const { host, active } = usePlayback();
-  const vertical = useMedia('(max-width: 760px)');
-  const playing = useGreeting(active, 4600);
-  const notice = useRef(null);
-  const learning = useRef(null);
-  const community = useRef(null);
-  const hub = useRef(null);
-  const agent = useRef(null);
-  const sources = [
-    { ref: notice, label: '通知 · 附件', Icon: Files, tone: 'paper' },
-    { ref: learning, label: '课程 · 作业', Icon: BookOpen, tone: 'lavender' },
-    { ref: community, label: '社区 · 日常', Icon: MessagesSquare, tone: 'sage' },
-  ];
-  return <div ref={host} className="mb-network" data-magicui="animated-beam">
-    <div className="mb-source-grid">
-      {sources.map(({ ref, label, Icon, tone }) => <div key={label} ref={ref} className={`mb-source mb-source-${tone}`}>
-        <Icon aria-hidden="true" strokeWidth={1.6} />
-        <span>{label}</span>
-      </div>)}
-    </div>
-    <div ref={hub} className="mb-hub">
-      <div className="mb-hub-icon"><Files aria-hidden="true" strokeWidth={1.6} /></div>
-      <strong>STU-MCP</strong>
-      <span>检索 · 读取 · 保留出处</span>
-    </div>
-    <div ref={agent} className="mb-agent">
-      <div className="mb-agent-icon"><Bot aria-hidden="true" strokeWidth={1.35} /></div>
-      <strong>Your Agent</strong>
-      <span>理解 · 整理 · 回答</span>
-    </div>
-    {sources.map(({ ref, label }, index) => <AnimatedBeam key={label}
-      containerRef={host} fromRef={ref} toRef={hub}
-      curvature={vertical ? 0 : index === 0 ? -66 : index === 2 ? 66 : 0}
-      vertical={vertical} playing={playing} repeat={0} duration={3.2} delay={index * 0.25}
-      pathColor="var(--mb-path, #b9b2a5)" pathOpacity={0.55} pathWidth={1.6}
-      gradientStartColor="#ddaf42" gradientStopColor="#a493c8" />)}
-    <AnimatedBeam containerRef={host} fromRef={hub} toRef={agent}
-      vertical={vertical} playing={playing} repeat={0} duration={3.2} delay={0.85}
-      pathColor="var(--mb-path, #b9b2a5)" pathOpacity={0.55} pathWidth={1.8}
-      gradientStartColor="#d1af53" gradientStopColor="#9c86c4" />
-  </div>;
+// Composition follows the inspected UI Layouts hover card and ReUI stat card
+// references: one surface per node, quiet label, strong title and lifted artwork.
+function NodeArtwork({ kind }) {
+  return <svg className={`mb-node-art mb-node-art-${kind}`} viewBox="0 0 240 180" aria-hidden="true">
+    <circle cx="199" cy="80" r="66"/><circle cx="228" cy="44" r="45"/>
+    <circle cx="160" cy="137" r="42"/><path d="M112 180 240 52M151 180 240 91"/>
+  </svg>;
 }
 
-const terminalInstallText = 'uv tool install --python 3.12 https://github.com/0error0warning/stu-mcp/releases/download/v0.7.1/stu_mcp-0.7.1-py3-none-any.whl\nstu-mcp setup';
-
-function InstallationTerminal({ text }) {
-  const { host, active } = usePlayback();
-  const [mode, setMode] = useState('agent');
-  const tabs = useRef([]);
-  const modes = [
-    { value: 'agent', label: '交给 Agent' },
-    { value: 'terminal', label: '终端安装' },
+function Connection() {
+  const { host, active, reduced } = usePlayback();
+  const vertical = useMedia('(max-width: 680px)');
+  const notice = useRef(null), learning = useRef(null), community = useRef(null);
+  const hubIn = useRef(null), hubOut = useRef(null), agentIn = useRef(null);
+  const sources = [
+    { ref: notice, label: '通知 · 附件', detail: '正文与文件', Icon: FileText, tone: 'paper', color: '#d4a63d' },
+    { ref: learning, label: '课程 · 作业', detail: '学习中的安排', Icon: BookOpen, tone: 'lavender', color: '#a78ad8' },
+    { ref: community, label: '社区 · 日常', detail: '校园里的线索', Icon: MessagesSquare, tone: 'sage', color: '#70a38d' },
   ];
-  const currentText = mode === 'agent' ? text : terminalInstallText;
-  const selectMode = next => {
-    if (next === mode) return;
-    setMode(next);
-    window.dispatchEvent(new CustomEvent('stu:install-mode', {
-      detail: { text: next === 'agent' ? text : terminalInstallText },
-    }));
-  };
-  const moveTab = event => {
-    const index = modes.findIndex(item => item.value === mode);
-    const next = event.key === 'ArrowRight' ? (index + 1) % modes.length
-      : event.key === 'ArrowLeft' ? (index + modes.length - 1) % modes.length
-      : event.key === 'Home' ? 0 : event.key === 'End' ? modes.length - 1 : -1;
-    if (next < 0) return;
-    event.preventDefault();
-    selectMode(modes[next].value);
-    tabs.current[next]?.focus();
-  };
-  return <div ref={host} className="mb-terminal-wrap" data-magicui="terminal">
-    <div className="mb-install-tabs" role="tablist" aria-label="安装方式" onKeyDown={moveTab}>
-      {modes.map((item, index) => <button key={item.value} ref={element => { tabs.current[index] = element; }}
-        type="button" role="tab" id={`install-tab-${item.value}`} aria-controls="install-mode-panel"
-        aria-selected={mode === item.value} tabIndex={mode === item.value ? 0 : -1}
-        onClick={() => selectMode(item.value)}>{item.label}</button>)}
+  return <div ref={host} className="mb-network" data-magicui="animated-beam" data-playing={active && !reduced}>
+    <div className="mb-source-grid">
+      {sources.map(({ ref, label, detail, Icon, tone, color }) => <div key={label} className={`mb-source mb-source-${tone}`} style={{ '--node-color': color }}>
+        <Icon aria-hidden="true" strokeWidth={1.65} />
+        <span className="mb-source-copy"><strong>{label}</strong><span>{detail}</span></span>
+        <span ref={ref} className="mb-port mb-source-port" aria-hidden="true" />
+      </div>)}
     </div>
-    <div id="install-mode-panel" role="tabpanel" aria-labelledby={`install-tab-${mode}`} tabIndex={0}>
-      <span className="mui-sr-only">{currentText}</span>
-      <div aria-hidden="true">
-        <Terminal key={mode} playing={active} title={mode === 'agent' ? 'STU-MCP / 给你的 Agent' : 'STU-MCP / 终端安装'}>
-          <TypingAnimation duration={mode === 'agent' ? 16 : 11} className={mode === 'agent' ? 'mb-install-prompt' : 'mb-install-prompt mb-install-command'}>{currentText}</TypingAnimation>
-        </Terminal>
-      </div>
+    <div className="mb-hub mb-node">
+      <NodeArtwork kind="hub" />
+      <span ref={hubIn} className="mb-port mb-hub-in" aria-hidden="true" />
+      <span ref={hubOut} className="mb-port mb-hub-out" aria-hidden="true" />
+      <span className="mb-node-caption">把入口连接起来</span>
+      <svg className="mb-brand-mark" viewBox="0 0 40 40" aria-hidden="true"><path d="M10 7h17l5 6v21H10zM27 7v7h5M16 20h10M16 26h6"/><path d="M6 12v23h20" opacity=".4"/></svg>
+      <strong>STU-MCP</strong>
+      <span className="mb-node-detail">检索 · 读取 · 保留出处</span>
     </div>
+    <div className="mb-agent mb-node">
+      <NodeArtwork kind="agent" />
+      <span ref={agentIn} className="mb-port mb-agent-in" aria-hidden="true" />
+      <span className="mb-node-caption">由你选择</span>
+      <Sparkles className="mb-agent-mark" aria-hidden="true" strokeWidth={1.45} />
+      <strong>Your Agent</strong>
+      <span className="mb-node-detail">理解 · 整理 · 回答</span>
+    </div>
+    {sources.map(({ ref, label, color }, index) => <AnimatedBeam key={label}
+      containerRef={host} fromRef={ref} toRef={hubIn} route="smooth"
+      vertical={vertical} playing={active} reducedMotion={reduced} repeat={Infinity} duration={2.3} repeatDelay={0.35} delay={index * 0.5}
+      pathColor="var(--mb-path, #c7c3ba)" pathOpacity={0.8} pathWidth={1.6} beamWidth={3.2}
+      gradientStartColor={color} gradientStopColor="#c39bf1" />)}
+    <AnimatedBeam containerRef={host} fromRef={hubOut} toRef={agentIn} route="smooth"
+      vertical={vertical} playing={active} reducedMotion={reduced} repeat={Infinity} duration={2.3} repeatDelay={0.35} delay={0.8}
+      pathColor="var(--mb-path, #c7c3ba)" pathOpacity={0.8} pathWidth={1.6} beamWidth={3.6}
+      gradientStartColor="#d6ae48" gradientStopColor="#a880d5" />
   </div>;
 }
 
@@ -166,13 +131,6 @@ function mount(element, content, cleanup) {
 export function mountMagicSections() {
   mount(document.getElementById('magic-connection'), <Connection />);
   mount(document.getElementById('magic-border'), <EvidenceBorder />);
-  const source = document.getElementById('install-prompt');
-  const terminal = document.getElementById('magic-terminal');
-  if (source && terminal) {
-    const wasHidden = source.hidden;
-    mount(terminal, <InstallationTerminal text={source.textContent.trim()} />, () => { source.hidden = wasHidden; });
-    source.hidden = true;
-  }
   document.querySelectorAll('[data-text-animate]').forEach(element => {
     const text = element.textContent.trim();
     mount(element, <TextAnimate as="span" animation="slideUp" by="text" once duration={0.35}>{text}</TextAnimate>, () => { element.textContent = text; });

@@ -8,12 +8,14 @@ import './motion-regions.js';
 import './activity.js';
 import { mountHeader } from './site-header.jsx';
 import { mountMagicSections } from './magic-sections.jsx';
+import { mountAgentInstall } from './agent-install.jsx';
 import './feedback.css';
 import './theme.css';
 
 document.getElementById('shared-defs').innerHTML = sharedDefs;
 mountHeader();
 mountMagicSections();
+mountAgentInstall();
 
 const scenarios = [
   { id: '01', key: 'notice', category: 'study', name: '通知，连附件一起。', source: '通知 · PDF', color: 'oklch(.92 .065 96)', prompt: '帮我查最近相关的通知，读一下 PDF 附件，把重点和原文链接一起给我。' },
@@ -60,9 +62,7 @@ async function copyText(text, success, button) {
 }
 
 const installPrompt = document.getElementById('install-prompt').textContent.trim();
-let activeInstallText = installPrompt;
-window.addEventListener('stu:install-mode', event => { activeInstallText = event.detail.text; });
-const copyInstall = () => copyText(activeInstallText, '安装指令已复制。');
+const copyInstall = event => copyText(event?.detail?.text ?? installPrompt, '安装 Prompt 已复制。');
 document.querySelectorAll('[data-copy-install]').forEach(button => button.addEventListener('click', copyInstall));
 window.addEventListener('stu:copy-install', copyInstall);
 document.getElementById('close-copy-dialog').addEventListener('click', () => dialog.close());

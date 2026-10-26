@@ -1,0 +1,18 @@
+{
+  "repository": "kuratlielia/arc-library",
+  "commit": "fff39c044c6e3b86006e3a6acc9a32a821a80d99",
+  "registry": "https://raw.githubusercontent.com/kuratlielia/arc-library/fff39c044c6e3b86006e3a6acc9a32a821a80d99/public/r/activity-heatmap.json",
+  "registrySha256": "4ebc8621bb08ea746a1df454c44384fd0853cd684061882dc2789dcc53f12e2a",
+  "motionTokensPath": "registry/motion-tokens.ts",
+  "license": "MIT",
+  "referenceUrls": [
+    "https://21st.dev/@kuratlielia/components/activity-heatmap",
+    "https://contribkit.app/?user=torvalds"
+  ],
+  "adaptations": [
+    "Chinese UI labels",
+    "Product token mapping",
+    "90 actual-day range supplied by validated existing API",
+    "18px square size and 4px gap for 14-column range"
+  ]
+}

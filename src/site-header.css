@@ -1,10 +1,11 @@
-/* Fixed Dock slots keep its visual center independent of brand/action widths. */
+/* Magic UI's icon-only Dock: one row, compact chrome and concentric corners. */
+html { scroll-padding-top: 92px; }
 .site-header .header-inner {
-  min-height: 92px;
+  min-height: 74px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 }
 .site-header .header-inner > .brand { grid-column: 1; justify-self: start; }
 .site-header #md-dock {
@@ -16,86 +17,100 @@
   background: none;
   border: 0;
 }
-.site-header .header-actions { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 12px; }
-.hero-full { margin-top: -92px; padding-top: 130px; }
+.site-header .header-actions { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 10px; }
+.hero-full { margin-top: -74px; padding-top: 112px; }
 .magic-dock {
+  --dock-inset: 6px;
+  --dock-inner-radius: 9px;
   width: max-content;
+  height: 54px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
-  padding: 5px 9px 6px;
-  border: 1px solid #263b491a;
-  border-radius: 23px;
+  padding: var(--dock-inset);
+  border: 1px solid #263b491c;
+  /* 1px border + inset + inner radius share the same corner center. */
+  border-radius: calc(var(--dock-inner-radius) + var(--dock-inset) + 1px);
   background: #fffef5e8;
-  box-shadow: 0 3px 12px -8px #263b4933;
+  box-shadow: 0 2px 8px -6px #263b4933;
+  overflow: visible;
 }
 .site-header #md-dock .magic-dock-link {
-  width: 68px;
-  min-height: 56px;
-  padding: 0 2px 1px;
+  position: relative;
+  flex: none;
+  min-width: 40px;
+  min-height: 40px;
   display: grid;
-  grid-template-rows: 35px auto;
-  align-items: center;
-  justify-items: center;
-  gap: 4px;
-  border-radius: 14px;
+  place-items: center;
+  padding: 0;
+  border-radius: var(--dock-inner-radius);
   background: transparent;
   text-decoration: none;
   color: #4e5d64;
   transition: color 160ms, background-color 160ms;
 }
-.magic-dock-icon-space { height: 35px; width: 44px; display: grid; place-items: center; }
-.magic-dock-icon { display: grid; place-items: center; border-radius: 50%; }
-.magic-dock-icon > svg { display: block; width: 56%; height: 56%; stroke-width: 1.65; }
-.magic-dock-label { white-space: nowrap; font-size: 11px; line-height: 1.35; font-weight: 600; }
-.site-header #md-dock .magic-dock-link:hover,
-.site-header #md-dock .magic-dock-link[aria-current="location"] { color: #213440; background: #f7e6a44d; }
-.site-header #md-dock .magic-dock-link:focus-visible { outline: 2px solid #9075b1; outline-offset: 2px; }
-#md-theme { display: grid; place-items: center; width: 40px; height: 40px; flex: none; }
-.theme-toggle {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 1px solid #263b4922;
-  border-radius: 50%;
-  background: #fffef5db;
-  color: #263b49;
-  transition: background-color 160ms, border-color 160ms;
+.magic-dock-icon { display: grid; place-items: center; width: 100%; height: 100%; }
+.magic-dock-icon > svg { display: block; width: 50%; height: 50%; stroke-width: 1.7; }
+.site-header #md-dock .magic-dock-link[aria-current="location"] { color: #213440; background: #f3df9470; }
+.site-header #md-dock .magic-dock-link:focus-visible { outline: 2px solid #9075b1; outline-offset: 3px; }
+.magic-dock-tooltip {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translate(-50%, -3px);
+  padding: 6px 10px;
+  border-radius: 7px;
+  color: #fffdf1;
+  background: #263b49;
+  font: 500 11px/1.5 var(--font-body);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px #263b4920;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 120ms, transform 120ms, visibility 120ms;
 }
+.magic-dock-tooltip::before { content: ''; position: absolute; top: -3px; left: calc(50% - 3px); width: 6px; height: 6px; transform: rotate(45deg); background: inherit; }
+.site-header #md-dock .magic-dock-link:focus-visible .magic-dock-tooltip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+@media (hover: hover) and (pointer: fine) {
+  .site-header #md-dock .magic-dock-link:hover { color: #213440; background: #f7e6a44d; }
+  .site-header #md-dock .magic-dock-link:hover .magic-dock-tooltip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+}
+#md-theme { display: grid; place-items: center; width: 36px; height: 36px; flex: none; }
+.theme-toggle { width: 36px; height: 36px; display: grid; place-items: center; padding: 0; border: 1px solid #263b4922; border-radius: 50%; background: #fffef5db; color: #263b49; transition: background-color 160ms, border-color 160ms; }
 .theme-toggle:hover { background: #f8ecb9; border-color: #263b4940; }
-.theme-toggle > svg { width: 20px; height: 20px; stroke-width: 1.75; }
-
-/* At narrow widths all four destinations stay present in a compact second row. */
-@media (min-width: 1600px) { .hero-full { padding-top: 144px; } }
-@media (max-width: 980px) {
-  .site-header .header-inner {
-    min-height: 126px;
-    padding-block: 12px 9px;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: auto auto;
-    row-gap: 9px;
-  }
-  .site-header .header-inner > .brand { grid-column: 1; grid-row: 1; }
-  .site-header .header-actions { grid-column: 2; grid-row: 1; }
-  .site-header #md-dock { grid-column: 1 / -1; grid-row: 2; }
-  .magic-dock { gap: 3px; padding: 4px 7px; border-radius: 19px; }
-  .site-header #md-dock .magic-dock-link { width: 66px; min-height: 44px; grid-template-rows: 25px auto; gap: 1px; }
-  .magic-dock-icon-space { height: 25px; width: 38px; }
-  .magic-dock-icon > svg { width: 49%; height: 49%; }
-  .magic-dock-label { font-size: 10px; }
-  html { scroll-padding-top: 146px; }
-  .hero-full { margin-top: -126px; padding-top: 160px; }
-}
-@media (max-width: 480px) {
-  .site-header .header-inner { width: calc(100% - 32px); }
-  .site-header .brand { font-size: 21px; gap: 7px; }
-  .site-header .brand-sub { font-size: 6px; letter-spacing: .12em; }
+.theme-toggle > svg { width: 19px; height: 19px; stroke-width: 1.75; }
+@media (min-width: 1600px) { .hero-full { padding-top: 126px; } }
+@media (max-width: 900px) and (min-width: 641px) {
+  .site-header .header-inner { gap: 12px; }
+  .site-header .brand { font-size: 21px; }
+  .site-header .brand-sub { font-size: 6px; }
+  .site-header .brand > svg { width: 29px; height: 29px; }
   .site-header .header-actions { gap: 8px; }
+  .site-header .quest-link { height: 36px; font-size: 11px; padding-left: 13px; gap: 9px; }
+  .site-header .nav-arrow { width: 26px; height: 26px; }
+}
+/* Only phones need a second row; the reported 821px viewport stays single-row. */
+@media (max-width: 640px) {
+  html { scroll-padding-top: 126px; }
+  .site-header .header-inner {
+    width: calc(100% - 32px);
+    min-height: 108px;
+    padding-block: 8px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: 34px 50px;
+    row-gap: 6px;
+  }
+  .site-header .header-inner > .brand { grid-column: 1; grid-row: 1; font-size: 21px; gap: 7px; }
+  .site-header .brand-sub { font-size: 6px; letter-spacing: .12em; }
+  .site-header .header-actions { grid-column: 2; grid-row: 1; gap: 8px; }
+  .site-header #md-dock { grid-column: 1 / -1; grid-row: 2; }
+  .magic-dock { --dock-inset: 4px; height: 50px; }
   #md-theme, .theme-toggle { width: 34px; height: 34px; }
   .site-header .quest-link { font-size: 10px; padding-left: 11px; gap: 7px; }
   .site-header .nav-arrow { width: 25px; height: 25px; }
+  .hero-full { margin-top: -108px; padding-top: 142px; }
 }
 
 /* Magic UI's circular reveal is finite and runs only after an explicit toggle. */

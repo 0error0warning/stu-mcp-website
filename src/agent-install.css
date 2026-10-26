@@ -1,0 +1,52 @@
+/* One input surface, based on the visible Wensity Liquid Multimodal Input.
+   Product semantics: edit a natural-language prompt, then copy it to an Agent. */
+#agent-install { width: min(100%, 920px); margin-inline: auto; }
+.install-doc-link { display: flex; width: fit-content; margin: 22px auto 0; font-size: 13px; }
+.install-doc-link svg { width: 16px; height: 16px; }
+@media (min-width: 681px) {
+  .install-steps, .connection-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+  .install-steps h3, .connection-steps h3 { font-size: 21px; }
+}
+.agent-install-composer { min-width: 0; }
+.agent-install-label { display: block; width: fit-content; margin: 0 0 13px 4px; font: 600 13px/1.5 var(--font-body); color: var(--color-muted); }
+.agent-prompt-surface { position: relative; width: 100%; min-width: 0; padding: 19px 20px 12px; border: 1px solid #263b4917; border-radius: 28px; background: linear-gradient(180deg, #ffffffc7 0%, #f8f8f9c9 60%, #edeef1c9 100%); box-shadow: inset 0 1px 1px #ffffffeb, inset 0 -2px 4px #263b4905, 0 2px 3px #263b4905, 0 12px 26px -22px #263b4950; transition: border-color 180ms, box-shadow 180ms; }
+.agent-prompt-surface::after { content: ''; position: absolute; pointer-events: none; height: 1px; left: 28px; right: 28px; bottom: -1px; background: linear-gradient(90deg, transparent, #bdb2d98c 25%, #e9b9c875 55%, transparent); opacity: .6; }
+.agent-prompt-surface:focus-within { border-color: #9c89bd7d; box-shadow: inset 0 1px 1px #ffffffeb, 0 0 0 3px #bda8d719, 0 12px 26px -22px #263b4950; }
+.agent-prompt-input { display: block; width: 100%; min-width: 0; min-height: 84px; max-height: 280px; padding: 0 2px; margin: 0; resize: none; border: 0; border-radius: 0; outline: none; color: var(--color-text); background: none; font: 400 15px/1.85 var(--font-body); letter-spacing: 0; overflow-wrap: anywhere; white-space: pre-wrap; scrollbar-width: thin; }
+.agent-prompt-input:focus-visible { outline: none; }
+.agent-prompt-input::selection { background: #d8caeb; color: #263b49; }
+.agent-prompt-rail { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 15px; }
+.agent-prompt-destination { display: inline-flex; align-items: center; gap: 8px; color: #788493; font: 400 11px/1.5 var(--font-body); white-space: nowrap; }
+.agent-prompt-destination svg { width: 16px; height: 16px; flex: none; }
+.agent-prompt-copy { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 44px; padding: 0; border: 0; border-radius: 999px; background: none; color: #54657a; font: 500 12px/1.5 var(--font-body); white-space: nowrap; }
+.agent-prompt-copy-icon { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #aebcd52b; border-radius: 50%; color: #526882; background: #dce4efb3; box-shadow: inset 0 1px 1px #ffffffbd; transition: background 160ms, color 160ms, transform 160ms; }
+.agent-prompt-copy-icon svg { width: 18px; height: 18px; flex: none; }
+.agent-prompt-copy:hover .agent-prompt-copy-icon { background: #d3c7eb; color: #3b3156; transform: translateY(-1px); }
+.agent-prompt-copy:active .agent-prompt-copy-icon { transform: scale(.95); }
+.agent-prompt-copy:focus-visible { outline: 2px solid #9b80bc; outline-offset: 5px; }
+.agent-prompt-copy:disabled { cursor: default; color: #a5acb6; }
+.agent-prompt-copy:disabled .agent-prompt-copy-icon { color: #9aa8b9; background: #e4e9f0; box-shadow: none; }
+
+html[data-theme="dark"] .agent-prompt-surface { border-color: #d0d6d12b; background: linear-gradient(180deg, #303b3ee8, #293437ed 65%, #222e32ed); box-shadow: inset 0 1px 1px #f7f7ed0c, inset 0 -2px 4px #0001, 0 12px 26px -22px #0009; }
+html[data-theme="dark"] .agent-prompt-surface:focus-within { border-color: #c5b0df8c; box-shadow: inset 0 1px 1px #f7f7ed0c, 0 0 0 3px #c1a8dc12, 0 12px 26px -22px #0009; }
+html[data-theme="dark"] .agent-prompt-destination { color: #a1afb7; }
+html[data-theme="dark"] .agent-prompt-copy { color: #c3c9d1; }
+html[data-theme="dark"] .agent-prompt-copy-icon { background: #3f4d5c; border-color: #aebcd528; color: #e0d9ec; box-shadow: inset 0 1px 1px #ffffff0f; }
+html[data-theme="dark"] .agent-prompt-copy:hover .agent-prompt-copy-icon { background: #665773; color: #fff7ff; }
+html[data-theme="dark"] .agent-prompt-copy:disabled .agent-prompt-copy-icon { color: #7c8a96; background: #344149; }
+
+@media (max-width: 600px) {
+  .agent-install-label { font-size: 12px; margin-left: 2px; margin-bottom: 11px; }
+  .agent-prompt-surface { padding: 17px 16px 10px; border-radius: 25px; }
+  .agent-prompt-surface::after { left: 25px; right: 25px; }
+  .agent-prompt-input { font-size: 14px; line-height: 1.85; }
+  .agent-prompt-rail { gap: 10px; padding-top: 13px; }
+  .agent-prompt-destination { font-size: 10px; gap: 6px; }
+  .agent-prompt-destination svg { width: 15px; height: 15px; }
+  .agent-prompt-copy { gap: 7px; font-size: 11px; }
+  .agent-prompt-copy-icon { width: 36px; height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .agent-prompt-surface, .agent-prompt-copy-icon { transition: none; }
+  .agent-prompt-copy:hover .agent-prompt-copy-icon, .agent-prompt-copy:active .agent-prompt-copy-icon { transform: none; }
+}

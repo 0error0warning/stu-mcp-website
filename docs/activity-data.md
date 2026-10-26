@@ -1,11 +1,24 @@
 # Repository activity data
 
-The visible chart defaults to **30 calendar days**, with actual dates and daily
-counts. The 90-day option groups those same real days into **calendar weeks**;
-the chart says “每周”, and partial first/last weeks retain their actual date
-range. Counts and zero days are never fabricated or removed to imply a higher
-commit frequency. The large 365-day surface and debug/source footnotes were
-removed from the product layout at the owner's request.
+The current chart uses the real **Arc Activity Heatmap** component, from the
+owner's 21st.dev reference, pinned at
+`fff39c044c6e3b86006e3a6acc9a32a821a80d99` in `kuratlielia/arc-library`.
+Its source, motion tokens, CSS, MIT license and `source.json` provenance are
+retained in `src/components/community/arc-activity/`.
+
+The range contains **90 actual calendar days**, one square per day. Weeks are
+columns, with seven rows and currently fourteen week columns; calendar-alignment
+padding is not an extra data day. The summary, month/weekday labels, tooltip,
+selection and keyboard interaction come from the referenced component. Chinese
+labels, the website's color tokens and an 18px-square/4px-gap compact range are
+product adaptations. No upstream sample activity or reference account data is
+included.
+
+Counts and zero days are never fabricated or removed to imply a higher commit
+frequency. The former large year grid, numbered day pills and 30/90-day mode
+switch are no longer rendered. Debug/source footnotes remain outside the
+product layout. ContribKit was inspected as a compact heatmap visual reference;
+its code and Torvalds' account data were not imported.
 
 ## Local and future server endpoint
 
@@ -40,7 +53,7 @@ the local data source, not a public deployment or a future server's runtime.
 
 Run `node scripts/update-activity.mjs` to refresh `public/data/activity.json`.
 This retained script collects 365 days so the local record can be independently
-inspected; the UI uses only its selected 30/90-day window. It reads no token.
+inspected; the current heatmap uses its latest 90 actual dates. It reads no token.
 Every date, including verified zero counts, is retained. `totalCommits` must
 equal the sum of the daily counts. The final date is partial through
 `generatedAt`. Fetch failures preserve the existing snapshot.
@@ -50,15 +63,24 @@ default branch at the recorded SHA. It is not an account-wide contribution
 calendar. These implementation details belong here rather than as footnotes
 under the product chart.
 
-## Validation
+## Data-layer checks
 
-`node --test tests/activity-data.test.mjs` checks the 30-day window and zero-day
-preservation, weekly totals/partial weeks, invalid or incomplete responses,
+`node --test tests/activity-data.test.mjs` checks date-window and zero-day
+preservation, weekly helper totals/partial weeks, invalid or incomplete responses,
 pinned and deduplicated online pagination using committer dates, and rejection
 of an unexpected pagination host. The fixture is fixed, so refreshing the real
-snapshot cannot invalidate the arithmetic tests.
+snapshot cannot invalidate the arithmetic tests. The retained 30-day and weekly
+helper cases are compatibility/data arithmetic checks, not the current chart's
+UI modes. Current Arc heatmap browser verification and screenshots are in
+[the reference refinement record](reference-refinement-2026-10-26.md), indexed by `qa.md`.
 
-Local Chromium browser verification after integration covered 1169px, 709px,
+## Historical browser verification — superseded number-cell calendar
+
+The measurements below describe the rejected, earlier numbered 30/90-day chart.
+They are preserved as stage evidence and do not describe the current Arc
+heatmap, its geometry or its interactions.
+
+That earlier local Chromium browser verification covered 1169px, 709px,
 and 390px touch simulation. The default view contained all 30 real days,
 including 20 zero days, and showed 116 commits for September 27–October 26.
 The 90-day view showed 14 explicit calendar weeks, including 11 zero weeks,

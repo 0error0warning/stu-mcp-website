@@ -16,20 +16,22 @@ npm run build
 npm run preview
 ```
 
-场景交互复制示例问句，安装区可复制 Agent 安装 prompt 或已核实的终端命令。没有登录表单或在线 MCP 查询；唯一站点接口 `/api/activity` 只读取公开仓库提交。
+场景交互复制示例问句，安装区提供单层、可编辑的 Prompt 输入面，复制后交给 Codex、Claude Code 或用户自己的 Agent。没有终端模式、登录表单或在线 MCP 查询；唯一站点接口 `/api/activity` 只读取公开仓库提交。
 
 ## 设计与实现
 
 - Side Quest Adoption Center 是真实源码底稿，原件保存在 `reference/side-quest/`。保留其 OKLCH 配色、排版、插画舞台、胶囊控件、颗粒与交互节奏。
-- 主页面为 HTML + 原生 CSS/JS，Vite 构建。ReactDrops 用于等高线、纸页画廊和两处光学按钮；物理角色默认关闭，原光球源码保留但不再挂载。
-- 六个 Magic UI 官方源码适配：Dock、Animated Beam、Terminal、Border Beam、Animated Theme Toggler、Text Animate。固定于 `efe76fc5755eca1142dd4f74c1d6f0ace2887e3c`，保留 MIT 许可；搭配 Lucide SVG 图标与本地中文界面字体。
-- ReactDrops 固定于 `b3924b92ebfce15152cf6f04ad85301c9f343672`，只保留实际使用的源文件。它们使用自定义 Component License，不是 MIT。详见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库不是可重发的组件库或模板。
+- 主页面为 HTML + 原生 CSS/JS，Vite 构建。ReactDrops 用于等高线、纸页画廊和首屏光学按钮；物理角色默认关闭，原光球和旧安装按钮源码保留但不再挂载。
+- Magic UI 的 Dock、Animated Beam、Border Beam、Animated Theme Toggler、Text Animate 用于页面；Terminal 源码保留但不挂载。固定于 `efe76fc5755eca1142dd4f74c1d6f0ace2887e3c`，保留 MIT 许可；搭配 Lucide SVG 图标和本地中文界面字体。
+- 提交热力图使用用户指定的真实 Arc Activity Heatmap，固定于 `fff39c044c6e3b86006e3a6acc9a32a821a80d99`，MIT 许可及来源在 `src/components/community/arc-activity/`。近 90 天按每天一格、每周一列展示，不再使用自写数字日历。
+- Prompt 输入面依据 Wensity 的公开 Liquid Multimodal Input 预览做视觉适配；其源码需登录，没有直接移植。汇聚节点的表面与内部图形悬停参考 UI Layouts 的 MIT 组件，层级参考 ReUI Statistics Card 2；来源范围见第三方声明。
+- ReactDrops 固定于 `b3924b92ebfce15152cf6f04ad85301c9f343672`，来源、许可及既有组件源码一并保留。它们使用自定义 Component License，不是 MIT。详见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库不是可重发的组件库或模板。
 - 本地补丁修复透明画布清屏和按钮的显示密度更新，新增可选亮度下限避免光学按钮大面积发黑；画廊按全部选中状态拟合宽度，物理画布覆盖首屏并对齐实际黄色弧面。
 - 小角色掉落默认关闭：不挂载物理场、不加载物理引擎，也没有静态角色占位。未来按钮可调用 `src/hero-characters.js` 的 `setHeroCharactersEnabled(true)` 开启，传 `false` 关闭；目前没有添加开启按钮。
 - 保留的可选物理场覆盖整个首屏，黄色椭圆上弧是真实碰撞地面；角色从顶部落下、向两侧滑滚。60% 跟随鼠标，数量为手机 4 / 中屏 6 / 大屏最多 10。启用后滚动或切后台暂停、返回续场景；关闭后释放，重新启用换种子。
-- 首屏、六个场景和三张原则纸页均使用为本项目绘制的原创 SVG。字体本地托管，来源、哈希与 OFL 许可保留在仓库。
-- 组件首次接近视口时懒加载，已加载实例保留，避免滚动时重建着色器、重播画廊。等高线仅绘静态帧；光学按钮仅交互时流动，手机/省流量/低核心设备用静态替代。信息光束、卡片边光和文字只做有限入场；离屏、后台和减少动态效果模式停止动态效果。
-- 顶部 Dock 在各尺寸按页面中心定位；窄屏两行布局。深色切换通过圆形 View Transition，缺少支持或减少动态效果时直接切换，选择保存在本地。
+- 首屏、六个场景和三张原则纸页均使用为本项目绘制的原创 SVG。字体本地托管；中文 UI 子集覆盖 444 个请求字符，来源、哈希与 OFL 许可保留在仓库。
+- 已加载实例保留，避免滚动时重建着色器、重播画廊。等高线仅绘静态帧；首屏光学按钮仅交互时流动，受限设备用静态替代。信息光束以真实端点间的渐变连续流动，可见时循环，离屏、后台或减少动态效果时停止；边光和文字仍为有限入场。
+- 顶部 Dock 为图标单行，悬停/键盘聚焦显示 tooltip，完整图标容器按距离弹簧放大；高度为 54px，手机为 50px。821px 头部为 74px 单行，390px 为 108px 两行，内外圆角按同一中心计算。深色切换通过圆形 View Transition，不支持或减少动态效果时直接切换，选择保存在本地。
 - 不增加阻塞式载入动画：现阶段优先减少运行期开销，内容直接显示。性能取样及已知验证范围见 `docs/qa.md`。
 
 ## 产品事实与提交日历
@@ -40,9 +42,9 @@ npm run preview
 npm run update:activity
 ```
 
-开发与生产预览内置只读 `/api/activity`：公开 GitHub API、固定分支 SHA 分页、10 分钟缓存，无令牌。默认图显示近 30 天每日提交；90 天视图明确按周汇总，保留真实零值和日期。离线回退真实快照，不添加页面小字说明。现有脚本仍可更新 365 天备用数据；上线 Node 服务时挂载 `server/activity.mjs` 的 handler，纯静态 `dist/` 需要另配此接口。详见 [数据口径](docs/activity-data.md)。
+开发与生产预览内置只读 `/api/activity`：公开 GitHub API、固定分支 SHA 分页、10 分钟缓存，无令牌。Arc 热力图显示近 90 个实际日期：90 个数据格、7 行、当前范围 14 个周列；月标、星期标和 tooltip 保留真实日期、次数和零值。离线回退真实快照，不添加页面小字说明。现有脚本仍可更新 365 天备用数据；上线 Node 服务时挂载 `server/activity.mjs` 的 handler，纯静态 `dist/` 需要另配此接口。详见 [数据口径](docs/activity-data.md)。
 
-原版对照、桌面和手机验收记录见 `docs/qa.md`。浏览器过程文件保存在忽略的 `output/playwright/`；交付截图保存在 `docs/qa/`。
+原版对照及各阶段验收记录见 `docs/qa.md`。旧数字日历、Prompt 终端和有限信息光束的 QA 仅记录历史状态；当前验收与截图见 [本轮参考复核](docs/reference-refinement-2026-10-26.md)。浏览器过程文件保存在忽略的 `output/playwright/`；交付截图保存在 `docs/qa/`。
 
 连续渲染回归：在 dev 服务中打开 `http://127.0.0.1:5173/tests/physics-render.html`，自动检查真实画布清空、透明度、鼠标眼神、动画残影及 WebGL 显示密度更新。该测试页不包含在生产构建中。
 

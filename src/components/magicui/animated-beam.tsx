@@ -1,7 +1,7 @@
 /**
  * Magic UI · MIT License · Copyright (c) Magic UI.
  * Source: https://github.com/magicuidesign/magicui/tree/efe76fc5755eca1142dd4f74c1d6f0ace2887e3c/apps/www/registry/magicui
- * Local adaptation: product CSS, finite playback and reduced-motion support.
+ * Local adaptation: scoped CSS, endpoint-based gradient travel, smooth routes and viewport/reduced-motion playback.
  * Full license is retained in licenses/Magic-UI-MIT.txt.
  */
 "use client"
@@ -34,6 +34,9 @@ export interface AnimatedBeamProps {
   /** Product playback: pause immediately when the section leaves view. */
   playing?: boolean
   vertical?: boolean
+  route?: "legacy" | "smooth"
+  beamWidth?: number
+  reducedMotion?: boolean
 }
 
 export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
@@ -58,39 +61,39 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
   endYOffset = 0,
   playing = true,
   vertical = false,
+  route = "legacy",
+  beamWidth = pathWidth,
+  reducedMotion,
 }) => {
   const id = useId()
   const controls = useAnimationControls()
-  const reduced = useReducedMotion()
+  const preference = useReducedMotion()
+  const reduced = reducedMotion ?? preference
   const [pathD, setPathD] = useState("")
   const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 })
+  const [endpoints, setEndpoints] = useState({ sx: 0, sy: 0, ex: 0, ey: 0 })
 
-  // Calculate the gradient coordinates based on the reverse prop
-  const horizontalCoordinates = reverse
-    ? {
-        x1: ["90%", "-10%"],
-        x2: ["100%", "0%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
-    : {
-        x1: ["10%", "110%"],
-        x2: ["0%", "100%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
-  const gradientCoordinates = vertical ? {
-    x1: ["0%", "0%"], x2: ["0%", "0%"],
-    y1: horizontalCoordinates.x1, y2: horizontalCoordinates.x2,
-  } : horizontalCoordinates
+  // A short connection occupies only part of the full SVG. Sweep over that
+  // path's real endpoints; viewport percentages hid the pulse for most of each
+  // cycle on short wires. Keep the original gradient-driven beam technique.
+  const begin = vertical ? endpoints.sy : endpoints.sx
+  const end = vertical ? endpoints.ey : endpoints.ex
+  const sign = end >= begin ? 1 : -1
+  const band = Math.max(20, Math.abs(end - begin) * 0.32)
+  const axis = reverse
+    ? { a: [end + sign * band, begin], b: [end, begin - sign * band] }
+    : { a: [begin - sign * band, end], b: [begin, end + sign * band] }
+  const gradientCoordinates = vertical
+    ? { x1: [endpoints.sx, endpoints.sx], x2: [endpoints.sx, endpoints.sx], y1: axis.a, y2: axis.b }
+    : { x1: axis.a, x2: axis.b, y1: [endpoints.sy, endpoints.sy], y2: [endpoints.sy, endpoints.sy] }
 
   useEffect(() => {
     if (!playing || reduced) { controls.stop(); return }
     controls.start(gradientCoordinates, {
-      delay, duration, ease: [0.16, 1, 0.3, 1], repeat, repeatDelay,
+      delay, duration, ease: "linear", repeat, repeatDelay,
     })
     return () => controls.stop()
-  }, [controls, playing, reduced, vertical, reverse, delay, duration, repeat, repeatDelay])
+  }, [controls, playing, reduced, vertical, reverse, delay, duration, repeat, repeatDelay, endpoints.sx, endpoints.sy, endpoints.ex, endpoints.ey])
 
   useEffect(() => {
     const updatePath = () => {
@@ -113,10 +116,15 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
           rectB.top - containerRect.top + rectB.height / 2 + endYOffset
 
         const controlY = startY - curvature
-        const d = `M ${startX},${startY} Q ${
+        const d = route === "smooth"
+          ? vertical
+            ? `M ${startX},${startY} C ${startX},${(startY + endY) / 2} ${endX},${(startY + endY) / 2} ${endX},${endY}`
+            : `M ${startX},${startY} C ${(startX + endX) / 2},${startY} ${(startX + endX) / 2},${endY} ${endX},${endY}`
+          : `M ${startX},${startY} Q ${
           (startX + endX) / 2
         },${controlY} ${endX},${endY}`
         setPathD(d)
+        setEndpoints({ sx: startX, sy: startY, ex: endX, ey: endY })
       }
     }
 
@@ -148,6 +156,8 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
     startYOffset,
     endXOffset,
     endYOffset,
+    route,
+    vertical,
   ])
 
   return (
@@ -167,9 +177,10 @@ export const AnimatedBeam: React.FC<AnimatedBeamProps> = ({
         strokeOpacity={pathOpacity}
         strokeLinecap="round"
       />
+      {!reduced && <path d={pathD} stroke={`url(#${id})`} strokeWidth={beamWidth + 4} strokeOpacity=".18" strokeLinecap="round" />}
       {!reduced && <path
         d={pathD}
-        strokeWidth={pathWidth}
+        strokeWidth={beamWidth}
         stroke={`url(#${id})`}
         strokeOpacity="1"
         strokeLinecap="round"
