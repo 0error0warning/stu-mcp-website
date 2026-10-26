@@ -93,6 +93,10 @@
 
 截图：[默认关闭·桌面](qa/performance-default-off-desktop.png) · [默认关闭·手机](qa/performance-default-off-mobile.png)。
 
+## 详细视觉反馈与 Magic UI · 2026-10-26
+
+十一条浏览器评论及六个组件请求的逐项实现、来源、真实验证范围与新阶段截图，见 [本轮记录](feedback-2026-10-26.md)。这取代前文旧自动掉落、旧全年日历及旧按钮配色的页面状态。仓库仍为私有，仅本地运行。
+
 ## 验证范围
 
 浏览器验收为本机 Chromium 桌面及触摸模拟，尚未覆盖真实 iOS/Safari、Android 硬件和公网访问。网站展示的产品验证范围以 stu-mcp 的验证记录为准；本次没有操作真实账号、查询私人信息或提交报修。

@@ -127,6 +127,8 @@ export type ChromaticMaterialProps = {
   /** Angular size of the projected plane. Defaults to 174 degrees. */
   projectionScale?: number;
   intensity?: number;
+  /** Product adaptation: preserve a light material instead of black reflections. */
+  brightnessFloor?: number;
   grain?: number;
   seed?: number;
 };
@@ -143,6 +145,7 @@ export const chromaticDefaults = {
   feather: 95,
   projectionScale: 174,
   intensity: 1.15,
+  brightnessFloor: 0,
   grain: 0.035,
   seed: 7,
 } as const;
@@ -321,6 +324,7 @@ export function ChromaticSurface({
           'centerProjectionScale',
           'borderRadius',
           'intensity',
+          'brightnessFloor',
           'grain',
           'spread',
           'seed',
@@ -374,6 +378,7 @@ export function ChromaticSurface({
         s.borderRadius === undefined ? -1 : finite(s.borderRadius, 50, 0, 50) / 50,
       );
       gl.uniform1f(uniforms.intensity, finite(s.intensity, 1.15, 0, 3));
+      gl.uniform1f(uniforms.brightnessFloor, finite(s.brightnessFloor, 0, 0, 0.95));
       gl.uniform1f(uniforms.grain, finite(s.grain, 0.035, 0, 0.5));
       gl.uniform1f(uniforms.spread, finite(s.colorSpread, 0, 0, 2));
       gl.uniform1f(uniforms.seed, finite(s.seed, 7, 0, 65535));

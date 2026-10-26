@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createRoot } from 'react-dom/client';
+import { ArrowUpRight, Bot, Code2, Copy, FileSearch, Fingerprint } from 'lucide-react';
 import { fitGalleryCardWidth } from './gallery-fit.js';
 import { heroGroundGeometry, heroGroundY } from './hero-physics-layout.js';
 import { heroCharactersEnabled, subscribeHeroCharacters } from './hero-characters.js';
@@ -188,18 +189,27 @@ function copyInstall() {
   window.dispatchEvent(new Event('stu:copy-install'));
 }
 
-function InstallIsland() {
+function ProductButtonIsland({ install = false }) {
   const { host, active, started, reduced, constrained } = usePlayback();
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const engaged = hovered || focused;
-  const content = <><span>复制安装指令</span><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5h10v13H9zM5 9v12h10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg></>;
-  const fallback = <button type="button" className="rd-install-static" onClick={copyInstall}>{content}</button>;
-  return <div ref={host} className="rd-island rd-install-island" data-reactdrops="chromatic-button" onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true); }} onPointerLeave={() => setHovered(false)} onPointerCancel={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={() => setFocused(false)}>
+  const onClick = install ? copyInstall : () => { window.location.hash = 'install'; };
+  const content = <><span>{install ? '复制安装指令' : '试着接入'}</span>{install ? <Copy aria-hidden="true" size={20} strokeWidth={1.8} /> : <ArrowUpRight aria-hidden="true" size={21} strokeWidth={1.8} />}</>;
+  const fallback = <button type="button" className="product-chromatic rd-install-static" onClick={onClick}>{content}</button>;
+  return <div ref={host} className={`rd-island rd-install-island ${install ? 'rd-install-cta' : 'rd-hero-cta'}`} data-reactdrops="chromatic-button" onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true); }} onPointerLeave={() => setHovered(false)} onPointerCancel={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={() => setFocused(false)}>
     <Suspense fallback={fallback}>
-      {started && !reduced && !constrained ? <ChromaticButton className="rd-install-button" colorMode="gradient-3" color="#f3d26e" color2="#ddd0ef" color3="#fff4bb" speed={0.3} paused={!active || !engaged} intensity={0.8} grain={0.06} hoverEffect="spotlight" entrance="none" onClick={copyInstall}>{content}</ChromaticButton> : fallback}
+      {started && !reduced && !constrained ? <ChromaticButton className="rd-install-button product-chromatic" colorMode="gradient-3" color="#c5b8f0" color2="#a9cfea" color3="#ead9f1" brightnessFloor={0.76} speed={0.22} paused={!active || !engaged} intensity={1.08} grain={0.018} hoverEffect="brighten" entrance="none" onClick={onClick}>{content}</ChromaticButton> : fallback}
     </Suspense>
   </div>;
+}
+
+function InstallIsland() { return <ProductButtonIsland install />; }
+function HeroButtonIsland() { return <ProductButtonIsland />; }
+
+function FeatureStrip() {
+  const items = [[Bot, '你的 Agent'], [FileSearch, '真实来源'], [Fingerprint, '本地配置'], [Code2, '独立开源']];
+  return <div className="feature-strip">{items.map(([Icon, label]) => <span className="feature-item" key={label}><Icon aria-hidden="true" size={21} strokeWidth={1.65} /><span>{label}</span></span>)}</div>;
 }
 
 const islands = {
@@ -208,6 +218,8 @@ const islands = {
   'rd-gallery': GalleryIsland,
   'rd-orb': OrbIsland,
   'rd-cta': InstallIsland,
+  'rd-hero-cta': HeroButtonIsland,
+  'hero-features': FeatureStrip,
 };
 
 function mountIslands() {

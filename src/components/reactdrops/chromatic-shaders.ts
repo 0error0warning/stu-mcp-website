@@ -124,6 +124,7 @@ uniform float u_projectionScale;
 uniform float u_centerProjectionScale;
 uniform float u_borderRadius;
 uniform float u_intensity;
+uniform float u_brightnessFloor;
 uniform float u_grain;
 uniform float u_spread;
 uniform float u_seed;
@@ -285,9 +286,11 @@ void main() {
     intensity *= 1. + u_hover * .4 * exp(-dot(light, light) * 3.);
   }
   vec3 sourceHsv = rgbToHsv(sourceColor);
+  // Local light-material option. Zero preserves the original component.
+  float materialValue = u_brightnessFloor + (1. - u_brightnessFloor) * sourceHsv.z * 1.75 * intensity;
   vec3 base = rgbToHsv(u_color);
   float hue = sourceHsv.x + base.x - .81 + tile * u_spread + t * .075;
-  vec3 color = hsv(vec3(hue, sourceHsv.y * base.y, min(1., sourceHsv.z * 1.75 * intensity * base.z)));
+  vec3 color = hsv(vec3(hue, sourceHsv.y * base.y, min(1., materialValue * base.z)));
   if (u_colorMode < 2.5) {
     vec3 palette = u_color;
     if (u_colorMode > .5) {
@@ -302,7 +305,7 @@ void main() {
       }
     }
     vec3 paletteHsv = rgbToHsv(palette);
-    color = hsv(vec3(paletteHsv.xy, min(1., sourceHsv.z * 1.75 * intensity * paletteHsv.z)));
+    color = hsv(vec3(paletteHsv.xy, min(1., materialValue * paletteHsv.z)));
   }
   color += (hash(vec3(floor(pixel * 1.5), u_seed)) - .5) * u_grain * (.1 + length(color) * .15);
   gl_FragColor = vec4(max(color, 0.) * opacity, opacity);

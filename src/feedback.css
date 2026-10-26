@@ -1,0 +1,52 @@
+/* October feedback: quiet paper composition, consistent SVG marks and bright glass. */
+html { --font-body: 'Schibsted Grotesk', 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif; }
+.nav-arrow svg { width: 18px; height: 18px; stroke-width: 2; }
+.hero-features { position: relative; z-index: 3; width: min(920px, calc(100% - 64px)); margin-top: 9px; min-height: 64px; padding: 19px 0 14px; border-top: 1px solid #263b4920; }
+.feature-strip { display: grid; grid-template-columns: repeat(4, 1fr); align-items: center; gap: 20px; }
+.feature-item { display: inline-flex; align-items: center; justify-content: center; gap: 10px; color: #364b50; font-family: var(--font-body); font-size: 13px; font-weight: 500; }
+.feature-item svg { flex: none; width: 21px; height: 21px; stroke-width: 1.65; }
+#rd-hero-cta { flex: none; }
+.hero-actions { gap: 22px; }
+.hero-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; color: #3d4d51; border: 1px solid #263b4925; border-radius: 999px; min-height: 56px; padding: 14px 23px; font-size: 14px; font-weight: 500; background: #fffdf226; transition: background 180ms, border-color 180ms, transform 180ms; }
+.hero-secondary svg { width: 18px; height: 18px; }
+.hero-secondary:hover { background: #fffdf284; border-color: #263b4950; transform: translateY(-1px); }
+.rd-island .product-chromatic,
+.product-chromatic.chromatic-button:has([data-renderer='webgl']) {
+  min-width: 178px; height: 58px; min-height: 58px; padding: 0 25px; gap: 23px;
+  font-family: var(--font-body); font-size: 15px; font-weight: 600; line-height: 1.4; letter-spacing: 0;
+  color: #253348; border: 1px solid #9c8cbd60; border-radius: 999px;
+  background: linear-gradient(120deg, #e4d9fb, #d2e3ef 55%, #eee2f7);
+  box-shadow: inset 0 1px 0 #ffffffa6, 0 7px 18px -10px #55488260;
+}
+.rd-island .product-chromatic .chromatic-button-content { gap: 23px; }
+.rd-island .product-chromatic svg { width: 20px; height: 20px; flex: none; stroke-width: 1.8; }
+.rd-island .product-chromatic .chromatic-surface { border-radius: inherit; }
+.rd-island .product-chromatic:focus-visible { outline: 3px solid #8b70b9; outline-offset: 5px; }
+.rd-island .product-chromatic:hover { box-shadow: inset 0 1px 0 #ffffffbd, 0 10px 22px -12px #55488270; }
+.hero-footnote { font-size: 12px; color: #526365; }
+.ideas-grid { align-content: start; }
+.filter-exit { pointer-events: none; z-index: 4; }
+.copy-prompt > span:last-child svg { width: 17px; height: 17px; }
+.copy-prompt:hover > span:last-child { transform: translateY(-2px); }
+.filters .pill { transition: transform 320ms cubic-bezier(.2,.75,.2,1), width 320ms cubic-bezier(.2,.75,.2,1); }
+.install-sheet { padding-top: 0; }
+.mui-terminal-screen { font-family: var(--font-body); }
+.install-actions { padding-top: 0; }
+.toast::before { content: none; }
+
+@media (max-width: 760px) {
+  .hero-features { width: calc(100% - 40px); min-height: 63px; padding: 14px 0 6px; }
+  .feature-strip { gap: 7px; }
+  .feature-item { flex-direction: column; gap: 7px; font-size: 10px; }
+  .feature-item svg { width: 21px; height: 21px; }
+  .hero-actions { gap: 11px; }
+  .rd-island .product-chromatic,
+  .product-chromatic.chromatic-button:has([data-renderer='webgl']) { height: 52px; min-height: 52px; min-width: 145px; font-size: 13px; padding-inline: 20px; gap: 20px; }
+  .rd-island .product-chromatic .chromatic-button-content { gap: 20px; }
+  .hero-secondary { min-height: 52px; padding: 12px 17px; gap: 8px; font-size: 12px; }
+  .hero-secondary svg { width: 16px; height: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-secondary:hover { transform: none; }
+  .filter-exit { display: none; }
+}

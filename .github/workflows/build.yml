@@ -18,5 +18,5 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: node --test tests/ellipse-ground.test.mjs
+      - run: node --test tests/ellipse-ground.test.mjs tests/activity-data.test.mjs
       - run: npm run build

@@ -4,7 +4,7 @@
   <path d="M24 47h252" stroke="#d7d1bd"/><text x="25" y="31" fill="#62717a" font-family="Arial,sans-serif" font-size="10" letter-spacing="2">A LITTLE PRINCIPLE / 01</text>
   <g stroke="#263b49" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
     <ellipse cx="154" cy="256" rx="80" ry="11" fill="#d8cfb2" opacity=".45" stroke="none"/>
-    <g transform="rotate(-8 130 164)"><rect x="75" y="94" width="118" height="147" rx="12" fill="#e1d6bb"/><rect x="69" y="88" width="118" height="147" rx="12" fill="#fffef5"/><path d="M91 112h67M91 127h52M91 142h61" stroke="#a0a49b"/><circle cx="109" cy="170" r="4" fill="#263b49" stroke="none"/><circle cx="142" cy="170" r="4" fill="#263b49" stroke="none"/><path d="M116 185q10 10 21 0"/></g>
+    <g transform="rotate(-8 130 164)"><rect x="75" y="94" width="118" height="147" rx="12" fill="#e1d6bb"/><rect x="69" y="88" width="118" height="147" rx="12" fill="#fffef5"/><path d="M91 112h67M91 127h52M91 142h61" stroke="#a0a49b"/><circle cx="109" cy="170" r="4" fill="#263b49" stroke="none"/><circle cx="142" cy="170" r="4" fill="#263b49" stroke="none"/><path d="M116 184Q126 194 136 184" fill="none"/></g>
     <circle cx="196" cy="205" r="34" fill="url(#v)"/><circle cx="196" cy="205" r="21" fill="#f9f5ea"/><path d="m219 230 27 30" stroke-width="14"/><path d="m219 230 27 30" stroke="#d7c3ea" stroke-width="8"/><path d="m202 78 4 11 11 4-11 4-4 11-4-11-11-4 11-4Z" fill="#efd677"/>
   </g>
   <text x="150" y="307" text-anchor="middle" fill="#263b49" font-family="'Microsoft YaHei','PingFang SC',sans-serif" font-size="23" font-weight="600">来源可追溯</text>

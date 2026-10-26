@@ -5,8 +5,15 @@ import sharedDefs from './shared-defs.html?raw';
 import { illustrations } from './illustrations.js';
 import './reactdrops.jsx';
 import './motion-regions.js';
+import './activity.js';
+import { mountHeader } from './site-header.jsx';
+import { mountMagicSections } from './magic-sections.jsx';
+import './feedback.css';
+import './theme.css';
 
 document.getElementById('shared-defs').innerHTML = sharedDefs;
+mountHeader();
+mountMagicSections();
 
 const scenarios = [
   { id: '01', key: 'notice', category: 'study', name: '通知，连附件一起。', source: '通知 · PDF', color: 'oklch(.92 .065 96)', prompt: '帮我查最近相关的通知，读一下 PDF 附件，把重点和原文链接一起给我。' },
@@ -53,7 +60,9 @@ async function copyText(text, success, button) {
 }
 
 const installPrompt = document.getElementById('install-prompt').textContent.trim();
-const copyInstall = () => copyText(installPrompt, '安装指令已复制，把它发给你的 Agent。');
+let activeInstallText = installPrompt;
+window.addEventListener('stu:install-mode', event => { activeInstallText = event.detail.text; });
+const copyInstall = () => copyText(activeInstallText, '安装指令已复制。');
 document.querySelectorAll('[data-copy-install]').forEach(button => button.addEventListener('click', copyInstall));
 window.addEventListener('stu:copy-install', copyInstall);
 document.getElementById('close-copy-dialog').addEventListener('click', () => dialog.close());
@@ -77,10 +86,54 @@ function renderScenarios(filter = 'all') {
   grid.innerHTML = visible.map(s => `<article class="idea-card in" style="--idea-color:${s.color}" aria-labelledby="scenario-${s.id}">
     <div class="idea-art"><span class="idea-id">${s.id}</span><svg viewBox="0 0 200 160" aria-hidden="true">${illustrations[s.key]}</svg><span class="idea-tag">${s.source}</span></div>
     <div class="card-content"><h3 id="scenario-${s.id}">${s.name}</h3><p class="idea-description">「${s.prompt}」</p>
-    <button class="copy-prompt" type="button" data-prompt="${s.id}" aria-label="复制${s.name}的示例问句"><span class="copy-label">复制问句</span><span aria-hidden="true">↗</span></button></div>
+    <button class="copy-prompt" type="button" data-prompt="${s.id}" aria-label="复制${s.name}的示例问句"><span class="copy-label">复制问句</span><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span></button></div>
   </article>`).join('');
 }
 renderScenarios();
+
+let filterAnimations = [];
+let filterGhosts = [];
+function transitionScenarios(filter) {
+  filterAnimations.forEach(animation => animation.cancel());
+  filterGhosts.forEach(ghost => ghost.remove());
+  filterAnimations = [];
+  filterGhosts = [];
+  const before = grid.getBoundingClientRect();
+  const oldCards = [...grid.children];
+  const positions = new Map(oldCards.map(card => [card.getAttribute('aria-labelledby'), card.getBoundingClientRect()]));
+  const oldHeight = before.height;
+  const visible = new Set(scenarios.filter(s => filter === 'all' || s.category === filter).map(s => `scenario-${s.id}`));
+  if (!motionQuery.matches) {
+    for (const card of oldCards) {
+      if (visible.has(card.getAttribute('aria-labelledby'))) continue;
+      const rect = card.getBoundingClientRect();
+      const ghost = card.cloneNode(true);
+      ghost.classList.add('filter-exit');
+      ghost.removeAttribute('aria-labelledby');
+      ghost.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+      ghost.setAttribute('aria-hidden', 'true');
+      ghost.inert = true;
+      Object.assign(ghost.style, { position: 'fixed', left: `${rect.left}px`, top: `${rect.top}px`, width: `${rect.width}px`, height: `${rect.height}px`, margin: '0' });
+      document.body.append(ghost);
+      filterGhosts.push(ghost);
+      const exit = ghost.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: 150, easing: 'ease-out' });
+      exit.onfinish = () => ghost.remove();
+      filterAnimations.push(exit);
+    }
+  }
+  renderScenarios(filter);
+  if (motionQuery.matches) return;
+  [...grid.children].forEach((card, index) => {
+    const key = card.getAttribute('aria-labelledby');
+    const current = card.getBoundingClientRect();
+    const previous = positions.get(key);
+    const frames = previous ? [{ transform: `translate(${previous.left - current.left}px, ${previous.top - current.top}px)`, opacity: 1 }, { transform: 'translate(0, 0)', opacity: 1 }]
+      : [{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'translateY(0)', opacity: 1 }];
+    filterAnimations.push(card.animate(frames, { duration: 320, delay: previous ? 0 : index * 25, easing: 'cubic-bezier(.2,.75,.2,1)' }));
+  });
+  const newHeight = grid.getBoundingClientRect().height;
+  if (Math.abs(oldHeight - newHeight) > 1) filterAnimations.push(grid.animate([{ height: `${oldHeight}px` }, { height: `${newHeight}px` }], { duration: 340, easing: 'cubic-bezier(.2,.75,.2,1)' }));
+}
 grid.addEventListener('click', event => {
   const button = event.target.closest('[data-prompt]');
   if (!button) return;
@@ -95,8 +148,9 @@ function movePill() {
   filterPill.style.transform = `translateX(${active.offsetLeft}px)`;
 }
 document.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
+  if (button.getAttribute('aria-pressed') === 'true') return;
   document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-  renderScenarios(button.dataset.filter);
+  transitionScenarios(button.dataset.filter);
   movePill();
 }));
 addEventListener('resize', movePill);
@@ -142,84 +196,3 @@ document.querySelectorAll('.faq-list details').forEach(details => details.addEve
   if (!details.open) return;
   document.querySelectorAll('.faq-list details').forEach(other => { if (other !== details) other.open = false; });
 }));
-
-async function loadActivity() {
-  const summary = document.getElementById('activity-summary');
-  const calendar = document.getElementById('activity-calendar');
-  const detail = document.getElementById('activity-detail');
-  try {
-    const response = await fetch('/data/activity.json');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    if (!Array.isArray(data.days) || data.days.length === 0) throw new Error('No daily data');
-    summary.textContent = `过去一年，${data.totalCommits} 次提交，${data.activeDays} 个活跃日。`;
-    const dayStart = new Date(`${data.days[0].date}T00:00:00Z`);
-    const offset = (dayStart.getUTCDay() + 6) % 7;
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < offset; i++) {
-      const pad = document.createElement('span');
-      pad.className = 'calendar-pad';
-      fragment.append(pad);
-    }
-    const max = Math.max(...data.days.map(d => d.count), 1);
-    const buttons = [];
-    for (const day of data.days) {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'calendar-day';
-      button.dataset.level = day.count === 0 ? 0 : Math.min(4, Math.ceil(day.count / max * 4));
-      const label = `${day.date}：${day.count} 次仓库提交`;
-      button.setAttribute('aria-label', label);
-      button.setAttribute('aria-pressed', 'false');
-      button.title = label;
-      button.tabIndex = -1;
-      button.addEventListener('click', () => {
-        buttons.forEach(b => { b.setAttribute('aria-pressed', String(b === button)); b.tabIndex = b === button ? 0 : -1; });
-        detail.textContent = `${label}。统计口径：main 分支、提交者日期（UTC）。`;
-      });
-      buttons.push(button);
-      fragment.append(button);
-    }
-    buttons.at(-1).tabIndex = 0;
-    calendar.replaceChildren(fragment);
-    calendar.addEventListener('keydown', e => {
-      const index = buttons.indexOf(document.activeElement);
-      if (index === -1) return;
-      const delta = { ArrowLeft: -7, ArrowRight: 7, ArrowUp: -1, ArrowDown: 1 }[e.key];
-      let next = delta === undefined ? undefined : Math.min(buttons.length - 1, Math.max(0, index + delta));
-      if (e.key === 'Home') next = 0;
-      if (e.key === 'End') next = buttons.length - 1;
-      if (next === undefined) return;
-      e.preventDefault();
-      buttons[index].tabIndex = -1;
-      buttons[next].tabIndex = 0;
-      buttons[next].focus();
-    });
-    const months = document.createElement('div');
-    months.className = 'calendar-months';
-    months.setAttribute('aria-hidden', 'true');
-    let lastMonth = -1;
-    data.days.forEach((day, i) => {
-      const date = new Date(`${day.date}T00:00:00Z`);
-      if (date.getUTCMonth() === lastMonth) return;
-      lastMonth = date.getUTCMonth();
-      // Omit a partial first month that shares its only week with the next one.
-      if (i === 0 && date.getUTCDate() > 24) return;
-      const label = document.createElement('span');
-      label.textContent = `${lastMonth + 1}月`;
-      label.style.gridColumn = `${Math.floor((i + offset) / 7) + 1}`;
-      months.append(label);
-    });
-    calendar.before(months);
-    const updated = new Date(data.generatedAt).toLocaleDateString('zh-CN', { timeZone: 'UTC' });
-    document.getElementById('activity-updated').textContent = `快照更新于 ${updated} · UTC`;
-    detail.textContent = `${data.dateRange.start} — ${data.dateRange.end}。仅该仓库提交，不代表个人 GitHub 全站贡献。`;
-    const scroller = document.querySelector('.activity-scroll');
-    scroller.scrollLeft = scroller.scrollWidth;
-  } catch {
-    summary.textContent = '暂无可用的提交数据';
-    document.getElementById('activity-updated').textContent = '请稍后再试，或直接查看 GitHub';
-    detail.textContent = '这里仅显示真实仓库数据。';
-  }
-}
-loadActivity();

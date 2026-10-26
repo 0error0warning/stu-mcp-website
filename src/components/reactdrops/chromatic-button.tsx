@@ -182,6 +182,7 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
       feather = chromaticButtonDefaults.feather,
       projectionScale = chromaticButtonDefaults.projectionScale,
       intensity = chromaticButtonDefaults.intensity,
+      brightnessFloor = chromaticButtonDefaults.brightnessFloor,
       grain = chromaticButtonDefaults.grain,
       borderRadius = chromaticButtonDefaults.borderRadius,
       hoverEffect = chromaticButtonDefaults.hoverEffect,
@@ -374,6 +375,7 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
               projectedScale -
               (chromaticButtonDefaults.projectionScale - chromaticDefaults.projectionScale),
             intensity,
+            brightnessFloor,
             grain,
             seed,
           }}

@@ -32,3 +32,27 @@ connection dashes play during hover/focus, and mobile header/sign/bar no longer
 sample blurred backgrounds. The external
 collector SVG retains its original self-contained animation and reduced-motion
 handling; the parent viewport controller does not control that image document.
+
+2026-10-26 detailed feedback revision:
+
+Visual thesis: keep the illustrated cream/yellow poster and paper gallery,
+with clear ink SVG marks and a light lavender/blue glass action color.
+Content: poster → questions → source beams → evidence → principles → recent
+repository activity → Agent/terminal installation → FAQ.
+Interaction thesis: a genuinely centered Magic UI Dock, smooth card filtering,
+finite source and border beams, one-time small-text entrances, bright ReactDrops
+Chromatic actions, and a circular light/dark theme transition.
+
+The four feature glyphs and glass box are replaced by a quiet SVG feature strip.
+Chinese UI text now uses a self-hosted Noto Sans SC subset. Duplicate defensive
+footnotes and the year-wide contribution surface are removed. Activity shows
+real 30-day counts or explicitly weekly 90-day totals; it requests a cached
+same-origin public GitHub endpoint. No authentication/account query is added.
+The terminal switches between the exact Agent prompt and documented v0.7.1
+wheel installation/setup commands. The action copies the currently selected
+complete text even while the visual type-in is incomplete.
+
+Magic UI source is pinned and MIT notices retained. The two Chromatic Buttons
+share a palette and use an optional shader brightness floor; default zero
+preserves the original material. The original gallery mouth path explicitly
+has no fill, preventing the implicit black closing triangle.

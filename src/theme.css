@@ -1,0 +1,119 @@
+/* The night palette keeps warm paper highlights and the original illustrations. */
+html { color-scheme: light; }
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-background: #171e21;
+  --color-surface: #212a2d;
+  --color-text: #f4efdf;
+  --color-text-soft: #d4d7cf;
+  --color-muted: #a7b2b3;
+  --color-line: #3b484a;
+  --color-line-soft: #303c3f;
+  --color-accent: #f2d475;
+  --color-accent-deep: #d5b758;
+  --color-violet: #c2aedb;
+  --mb-path: #b6b9a4;
+  --activity-surface: #202a2d;
+  --activity-empty: #303c3f;
+  --activity-cell-text: #edf0df;
+  --activity-level-1: #655f3c;
+  --activity-level-2: #9c8b48;
+  --activity-level-3: #c3ab57;
+  --activity-level-4: #edd480;
+  --activity-level-4-text: #263331;
+  --shadow-soft: 0 1px 2px #00000018, 0 8px 24px -8px #00000040;
+  --shadow-lift: 0 2px 4px #00000020, 0 24px 48px -16px #00000070;
+  background: var(--color-background);
+  color: var(--color-text);
+}
+html[data-theme="dark"] body { background: var(--color-background); }
+html[data-theme="dark"] ::selection { background: #e4c762; color: #192329; }
+html[data-theme="dark"] :focus-visible { outline-color: #c2a9ea; }
+html[data-theme="dark"] .section-lede,
+html[data-theme="dark"] .eyebrow { color: var(--color-muted); }
+html[data-theme="dark"] .site-header.scrolled {
+  background: #1c2528f5;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+html[data-theme="dark"] .magic-dock { background: #222d30f5; border-color: #c7d1c025; box-shadow: 0 3px 16px -8px #0008; }
+html[data-theme="dark"] .site-header #md-dock .magic-dock-link { color: #c1cac6; }
+html[data-theme="dark"] .site-header #md-dock .magic-dock-link:hover,
+html[data-theme="dark"] .site-header #md-dock .magic-dock-link[aria-current="location"] { color: #f7e7ab; background: #f4d76a16; }
+html[data-theme="dark"] .theme-toggle { background: #252f31; border-color: #c7d1c030; color: #efd995; }
+html[data-theme="dark"] .theme-toggle:hover { background: #343c34; border-color: #efd99550; }
+html[data-theme="dark"] .quest-link { background: #eee9d8; color: #233237; box-shadow: 0 6px 18px -8px #0008; }
+html[data-theme="dark"] .nav-arrow { color: #283631; }
+html[data-theme="dark"] .hero-full { background: linear-gradient(180deg, #1a2428 0%, #25302d 38%, #343b2f 70%, #494630 100%); }
+html[data-theme="dark"] .hero-full::before { opacity: .4; background-image: linear-gradient(#d9d5a817 1px, transparent 1px), linear-gradient(90deg, #d9d5a817 1px, transparent 1px); }
+html[data-theme="dark"] .hero-full .cloud { background: #d1ac51; opacity: .06; }
+html[data-theme="dark"] .hero-full .cloud.c5 { background: #c3a7dc; opacity: .04; }
+html[data-theme="dark"] #rd-topography { opacity: .22; filter: brightness(2.1); }
+html[data-theme="dark"] .hero-full .horizon { background: radial-gradient(ellipse 50% 40% at 50% 0%, #8b7c46, #514b34 70%); box-shadow: 0 -1px 0 #f6e1a24f, 0 -24px 70px #e3ba4c12; }
+html[data-theme="dark"] .hero-full .open-sign,
+html[data-theme="dark"] .hero-full .chip { color: #eee8d2; background: #2a3532; border-color: #eee8d225; box-shadow: 0 8px 20px -10px #0009; }
+html[data-theme="dark"] .hero-full .hero-bar { background: #28332cbb; border-color: #e7dda340; box-shadow: 0 12px 30px -22px #0009; }
+html[data-theme="dark"] .hero-bar-item { color: #eee7ca; }
+html[data-theme="dark"] .hero-bar-item:not(:last-child) { border-color: #e7dda325; }
+html[data-theme="dark"] .hero-features { border-color: #eee7ca30; }
+html[data-theme="dark"] .feature-item { color: #eee7ca; }
+html[data-theme="dark"] .hero-secondary { color: #ede6ca; background: #e9e2bc12; border-color: #e7dda34d; }
+html[data-theme="dark"] .hero-secondary:hover { background: #e9e2bc24; border-color: #e7dda380; }
+html[data-theme="dark"] .hero-footnote { color: #bfc6b9; }
+html[data-theme="dark"] .primary-button { color: #202b2d; background: #f4df98; }
+html[data-theme="dark"] .primary-button .ico { background: #1f3034; color: #f4df98; }
+html[data-theme="dark"] .availability { color: #ddd9c5; background: #243034; }
+html[data-theme="dark"] .filters { background: #2b373a; }
+html[data-theme="dark"] .filters .pill { background: #465448; }
+html[data-theme="dark"] .filters button { color: #b8c1be; }
+html[data-theme="dark"] .filters button[aria-pressed="true"] { color: #fff5d2; }
+html[data-theme="dark"] .idea-card { border-color: #465052; }
+/* Keep ink dark on the intentionally light artwork; the card's text remains light. */
+html[data-theme="dark"] .idea-art { --color-text: #263b49; --color-surface: #fffcf1; color: #263b49; }
+html[data-theme="dark"] .idea-card::after { background: radial-gradient(420px circle at var(--mx) var(--my), #f0d66c10, transparent 45%); }
+html[data-theme="dark"] .copy-prompt > span:last-child { color: #263b49; }
+html[data-theme="dark"] .connection-scene { background: radial-gradient(ellipse at 50% 60%, #f6d97f0c, transparent 65%); }
+html[data-theme="dark"] .source-piece,
+html[data-theme="dark"] .connection-hub { background: #253135; color: #ece8d9; border-color: #64706b; box-shadow: 4px 5px 0 #111a1d; }
+html[data-theme="dark"] .source-piece:nth-child(2) { background: #35303e; }
+html[data-theme="dark"] .source-piece:last-child { background: #2a3b34; }
+html[data-theme="dark"] .connection-lines { stroke: #aeb4a04d; }
+html[data-theme="dark"] .connection-dashes { stroke: #c7a6eb; }
+html[data-theme="dark"] .dark { background: #1f292d; color: #f4efdf; border: 1px solid #60684a4d; }
+html[data-theme="dark"] .dark .eyebrow,
+html[data-theme="dark"] .dark .section-lede { color: #b7c0bb; }
+html[data-theme="dark"] .stage p { color: #b7c0bb; }
+html[data-theme="dark"] .principles-list { color: #eee9d8; }
+html[data-theme="dark"] .activity-panel { background: #202a2d; border-color: #445052; }
+html[data-theme="dark"] .activity-day:is([data-level="2"], [data-level="3"]) { color: #101a1c; }
+html[data-theme="dark"] .calendar-day,
+html[data-theme="dark"] .calendar-legend i { --cell: #303c3f; border-color: #f0e9c608; }
+html[data-theme="dark"] .calendar-day[data-level="1"],
+html[data-theme="dark"] .calendar-legend i[data-level="1"] { --cell: #655f3c; }
+html[data-theme="dark"] .calendar-day[data-level="2"],
+html[data-theme="dark"] .calendar-legend i[data-level="2"] { --cell: #9c8b48; }
+html[data-theme="dark"] .calendar-day[data-level="3"],
+html[data-theme="dark"] .calendar-legend i[data-level="3"] { --cell: #c3ab57; }
+html[data-theme="dark"] .calendar-day[data-level="4"],
+html[data-theme="dark"] .calendar-legend i[data-level="4"] { --cell: #edd480; }
+html[data-theme="dark"] .calendar-day:hover,
+html[data-theme="dark"] .calendar-day:focus-visible,
+html[data-theme="dark"] .calendar-day[aria-pressed="true"] { box-shadow: 0 0 0 2px #202a2d, 0 0 0 3px #c5a2e4; }
+html[data-theme="dark"] .release-badge { background: #3b3345; color: #d0b9e8; }
+html[data-theme="dark"] .install-sheet { background: #222d2f; border-color: #625f4a; box-shadow: 0 6px 0 -2px #343b30, 0 7px 0 -2px #625f4a, 0 18px 32px -22px #0009; }
+html[data-theme="dark"] .sheet-top { border-color: #6b6d53; }
+html[data-theme="dark"] .copy-mini:hover { background: #394138; }
+html[data-theme="dark"] #install-prompt { color: #e0dfcf; }
+html[data-theme="dark"] .footer-doodle { color: #d8c88e; }
+html[data-theme="dark"] .toast { color: #f4efdf; background: #354246; border-color: #eadc9d30; }
+html[data-theme="dark"] dialog { background: #222d2f; }
+html[data-theme="dark"] dialog textarea { color: #e0dfcf; background: #172326; border-color: #515f5b; }
+html[data-theme="dark"] .site-footer::after { opacity: .12; }
+html[data-theme="dark"] .skip-link { background: #f3d77d; color: #243336; }
+
+/* Third-party imagery stays in its paper colors; only surrounding UI changes. */
+html[data-theme="dark"] .rd-gallery-island .fan-gallery-card { box-shadow: 0 5px 10px #0002, 0 22px 40px -20px #000b; }
+
+@media (prefers-reduced-motion: reduce) {
+  html::view-transition-group(root), html::view-transition-new(root), html::view-transition-old(root) { animation: none !important; }
+}

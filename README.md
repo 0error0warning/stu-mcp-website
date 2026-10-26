@@ -16,18 +16,20 @@ npm run build
 npm run preview
 ```
 
-没有后端、登录表单或在线 MCP 查询。场景交互只复制示例问句；安装按钮复制公开安装 prompt。
+场景交互复制示例问句，安装区可复制 Agent 安装 prompt 或已核实的终端命令。没有登录表单或在线 MCP 查询；唯一站点接口 `/api/activity` 只读取公开仓库提交。
 
 ## 设计与实现
 
 - Side Quest Adoption Center 是真实源码底稿，原件保存在 `reference/side-quest/`。保留其 OKLCH 配色、排版、插画舞台、胶囊控件、颗粒与交互节奏。
-- 主页面为 HTML + 原生 CSS/JS，Vite 构建。五个真实 ReactDrops 组件以 React islands 接入：Topographic Flow、Shape Physics、Fan Gallery、Liquid Glass Orb、Chromatic Button。
+- 主页面为 HTML + 原生 CSS/JS，Vite 构建。ReactDrops 用于等高线、纸页画廊和两处光学按钮；物理角色默认关闭，原光球源码保留但不再挂载。
+- 六个 Magic UI 官方源码适配：Dock、Animated Beam、Terminal、Border Beam、Animated Theme Toggler、Text Animate。固定于 `efe76fc5755eca1142dd4f74c1d6f0ace2887e3c`，保留 MIT 许可；搭配 Lucide SVG 图标与本地中文界面字体。
 - ReactDrops 固定于 `b3924b92ebfce15152cf6f04ad85301c9f343672`，只保留实际使用的源文件。它们使用自定义 Component License，不是 MIT。详见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库不是可重发的组件库或模板。
-- 本地补丁修复透明画布清屏和按钮的显示密度更新；画廊按全部选中状态拟合宽度，物理画布覆盖首屏并对齐实际黄色弧面。
+- 本地补丁修复透明画布清屏和按钮的显示密度更新，新增可选亮度下限避免光学按钮大面积发黑；画廊按全部选中状态拟合宽度，物理画布覆盖首屏并对齐实际黄色弧面。
 - 小角色掉落默认关闭：不挂载物理场、不加载物理引擎，也没有静态角色占位。未来按钮可调用 `src/hero-characters.js` 的 `setHeroCharactersEnabled(true)` 开启，传 `false` 关闭；目前没有添加开启按钮。
 - 保留的可选物理场覆盖整个首屏，黄色椭圆上弧是真实碰撞地面；角色从顶部落下、向两侧滑滚。60% 跟随鼠标，数量为手机 4 / 中屏 6 / 大屏最多 10。启用后滚动或切后台暂停、返回续场景；关闭后释放，重新启用换种子。
 - 首屏、六个场景和三张原则纸页均使用为本项目绘制的原创 SVG。字体本地托管，来源、哈希与 OFL 许可保留在仓库。
-- 组件首次接近视口时懒加载，已加载实例保留，避免滚动时重建着色器、重播画廊。等高线仅绘静态帧；光球和安装按钮只在悬停或聚焦时流动，手机/省流量/低核心设备采用静态替代。卡片插画与连接虚线仅交互时运动，离屏或后台暂停；大块模糊云层静止。减少动态效果模式使用静态替代。
+- 组件首次接近视口时懒加载，已加载实例保留，避免滚动时重建着色器、重播画廊。等高线仅绘静态帧；光学按钮仅交互时流动，手机/省流量/低核心设备用静态替代。信息光束、卡片边光和文字只做有限入场；离屏、后台和减少动态效果模式停止动态效果。
+- 顶部 Dock 在各尺寸按页面中心定位；窄屏两行布局。深色切换通过圆形 View Transition，缺少支持或减少动态效果时直接切换，选择保存在本地。
 - 不增加阻塞式载入动画：现阶段优先减少运行期开销，内容直接显示。性能取样及已知验证范围见 `docs/qa.md`。
 
 ## 产品事实与提交日历
@@ -38,7 +40,7 @@ npm run preview
 npm run update:activity
 ```
 
-脚本通过公开 GitHub API 更新 `public/data/activity.json`，不使用令牌。统计指定默认分支快照的过去 365 个 UTC 日期，按 `commit.committer.date` 汇总；不是个人全站贡献。刷新失败保留旧快照，前端标注更新时间。详见 [数据口径](docs/activity-data.md)。
+开发与生产预览内置只读 `/api/activity`：公开 GitHub API、固定分支 SHA 分页、10 分钟缓存，无令牌。默认图显示近 30 天每日提交；90 天视图明确按周汇总，保留真实零值和日期。离线回退真实快照，不添加页面小字说明。现有脚本仍可更新 365 天备用数据；上线 Node 服务时挂载 `server/activity.mjs` 的 handler，纯静态 `dist/` 需要另配此接口。详见 [数据口径](docs/activity-data.md)。
 
 原版对照、桌面和手机验收记录见 `docs/qa.md`。浏览器过程文件保存在忽略的 `output/playwright/`；交付截图保存在 `docs/qa/`。
 

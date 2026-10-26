@@ -1,0 +1,13 @@
+{
+  "repository": "magicuidesign/magicui",
+  "commit": "efe76fc5755eca1142dd4f74c1d6f0ace2887e3c",
+  "paths": [
+    "apps/www/registry/magicui/animated-beam.tsx",
+    "apps/www/registry/magicui/animated-theme-toggler.tsx",
+    "apps/www/registry/magicui/border-beam.tsx",
+    "apps/www/registry/magicui/dock.tsx",
+    "apps/www/registry/magicui/terminal.tsx",
+    "apps/www/registry/magicui/text-animate.tsx"
+  ],
+  "licensePath": "LICENSE.md"
+}

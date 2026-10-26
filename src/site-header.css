@@ -1,0 +1,108 @@
+/* Fixed Dock slots keep its visual center independent of brand/action widths. */
+.site-header .header-inner {
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+}
+.site-header .header-inner > .brand { grid-column: 1; justify-self: start; }
+.site-header #md-dock {
+  display: block;
+  grid-column: 2;
+  justify-self: center;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+}
+.site-header .header-actions { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: 12px; }
+.hero-full { margin-top: -92px; padding-top: 130px; }
+.magic-dock {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 9px 6px;
+  border: 1px solid #263b491a;
+  border-radius: 23px;
+  background: #fffef5e8;
+  box-shadow: 0 3px 12px -8px #263b4933;
+}
+.site-header #md-dock .magic-dock-link {
+  width: 68px;
+  min-height: 56px;
+  padding: 0 2px 1px;
+  display: grid;
+  grid-template-rows: 35px auto;
+  align-items: center;
+  justify-items: center;
+  gap: 4px;
+  border-radius: 14px;
+  background: transparent;
+  text-decoration: none;
+  color: #4e5d64;
+  transition: color 160ms, background-color 160ms;
+}
+.magic-dock-icon-space { height: 35px; width: 44px; display: grid; place-items: center; }
+.magic-dock-icon { display: grid; place-items: center; border-radius: 50%; }
+.magic-dock-icon > svg { display: block; width: 56%; height: 56%; stroke-width: 1.65; }
+.magic-dock-label { white-space: nowrap; font-size: 11px; line-height: 1.35; font-weight: 600; }
+.site-header #md-dock .magic-dock-link:hover,
+.site-header #md-dock .magic-dock-link[aria-current="location"] { color: #213440; background: #f7e6a44d; }
+.site-header #md-dock .magic-dock-link:focus-visible { outline: 2px solid #9075b1; outline-offset: 2px; }
+#md-theme { display: grid; place-items: center; width: 40px; height: 40px; flex: none; }
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid #263b4922;
+  border-radius: 50%;
+  background: #fffef5db;
+  color: #263b49;
+  transition: background-color 160ms, border-color 160ms;
+}
+.theme-toggle:hover { background: #f8ecb9; border-color: #263b4940; }
+.theme-toggle > svg { width: 20px; height: 20px; stroke-width: 1.75; }
+
+/* At narrow widths all four destinations stay present in a compact second row. */
+@media (min-width: 1600px) { .hero-full { padding-top: 144px; } }
+@media (max-width: 980px) {
+  .site-header .header-inner {
+    min-height: 126px;
+    padding-block: 12px 9px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    row-gap: 9px;
+  }
+  .site-header .header-inner > .brand { grid-column: 1; grid-row: 1; }
+  .site-header .header-actions { grid-column: 2; grid-row: 1; }
+  .site-header #md-dock { grid-column: 1 / -1; grid-row: 2; }
+  .magic-dock { gap: 3px; padding: 4px 7px; border-radius: 19px; }
+  .site-header #md-dock .magic-dock-link { width: 66px; min-height: 44px; grid-template-rows: 25px auto; gap: 1px; }
+  .magic-dock-icon-space { height: 25px; width: 38px; }
+  .magic-dock-icon > svg { width: 49%; height: 49%; }
+  .magic-dock-label { font-size: 10px; }
+  html { scroll-padding-top: 146px; }
+  .hero-full { margin-top: -126px; padding-top: 160px; }
+}
+@media (max-width: 480px) {
+  .site-header .header-inner { width: calc(100% - 32px); }
+  .site-header .brand { font-size: 21px; gap: 7px; }
+  .site-header .brand-sub { font-size: 6px; letter-spacing: .12em; }
+  .site-header .header-actions { gap: 8px; }
+  #md-theme, .theme-toggle { width: 34px; height: 34px; }
+  .site-header .quest-link { font-size: 10px; padding-left: 11px; gap: 7px; }
+  .site-header .nav-arrow { width: 25px; height: 25px; }
+}
+
+/* Magic UI's circular reveal is finite and runs only after an explicit toggle. */
+html[data-magicui-theme-vt="active"]::view-transition-group(root) { animation-duration: var(--magicui-theme-toggle-vt-duration); }
+html[data-magicui-theme-vt="active"]::view-transition-old(root),
+html[data-magicui-theme-vt="active"]::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+html[data-magicui-theme-vt="active"]::view-transition-new(root) { clip-path: var(--magicui-theme-vt-clip-from); z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .magic-dock *, .theme-toggle { transition: none !important; }
+}
