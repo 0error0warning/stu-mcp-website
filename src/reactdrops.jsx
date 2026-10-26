@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { fitGalleryCardWidth } from './gallery-fit.js';
 import './reactdrops.css';
 
 // ReactDrops source: b3924b92ebfce15152cf6f04ad85301c9f343672.
@@ -27,7 +28,7 @@ function usePlayback() {
   const [visible, setVisible] = useState(false);
   const [foreground, setForeground] = useState(!document.hidden);
   const reduced = useMedia('(prefers-reduced-motion: reduce)');
-  const mobile = useMedia('(max-width: 600px)');
+  const mobile = useMedia('(max-width: 760px)');
   useEffect(() => {
     if (!host.current) return;
     const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { rootMargin: '64px' });
@@ -72,11 +73,13 @@ function StillShapes() {
 
 function PhysicsIsland() {
   const { host, active, constrained, mobile } = usePlayback();
-  const count = mobile ? 1 : constrained ? 2 : 3;
+  const phone = useMedia('(max-width: 480px)');
+  const count = phone ? 3 : mobile ? 4 : constrained ? 5 : 7;
+  const size = phone ? 22 : mobile ? 27 : 34;
   return <div ref={host} className="rd-island rd-physics-island" data-reactdrops="shape-physics">
     <Suspense fallback={<StillShapes />}>
       {active ? ['left', 'right'].map((side, i) => <div key={side} className={`rd-physics-lane rd-physics-${side}`}>
-        <ShapePhysics height="100%" count={count} size={mobile ? 24 : 39} sizeVariation={0.2} shape={i === 0 ? 'cloud' : 'mixed'} depth="3d" colors={['#d4bfeb', '#e8cbad', '#f1d46d', '#c8d9b8', '#bfcbd9']} background="transparent" faceColor="#263b49" gravity={520} restitution={0.48} friction={0.55} spin={0.45} spawnRate={4} appearanceDuration={0.7} followCursor={false} interactive={!mobile} seed={1477 + i} aria-label={mobile ? '会轻轻落下的几何小角色' : `${i === 0 ? '左' : '右'}侧几何小角色：可拖动；按 Enter 添加，按 R 重新排列`} />
+        <ShapePhysics height="100%" count={count} size={size} sizeVariation={0.16} shape="mixed" depth="3d" colors={['#d4bfeb', '#e8cbad', '#f1d46d', '#c8d9b8', '#bfcbd9']} background="transparent" faceColor="#263b49" gravity={420} restitution={0.48} friction={0.55} spin={0.45} spawnRate={4} appearanceDuration={0.55} followCursor={true} cursorFollowRatio={1} interactive={!mobile} seed={1477 + i} aria-label={mobile ? '会轻轻落下、用眼睛跟随鼠标的几何小角色' : `${i === 0 ? '左' : '右'}侧几何小角色：眼睛跟随鼠标，可拖动；按 Enter 添加，按 R 重新排列`} />
       </div>) : <StillShapes />}
     </Suspense>
   </div>;
@@ -94,9 +97,21 @@ function StillGallery() {
 
 function GalleryIsland() {
   const { host, active, mobile } = usePlayback();
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const element = host.current;
+    if (!element) return;
+    const measure = () => setWidth(Math.floor(element.clientWidth));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [host]);
+  const lift = mobile ? 18 : 26;
+  const cardWidth = fitGalleryCardWidth(width, mobile ? 140 : 210, lift);
   return <div ref={host} className="rd-island rd-gallery-island" data-reactdrops="fan-gallery">
     <Suspense fallback={<StillGallery />}>
-      {active ? <FanGallery items={galleryItems} trigger="auto" entrance="stack" cardWidth={mobile ? 140 : 210} aspectRatio={0.78} spacing={0.55} curve={0.2} tilt={8} lift={mobile ? 18 : 26} spread={0.08} radius={20} speed={0.65} stagger={0.08} bounce={0.18} ariaLabel="三个开源原则，轻触纸页展开" /> : <StillGallery />}
+      {active && width > 0 ? <FanGallery items={galleryItems} trigger="auto" entrance="stack" cardWidth={cardWidth} aspectRatio={0.78} spacing={0.55} curve={0.2} tilt={8} lift={lift} spread={0.08} radius={20} speed={0.65} stagger={0.08} bounce={0.18} ariaLabel="三个开源原则，轻触纸页展开" /> : <StillGallery />}
     </Suspense>
   </div>;
 }

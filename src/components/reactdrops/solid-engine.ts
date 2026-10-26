@@ -535,6 +535,11 @@ export function createSolidEngine(
       ctx!.rect(region.x0, region.y0, region.x1 - region.x0, region.y1 - region.y0);
       ctx!.clip();
     }
+    // Local fix: source-over with a transparent/translucent fill cannot erase
+    // an old frame. Clear the same device-aligned dirty region before repainting
+    // so moving silhouettes and changing eyes leave no trails or clipped seams.
+    if (region) ctx!.clearRect(region.x0, region.y0, region.x1 - region.x0, region.y1 - region.y0);
+    else ctx!.clearRect(0, 0, width, height);
     ctx!.fillStyle = background;
     if (region) ctx!.fillRect(region.x0, region.y0, region.x1 - region.x0, region.y1 - region.y0);
     else ctx!.fillRect(0, 0, width, height);
@@ -895,10 +900,11 @@ export function createSolidEngine(
 
   /**
    * Low-power devices: if busy frames stay slow (frame interval includes the
-   * browser's rasterization, not just our script), drop to 1x pixels.
+   * browser's rasterization, not just our script), cap very dense displays at
+   * 2x. Keep small faces sharp rather than degrading them to 1x pixels.
    */
   function adapt(interval: number, cost: number) {
-    if (lowPower || ratio <= 1 || !world.awakeCount) return;
+    if (lowPower || ratio <= 2 || !world.awakeCount) return;
     costAverage += Math.max(interval, cost);
     if (++costFrames < 40) return;
     if (costAverage / costFrames > 24) {
@@ -958,7 +964,9 @@ export function createSolidEngine(
       stop();
       return;
     }
-    const nextRatio = lowPower ? 1 : Math.min(devicePixelRatio || 1, 2);
+    // These small curved characters benefit from 2x supersampling even on a
+    // 1x display. High-density displays retain up to 3x; adaptation floors at 2x.
+    const nextRatio = Math.min(Math.max(devicePixelRatio || 1, 2), lowPower ? 2 : 3);
     if (nextRatio !== ratio) sprites.clear();
     ratio = nextRatio;
     if (width && height && (width !== nextWidth || height !== nextHeight)) {
@@ -979,6 +987,8 @@ export function createSolidEngine(
     canvas.dataset.shapeRatio = String(ratio);
     canvas.width = Math.round(width * ratio);
     canvas.height = Math.round(height * ratio);
+    ctx!.imageSmoothingEnabled = true;
+    ctx!.imageSmoothingQuality = 'high';
     full = false;
     relieveOverflow();
     refreshLimits();

@@ -35,7 +35,6 @@ button:disabled { cursor: wait; }
 .hero-stage .chip { z-index: 3; font-size: 13px; pointer-events: none; }
 .hero-stage .chip-a { left: 17%; top: 16%; }
 .hero-stage .chip-b { right: 12%; top: 51%; }
-.play-hint { position: absolute; left: 3%; bottom: 15px; font-size: 10px; letter-spacing: .04em; opacity: .6; z-index: 3; pointer-events: none; }
 .hero-bar { width: min(1120px, calc(100% - 64px)); margin-top: -2px; border-radius: 24px; padding-block: 17px; }
 .hero-bar-item { font-size: 13px; gap: 10px; }
 .hero-bar-item > span { font-size: 22px; }
@@ -215,7 +214,6 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .hero-stage .chip { font-size: 9px; padding: .65em .9em; gap: 5px; border-radius: 10px; }
   .hero-stage .chip-a { left: 5%; top: 6%; }
   .hero-stage .chip-b { right: 4%; top: 63%; }
-  .play-hint { display: none; }
   .hero-bar { width: calc(100% - 32px); padding: 13px 3px; margin-top: 0; border-radius: 18px; grid-template-columns: repeat(4, 1fr); }
   .hero-bar-item { font-size: 9px; padding-inline: 5px; flex-direction: column; gap: 3px; }
   .hero-bar-item > span { font-size: 17px; }

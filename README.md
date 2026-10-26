@@ -23,6 +23,7 @@ npm run preview
 - Side Quest Adoption Center 是真实源码底稿，原件保存在 `reference/side-quest/`。保留其 OKLCH 配色、排版、插画舞台、胶囊控件、颗粒与交互节奏。
 - 主页面为 HTML + 原生 CSS/JS，Vite 构建。五个真实 ReactDrops 组件以 React islands 接入：Topographic Flow、Shape Physics、Fan Gallery、Liquid Glass Orb、Chromatic Button。
 - ReactDrops 固定于 `b3924b92ebfce15152cf6f04ad85301c9f343672`，只保留实际使用的源文件。它们使用自定义 Component License，不是 MIT。详见 [第三方声明](THIRD_PARTY_NOTICES.md)。本仓库不是可重发的组件库或模板。
+- 本地补丁修复透明画布清屏和按钮的显示密度更新；画廊按全部选中状态拟合宽度，物理画布严格跟随首屏舞台尺寸。
 - 首屏、六个场景和三张原则纸页均使用为本项目绘制的原创 SVG。字体本地托管，来源、哈希与 OFL 许可保留在仓库。
 - 组件懒加载，离屏与后台停用动态效果；减少动态效果模式使用静态替代。手机物理画布不捕获滑动手势。
 
@@ -37,3 +38,5 @@ npm run update:activity
 脚本通过公开 GitHub API 更新 `public/data/activity.json`，不使用令牌。统计指定默认分支快照的过去 365 个 UTC 日期，按 `commit.committer.date` 汇总；不是个人全站贡献。刷新失败保留旧快照，前端标注更新时间。详见 [数据口径](docs/activity-data.md)。
 
 原版对照、桌面和手机验收记录见 `docs/qa.md`。浏览器过程文件保存在忽略的 `output/playwright/`；交付截图保存在 `docs/qa/`。
+
+连续渲染回归：在 dev 服务中打开 `http://127.0.0.1:5173/tests/physics-render.html`，自动检查真实画布清空、透明度、鼠标眼神、动画残影及 WebGL 显示密度更新。该测试页不包含在生产构建中。

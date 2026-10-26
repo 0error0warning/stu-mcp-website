@@ -6,14 +6,16 @@
 .rd-topography-island .topographic-flow { width: 100%; height: 100%; background: transparent !important; }
 .rd-island > .rd-still-contours { width: 100%; height: 100%; fill: none; stroke: #71602e; stroke-width: .9; opacity: .25; }
 #rd-physics { pointer-events: none; }
-.rd-physics-island { position: relative; height: 100%; min-height: 260px; pointer-events: none; }
+.rd-physics-island { position: relative; height: 100%; min-height: 0; pointer-events: none; }
 .rd-physics-lane { position: absolute; top: 0; bottom: 0; width: 23%; pointer-events: auto; }
 .rd-physics-left { left: 2%; }
 .rd-physics-right { right: 2%; }
-.rd-physics-island .shape-physics { min-height: 260px; }
-.rd-still-shapes { width: 100%; height: 100%; min-height: 260px; }
-.rd-gallery-island { min-height: 500px; overflow: clip; isolation: isolate; }
-.rd-gallery-island .fan-gallery { padding: 30px 0; }
+.rd-physics-island .shape-physics { height: 100%; min-height: 0; }
+.rd-still-shapes { width: 100%; height: 100%; min-height: 0; }
+.rd-gallery-island { min-height: 500px; overflow: visible; isolation: isolate; }
+/* The fitter reserves space for all selected states, including side cards.
+   Keep shadows and spring motion visible rather than hard-clipping them. */
+.rd-gallery-island .fan-gallery { padding: 30px 0; overflow: visible; }
 .rd-gallery-island .fan-gallery-card { background: #fffcf2; box-shadow: 0 5px 10px #263b4910, 0 22px 40px -20px #263b4940; }
 .rd-gallery-island .fan-gallery-card img { object-fit: contain; }
 .rd-still-gallery { display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 500px; padding: 30px 15px; }
@@ -28,8 +30,7 @@
 .rd-install-button.chromatic-button svg, .rd-install-static svg { width: 20px; height: 20px; flex: none; }
 .rd-install-button .chromatic-button-content { gap: 26px; }
 .rd-install-static:focus-visible { outline: 3px solid #7f679e; outline-offset: 5px; }
-@media (max-width: 600px) {
-  .rd-physics-island, .rd-physics-island .shape-physics, .rd-still-shapes { min-height: 190px; }
+@media (max-width: 760px) {
   .rd-physics-lane { width: 24%; pointer-events: none; }
   .rd-gallery-island, .rd-still-gallery { min-height: 330px; }
   .rd-still-gallery { gap: 8px; padding-inline: 0; }

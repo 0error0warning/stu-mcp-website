@@ -514,6 +514,9 @@ export function ChromaticSurface({
     button?.addEventListener('blur', onBlur);
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas);
+    // Local fix: browser zoom / moving between displays can change DPR while
+    // the button's CSS dimensions stay identical, so ResizeObserver stays idle.
+    window.addEventListener('resize', resize);
     const intersectionObserver = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       refresh();
@@ -530,6 +533,7 @@ export function ChromaticSurface({
       updateRef.current = null;
       cancelAnimationFrame(frame);
       resizeObserver.disconnect();
+      window.removeEventListener('resize', resize);
       intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', refresh);
       motion.removeEventListener('change', refresh);

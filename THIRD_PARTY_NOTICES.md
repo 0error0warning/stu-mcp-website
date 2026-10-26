@@ -23,10 +23,17 @@ not offered here as a reusable component library, starter, or website template.
 - Imported files: the official `registry/*.json` source distributions for those
   five components, extracted into `src/components/reactdrops/`. Import paths
   are exactly those provided by the upstream registry.
-- Upstream component source and CSS are unchanged. Product adaptations live in
+- Upstream source is retained with two local rendering fixes: `solid-engine.ts`
+  explicitly clears each dirty rectangle before transparent or translucent
+  repainting and retains 2–3x render density with high-quality sprite smoothing;
+  `chromatic-surface.tsx` refreshes its pixel buffer on window resize
+  so changes in display density do not leave an outdated resolution. Upstream
+  CSS is unchanged. Product adaptations live in
   `src/reactdrops.jsx` and `src/reactdrops.css`: warm palettes, limited geometry
   counts, lower motion speeds, three original SVG gallery images, viewport and
-  document-visibility gating, lazy loading, and static reduced-motion fallbacks.
+  document-visibility gating, lazy loading, static reduced-motion fallbacks,
+  stage-matched physics height, an all-selection-state gallery fit, full mouse
+  gaze following and a responsive population of 6 / 8 / up to 14 characters.
 - No upstream demonstration photographs, videos, fonts, or logos are reused.
 - No visible ReactDrops credit is required by the component license; its
   source and third-party notices must remain with permitted source copies.
