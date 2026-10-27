@@ -4,15 +4,6 @@ import { createRoot } from 'react-dom/client';
 const GradientASCII = lazy(() => import('./components/reactbits/GradientASCII.jsx'));
 const PALETTE = ['#172c66', '#7386ce', '#8bc9dd', '#4e5497'];
 
-// A static character field also covers the first lazy frame, constrained devices
-// and unavailable WebGL. The actual React Bits component supplies normal motion.
-const ASCII_STILL = Array.from({ length:56 }, (_, row) => Array.from({ length:160 }, (_, col) => {
-  const x = (col - 80) / 80, y = row / 56;
-  const field = Math.max(0, 1 - Math.abs(y - (.73 - .22 * x * x)) * 2.6);
-  const variation = (Math.sin(col * 12.9898 + row * 78.233) * 43758.5453) % 1;
-  return field + Math.abs(variation) * .35 < .36 ? ' ' : ' .:=+xX0S8#@'[Math.min(10, Math.floor(field * 7 + Math.abs(variation) * 3))];
-}).join('')).join('\n');
-
 function NightHero() {
   const host = useRef(null);
   const [dark, setDark] = useState(() => document.documentElement.dataset.theme === 'dark');
@@ -38,8 +29,7 @@ function NightHero() {
     return () => { theme.disconnect();view.disconnect();document.removeEventListener('visibilitychange',visibility);motion.removeEventListener('change',changeMotion);phone.removeEventListener('change',changePhone); };
   }, []);
   useEffect(() => { if (active) setStarted(true); }, [active]);
-  return <div ref={host} className="night-gradient-layer" data-active={active} data-render-mode={started && !constrained && !reduced ? 'webgl' : 'static'}>
-    <pre className="night-ascii-still" aria-hidden="true">{ASCII_STILL}</pre>
+  return <div ref={host} className="night-animation-layer" data-active={active} data-render-mode={started && !constrained && !reduced ? 'webgl' : 'static'}>
     <Suspense fallback={null}>
       {started && !constrained && !reduced && <GradientASCII colors={PALETTE} shape="horizon" characters=" .:=+xX0S8#@" cellSize={15}
         density={.7} glyphOpacity={.8} glow={0} flicker={.06} softness={.6} flow={.4} speed={.2} gradientOpacity={.7}
@@ -50,7 +40,7 @@ function NightHero() {
 
 let mounted;
 export function mountNightHero() {
-  const host = document.getElementById('night-gradient');
+  const host = document.getElementById('night-animation');
   if (!host || mounted) return;
   const root = createRoot(host);root.render(<NightHero />);mounted={host,root};
 }

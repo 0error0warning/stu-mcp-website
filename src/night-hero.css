@@ -1,8 +1,9 @@
 /* Night-only midnight/indigo composition. Light palette and layout are retained. */
 #night-gradient { display:none; position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
 .night-gradient-layer { position:absolute; inset:0; }
+.night-animation-layer, #night-animation { position:absolute; inset:0; }
 .night-gradient-layer::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 42% 44% at 50% 31%,#091020eb 0%,#091020bd 65%,#09102018 100%),linear-gradient(180deg,#09102030,transparent 55%,#0d153a40); pointer-events:none; }
-.night-ascii-still { position:absolute; inset:0; margin:0; padding:0; width:100%; height:100%; overflow:hidden; color:transparent; background:radial-gradient(ellipse 70% 55% at 50% 80%,#90c4e0,#7c83c8 45%,#253d76 75%,transparent); background-clip:text; -webkit-background-clip:text; font:10px/1.45 ui-monospace,Consolas,monospace; letter-spacing:2.5px; text-align:center; opacity:.55; user-select:none; }
+.night-ascii-still { position:absolute; inset:0; margin:0; padding:0; width:100%; height:100%; overflow:hidden; color:transparent; background:radial-gradient(ellipse 70% 55% at 50% 80%,#90c4e0,#7c83c8 45%,#253d76 75%,transparent); background-clip:text; -webkit-background-clip:text; font:10px/1.45 ui-monospace,Consolas,monospace; letter-spacing:2.5px; text-align:center; opacity:.55; transition:opacity 350ms ease; user-select:none; }
 .night-gradient-layer .gradient-ascii-container { position:absolute; inset:0; opacity:0; transition:opacity 350ms ease; }
 .night-gradient-layer:has(canvas[data-renderer="webgl"]) .gradient-ascii-container { opacity:.85; }
 .night-gradient-layer:has(canvas[data-renderer="webgl"]) .night-ascii-still { opacity:.14; }
@@ -37,4 +38,4 @@ html[data-theme="dark"] .theme-toggle:hover { background:#23324b; border-color:#
 html[data-theme="dark"] .quest-link { color:#172445; background:#dce5fa; }
 html[data-theme="dark"] .nav-arrow { background:#a9c4f4; color:#172445; }
 @media (max-width:760px) { .night-ascii-still { font-size:9px; letter-spacing:1.5px; opacity:.5; } }
-@media (prefers-reduced-motion:reduce) { .night-gradient-layer .gradient-ascii-container { transition:none; } }
+@media (prefers-reduced-motion:reduce) { .night-gradient-layer .gradient-ascii-container, .night-ascii-still { transition:none; } }

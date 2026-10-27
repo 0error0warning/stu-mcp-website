@@ -16,3 +16,9 @@
 - `npm run build` 成功；`node --test tests/ellipse-ground.test.mjs tests/activity-data.test.mjs` 通过 9 项。
 
 检查使用本机浏览器和本地数据，不能代替真实手机、弱网或未来上线后的性能监测。
+
+## 暗色 ASCII 首帧补查
+
+- 独立 Chromium 拦截 React Bits 的动态模块并记录交接帧：修复前静态层会立即由 0.55 降到 0.14，此时画布仍为 0；修复后首帧静态层保持 0.55，静态层与画布透明度按相同时长渐变。测试使用软件 WebGL，不能代表所有显卡或帧率。
+- 静态字符在开发及生产 HTML 中直接提供，React 只挂载动态层；分别延迟生产入口脚本检查 1440px 和 390px，脚本执行前后字符层是同一个 DOM 节点。保留 [桌面加载前](qa/ascii-desktop-before.jpg)、[桌面加载后](qa/ascii-desktop-after.jpg)、[手机加载前](qa/ascii-mobile-before.jpg) 和 [手机加载后](qa/ascii-mobile-after.jpg)。
+- 模拟 WebGL 不可用时保留静态字符，未发现页面异常；手机减少动态效果使用静态背景。重新构建通过。
