@@ -214,3 +214,6 @@ Their embedded credit is “SVG created with Arrow, by QuiverAI (https://quiver.
 The selected navbar icon and hero illustration are used with layout adaptations;
 no additional license is inferred. See `reference/phoenix/README.md` for exact
 source filenames, scope and regeneration instructions.
+The owner also supplied the four pose/expression SVG references retained in
+`reference/phoenix/motion/`. Their provenance is preserved; the website's independent
+joint rig, spring solver and scene interactions are local adaptations.

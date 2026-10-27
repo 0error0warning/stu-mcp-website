@@ -10,6 +10,7 @@ import { mountHeader } from './site-header.jsx';
 import { mountMagicSections } from './magic-sections.jsx';
 import { mountAgentInstall } from './agent-install.jsx';
 import { mountNightHero } from './night-hero.jsx';
+import { mountPhoenix } from './phoenix-scene.js';
 import './feedback.css';
 import './theme.css';
 import './night-hero.css';
@@ -21,6 +22,7 @@ mountHeader();
 mountMagicSections();
 mountAgentInstall();
 mountNightHero();
+mountPhoenix();
 
 const scenarios = [
   { id: '01', key: 'notice', category: 'study', name: '通知，连附件一起。', source: '通知 · PDF', color: 'oklch(.92 .065 96)', prompt: '帮我查最近相关的通知，读一下 PDF 附件，把重点和原文链接一起给我。' },

@@ -1,8 +1,8 @@
 import './motion-regions.css';
 
 // Only native, repeating decorations use this state. Entrance/reveal animations
-// and ReactDrops canvases have their own playback; the external collector SVG
-// is an image document and is deliberately outside this controller's scope.
+// and ReactDrops canvases have their own playback. The interactive phoenix
+// separately pauses its CSS animations and timers when its stage leaves view.
 function observeMotionRegions() {
   const regions = new Set();
   const visibility = new Map();

@@ -18,6 +18,17 @@ function nightAsciiFirstPaint() {
   };
 }
 
+// Render the interactive vector before JS starts: no image swap or blank frame.
+function phoenixFirstPaint() {
+  return {
+    name: 'phoenix-first-paint',
+    transformIndexHtml: {
+      order: 'pre',
+      handler: html => html.replace('<!-- PHOENIX_SCENE -->', readFileSync(new URL('./src/phoenix-scene.svg', import.meta.url), 'utf8')),
+    },
+  };
+}
+
 // Vite injects JS-imported CSS after the module graph loads in development.
 // Make the same global styles render-blocking in preview so a cold page cannot
 // briefly paint the unstyled HTML. Production already emits stylesheet links.
@@ -25,7 +36,7 @@ function developmentFirstPaintStyles() {
   const styles = [
     'fonts', 'side-quest', 'styles', 'reactdrops', 'motion-regions',
     'activity', 'site-header', 'magic-sections', 'product-story',
-    'agent-install', 'feedback', 'theme', 'night-hero', 'hero-actions', 'footer-night',
+    'agent-install', 'feedback', 'theme', 'night-hero', 'hero-actions', 'footer-night', 'phoenix-scene',
   ];
   return {
     name: 'development-first-paint-styles',
@@ -40,7 +51,7 @@ function developmentFirstPaintStyles() {
 }
 
 export default defineConfig({
-  plugins: [nightAsciiFirstPaint(), developmentFirstPaintStyles(), react(), activityApi()],
+  plugins: [nightAsciiFirstPaint(), phoenixFirstPaint(), developmentFirstPaintStyles(), react(), activityApi()],
   server: { host: '127.0.0.1', port: 5173, strictPort: true },
   preview: { host: '127.0.0.1', port: 4173, strictPort: true },
   build: { sourcemap: false },
