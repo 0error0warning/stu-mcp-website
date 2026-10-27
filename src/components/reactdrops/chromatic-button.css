@@ -140,6 +140,12 @@ non-waivable. No other permissions are granted by implication.
   width: 100%;
   height: 100%;
   pointer-events: none;
+  /* A blocked or failed canvas may show Chrome's broken-content placeholder.
+     Keep the CSS material visible until a real WebGL frame is available. */
+  visibility: hidden;
+}
+.chromatic-button .chromatic-surface[data-renderer='webgl'] {
+  visibility: visible;
 }
 .chromatic-button:has([data-renderer='webgl']) {
   background: transparent;

@@ -390,6 +390,11 @@ export function ChromaticSurface({
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.uniform1i(uniforms.field, 0);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+      // Reveal only a successfully drawn frame. The CSS fallback also handles
+      // Chrome configurations that block canvas or fail shader initialization.
+      if (!canvas.dataset.renderer && !gl.isContextLost() && gl.getError() === gl.NO_ERROR) {
+        canvas.dataset.renderer = 'webgl';
+      }
     };
     const tick = (now: number) => {
       frame = 0;
@@ -507,7 +512,6 @@ export function ChromaticSurface({
         gl!.generateMipmap(gl!.TEXTURE_2D);
         gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR_MIPMAP_LINEAR);
       }
-      canvas.dataset.renderer = 'webgl';
       refresh();
     }
     initialize();
