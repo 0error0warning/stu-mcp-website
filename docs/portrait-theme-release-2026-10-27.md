@@ -19,3 +19,15 @@ Build passed; all 11 tests passed. Previous pass also exercised pointer targetin
 ## Deployment safeguards
 
 Read-only preflight: existing current release c379f97; caddy, stu-site-activity and stu-site-guard active. Private GitHub repository verified. Deploy static dist into a new release, retain unchanged API runtime and old hashed assets, verify archive SHA-256, switch current symlink atomically. No Caddy/systemd/Tailscale/cost-guard changes.
+
+## Production result
+
+- Static source/release: `198d729`, current `/opt/stu-mcp-site/releases/198d729`.
+- Archive SHA-256 `bd64ccf8bd3c94b0eee99f9c2f4277ae5c0459407133135da1184fc74a24b628`, verified remotely before extraction.
+- Previous release `c379f97` retained; API server/source identical, Caddy configuration hash unchanged, three existing services active. No restart required.
+- External Chrome `https://stu-mcp.com/`: HTTP 200. Portrait 390×844: Dock hidden, header 62px, exactly one phoenix SVG, no horizontal overflow. Desktop Dock visible.
+- Actual online toggle dark then light: same SVG node and same breathing animation instance, time increased from ~1542ms to ~2200ms. No console/page errors during online checks.
+- `/api/activity`: HTTP 200, repository `0error0warning/stu-mcp`, delivery `live`.
+- Live screenshots saved in `docs/qa/portrait-theme/` and portrait capture visually inspected.
+- Production preview additionally checked keyboard/reduced-motion theme toggle, touch-emulated toggle and static no-JS phoenix first paint. This is not physical-device coverage.
+- Future character architecture is saved only; no dragging, locomotion, full turning or Rive runtime shipped.
