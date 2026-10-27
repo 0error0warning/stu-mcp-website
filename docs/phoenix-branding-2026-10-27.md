@@ -37,3 +37,24 @@ Caddy serves `/opt/stu-mcp-site/current/dist`; its bare-IP 404 is intentional.
 The prior release is `62e8a81`. Preserve its runtime/API and all Caddy, systemd,
 Tailscale and cost-guard configuration. Stage a new static release and switch
 `current` atomically after verification; retain the prior release for rollback.
+
+## Production result
+
+- Static source commit: `c379f97`; activated release:
+  `/opt/stu-mcp-site/releases/c379f97`.
+- Uploaded archive SHA-256:
+  `7be6f56677e0ab53824274c0dca43ec7f83d81fc11ca8dc2c9e26c26c89553bf`;
+  verified on the server before extraction.
+- Existing API runtime source/imports were copied unchanged from `62e8a81`;
+  this release changes only the built static frontend. Old hashed assets were
+  retained for existing browser sessions. No service restart was necessary.
+- Caddy configuration hash unchanged; Caddy, activity and cost-guard services active.
+- External Chrome navigation to `https://stu-mcp.com/`: HTTP 200, navbar and
+  both hero images fully loaded, light/dark screenshots saved as `live-*.png`.
+- `/api/activity`: HTTP 200, repository `0error0warning/stu-mcp`, delivery `live`.
+- `https://www.stu-mcp.com/`: HTTP 301 to `https://STU-MCP.com/`.
+- External Chrome check: no console errors or page errors.
+- Served navbar SHA-256 matches local:
+  `eb94a2530e992e6c8997e646cbed6f0f71c84af044b26ea1a8fbf7e7ac941a61`.
+- Rollback, if requested: atomically replace `/opt/stu-mcp-site/current` with a
+  symlink to `releases/62e8a81`. The prior release remains intact.
