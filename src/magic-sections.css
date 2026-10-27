@@ -9,7 +9,7 @@
    label/title and quiet geometric background. Sources recorded in notices. */
 #magic-connection.connection-scene { display: block; height: auto; min-height: 322px; padding: 0; background: none; }
 #magic-connection.connection-scene::before { content: none; }
-.mb-network { position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(145px, 180px) minmax(170px, 220px) minmax(170px, 220px); justify-content: space-between; align-items: center; gap: clamp(30px, 5vw, 92px); width: 100%; min-width: 0; min-height: 322px; padding: 20px 10px; }
+.mb-network { position: relative; isolation: isolate; display: grid; grid-template-columns: repeat(3, minmax(170px, 220px)); justify-content: space-between; align-items: center; gap: clamp(30px, 5vw, 92px); width: 100%; min-width: 0; min-height: 322px; padding: 20px 10px; }
 .mb-network .mui-animated-beam { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; overflow: visible; pointer-events: none; stroke: none; stroke-width: 0; z-index: -1; }
 .mb-source-grid { display: grid; gap: 16px; width: 100%; }
 .mb-source { position: relative; display: flex; align-items: center; gap: 13px; width: 100%; min-height: 76px; padding: 15px 16px; border: 1px solid #263b491a; border-radius: 13px; background: #fffcf2; color: #293f49; box-shadow: 0 3px 9px -6px #263b492b; transition: border-color 240ms, box-shadow 240ms; }
@@ -55,7 +55,7 @@ html[data-theme="dark"] .mb-hub { border-color: #fff8d421; }
 .mui-border-light { position: absolute; aspect-ratio: 1; background: linear-gradient(90deg, transparent, var(--color-from) 42%, var(--color-to) 75%, transparent); }
 
 @media (max-width: 1000px) and (min-width: 681px) {
-  .mb-network { grid-template-columns: minmax(145px, 170px) minmax(164px, 190px) minmax(164px, 190px); gap: 30px; padding-inline: 4px; }
+  .mb-network { grid-template-columns: repeat(3, minmax(164px, 190px)); gap: 30px; padding-inline: 4px; }
   .mb-source { padding-inline: 13px; gap: 10px; }
   .mb-node { padding: 19px; height: 174px; }
   .mb-node-caption { left: 19px; top: 20px; }

@@ -1,7 +1,13 @@
 /* The labels, rather than a label-plus-arrow flex box, sit on the button axis.
    Equal space at both ends keeps the text centered in WebGL and still modes. */
+.hero-actions { --hero-action-width: 178px; }
+.hero-actions #rd-hero-cta,
+.hero-actions .rd-hero-cta,
+.hero-actions .rd-hero-cta .product-chromatic,
+.hero-actions .hero-secondary { width: var(--hero-action-width); }
 .hero-actions .rd-hero-cta .product-chromatic {
   position: relative;
+  min-width: 0;
 }
 .hero-actions .rd-hero-cta .chromatic-button-content {
   display: contents;
@@ -33,8 +39,6 @@
 }
 .hero-actions .hero-secondary {
   position: relative;
-  /* Preserve the former six-character label + icon + gap + padding width. */
-  width: calc(6em + 76px);
   padding-inline: 30px;
 }
 .hero-actions .hero-secondary .hero-action-icon {
@@ -47,10 +51,10 @@
   transform: translateY(-.5px);
 }
 @media (max-width: 760px) {
+  .hero-actions { --hero-action-width: min(145px, calc((100vw - 51px) / 2)); }
   .hero-actions .rd-hero-cta .hero-action-icon { right: 13px; }
   .hero-actions .rd-hero-cta .hero-action-label { transform: translateY(-.4px); }
   .hero-actions .hero-secondary {
-    width: calc(6em + 60px);
     padding-inline: 25px;
   }
   .hero-actions .hero-secondary .hero-action-icon {

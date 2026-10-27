@@ -70,7 +70,7 @@ export function mountPhoenix() {
     if (!pointer || !playing() || reduced.matches || !fine.matches) return;
     const matrix=scene.getScreenCTM();if(!matrix)return;
     const p=new DOMPoint(pointer.x,pointer.y).matrixTransform(matrix.inverse());
-    const x=Math.max(-7,Math.min(7,(p.x-625)/45)),y=Math.max(-4,Math.min(4,(p.y-170)/45));
+    const x=Math.max(-7,Math.min(7,(p.x-617)/45)),y=Math.max(-4,Math.min(4,(p.y-170)/45));
     scene.style.setProperty('--phx-look-x',`${x.toFixed(2)}px`);
     scene.style.setProperty('--phx-look-y',`${y.toFixed(2)}px`);
     scene.style.setProperty('--phx-lean',`${(x/9).toFixed(2)}deg`);

@@ -74,6 +74,7 @@ const orangeTail = orange(`M364.51 558.614${curve(14,22)}Q388 587 364.51 558.614
 const orangeCrest = orange(`M599.41 385.79${curve(4,13)}Q550 410 599.41 385.79Z`);
 const rightWing = orange(`M747.5 522.9${curve(0,3)}C675 530 676 575 700.9 592.32${curve(24,26)}Z`);
 const rig = `<g class="phx-ring">${art.slice(3, 7).join('')}${art.slice(72).join('')}</g>
+<g class="phx-character-placement" transform="translate(-19.016 0)">
 <g class="phx-hop"><g class="phx-breathe"><g class="phx-lean"><g class="phx-attitude">
   <g class="phx-tail">${art[7]}${orangeTail}</g><g class="phx-wing-right">${rightWing}</g>${torso}${art[9]}
   <g class="phx-cheek phx-cheek-left">${fit(smile[3],[546.709,514.177,61.393,44.143],500,536,29,15)}</g>
@@ -87,11 +88,15 @@ const rig = `<g class="phx-ring">${art.slice(3, 7).join('')}${art.slice(72).join
 </g></g></g></g>
 <g class="phx-delight" fill="#ef9baa" aria-hidden="true"><path d="M710 335C670 306 692 278 710 294C728 278 750 306 710 335Z"/></g>
 <g class="phx-sleep-sign" stroke="var(--phx-spark)" stroke-width="6" fill="none" aria-hidden="true"><path d="M720 335h22l-22 22h22M751 301h28l-28 28h28"/></g>
-<g class="phx-hotspots">${phoenixParts.map(({id,label,area:[cx,cy,rx,ry]})=>`<g class="phx-hotspot" data-phx-part="${id}" role="button" tabindex="-1" aria-disabled="true" aria-label="${label}"><ellipse class="phx-target" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="transparent"/></g>`).join('')}</g>`;
+<g class="phx-hotspots">${phoenixParts.map(({id,label,area:[cx,cy,rx,ry]})=>`<g class="phx-hotspot" data-phx-part="${id}" role="button" tabindex="-1" aria-disabled="true" aria-label="${label}"><ellipse class="phx-target" cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="transparent"/></g>`).join('')}</g></g>`;
 let interactive = composition.replace(/<g class="phoenix">[\s\S]*?<\/g><\/g>/, `<g class="phx-control" role="group" aria-label="凤凰的互动部件" aria-describedby="phx-help" transform="translate(380 -42) scale(.43)"><desc id="phx-help">用方向键选择部件，按 Enter 或空格互动。</desc>${rig}</g>`);
 // Prefix satellite class names because this artwork lives in the document now.
 interactive = interactive.replace(/class="(routes|platform|document|letter|conversation|calendar)"/g, 'class="phx-$1"')
   .replace('var(--spark)', 'var(--phx-spark)');
+// Keep responsive placement outside animated groups. Mobile Chrome can paint
+// SVG translate + animated transform differently from getBoundingClientRect.
+interactive = interactive.replace(/<g class="phx-(document|conversation)">[\s\S]*?<\/g><\/g>/g,
+  (markup, name) => `<g class="phx-${name}-placement">${markup}</g>`);
 const themed = { '#FBC34B':'platform-edge', '#FEE7A4':'platform-top', '#FAD57D':'shadow', '#C09EFC':'ring', '#8C65E0':'ring-inner' };
 interactive = interactive.replace(/fill="([^"]+)"/g, (attr, color) => themed[color] ? `fill="var(--phx-${themed[color]})"` : attr)
   .replace('r="204" fill="#fff"', 'r="204" fill="var(--phx-ring-well)"');

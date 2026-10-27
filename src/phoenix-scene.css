@@ -72,9 +72,12 @@ html[data-theme="dark"] .phoenix-scene {
 @keyframes phx-crest { 50% { transform: rotate(-4deg); } }
 @keyframes phx-float { 50% { transform: translateY(-4px); } }
 @media (max-width: 760px) { .hero-stage .phoenix-scene { width: 165%; max-width: none; margin-left: -32.5%; } }
-@media (max-width: 412px) {
-  .phx-document { translate: 100px 0; } .phx-conversation { translate: -90px 0; }
-  .phx-calendar { translate: -14px 0; } .phx-routes { opacity: .35; }
+@media (max-width: 520px) {
+  .phoenix-scene { --phx-satellite-inset: clamp(0px, calc(520px - 100vw), 100px); }
+  .phx-document-placement { transform: translateX(var(--phx-satellite-inset)); }
+  .phx-conversation-placement { transform: translateX(calc(var(--phx-satellite-inset) * -.9)); }
+  .phx-calendar { translate: calc(var(--phx-satellite-inset) * -.14) 0; }
+  .phx-routes { opacity: .35; }
 }
 @media (prefers-reduced-motion: reduce) {
   .phoenix-scene *, .phoenix-scene[data-action] * { animation: none !important; transition: none !important; }

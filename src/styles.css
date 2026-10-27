@@ -20,6 +20,9 @@ button:disabled { cursor: wait; }
 .hero-product { display: block; font-size: clamp(80px, 8.8vw, 126px); }
 .hero-sentence { display: block; margin-top: 20px; font-family: var(--font-heading); font-size: clamp(26px, 3.2vw, 46px); line-height: 1.35; letter-spacing: -.025em; }
 .hero-sentence em { white-space: nowrap; }
+/* Hang the final punctuation outside the centered words, keeping it in the
+   accessible heading. On mobile each phrase gets its own centered line. */
+.hero-sentence em > .hero-punctuation { display: inline-block; width: 0; }
 .hero-sentence .brush { top: 28%; height: 100%; left: -2%; width: 104%; }
 .hero-sentence .brush .b1 { stroke-width: 10px; }
 .hero-sentence .brush .b2 { stroke-width: 6px; }
@@ -40,12 +43,11 @@ button:disabled { cursor: wait; }
 .hero-bar-item { font-size: 13px; gap: 10px; }
 .hero-bar-item > span { font-size: 22px; }
 .hero-pad { height: 26px; }
-.facts-strip { display: flex; align-items: center; gap: 55px; padding-block: 36px; border-bottom: 1px solid var(--color-line); }
-.facts-strip > div { display: flex; align-items: baseline; gap: 12px; }
+.facts-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: center; gap: 20px; padding-block: 36px; border-bottom: 1px solid var(--color-line); }
+.facts-strip > div { display: flex; align-items: baseline; justify-content: center; gap: 12px; }
 .facts-strip strong { font-family: 'Gloock', serif; font-size: 28px; font-weight: 400; letter-spacing: -.03em; }
 .facts-strip span, .facts-strip a { font-size: 12px; color: var(--color-muted); }
-.facts-strip a { margin-left: auto; text-decoration: none; }
-.facts-strip .facts-release-link { margin-left: auto; }
+.facts-strip a { text-decoration: none; }
 .section { padding-top: 112px; }
 .section-title { font-weight: 400; font-size: clamp(30px, 3.5vw, 47px); letter-spacing: -.035em; line-height: 1.3; margin-top: .5em; }
 .section-lede { font-size: 15px; line-height: 1.9; max-width: 48ch; margin-top: 18px; }
@@ -204,6 +206,8 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .hero-product { font-size: clamp(68px, 17.9vw, 104px); }
   .hero-sentence { font-size: clamp(24px, 5.5vw, 36px); margin-top: 18px; line-height: 1.5; }
   .hero-sentence em { display: block !important; width: fit-content; margin-inline: auto; }
+  .hero-phrase { display: block; }
+  .hero-phrase > .hero-punctuation { display: inline-block; width: 0; }
   .hero-full .lede { font-size: 13px; line-height: 1.9; max-width: 27ch; margin-top: 22px; }
   .hero-actions { gap: 21px; margin-top: 22px; }
   .hero-actions .text-link { font-size: 11px; }
@@ -220,7 +224,7 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .hero-bar-item { font-size: 9px; padding-inline: 5px; flex-direction: column; gap: 3px; }
   .hero-bar-item > span { font-size: 17px; }
   .hero-pad { height: 18px; }
-  .facts-strip { gap: 0; justify-content: space-between; padding-block: 28px; }
+  .facts-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; text-align: center; padding-block: 28px; }
   .facts-strip > div { display: block; }
   .facts-strip strong { font-size: 23px; }
   .facts-strip span { display: block; margin-top: 7px; font-size: 9px; }
