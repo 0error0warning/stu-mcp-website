@@ -206,3 +206,11 @@ Fonts were retrieved from the official Google Fonts CSS API and its returned
 byte sizes, and download timestamp are recorded in
 `public/fonts/sources.json`. The license copies come from the official
 [Google Fonts repository](https://github.com/google/fonts).
+
+## Owner-supplied Phoenix artwork (2026-10-27)
+
+The four original SVG files in `reference/phoenix/` were provided by the owner.
+Their embedded credit is “SVG created with Arrow, by QuiverAI (https://quiver.ai)”.
+The selected navbar icon and hero illustration are used with layout adaptations;
+no additional license is inferred. See `reference/phoenix/README.md` for exact
+source filenames, scope and regeneration instructions.

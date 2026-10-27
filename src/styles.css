@@ -215,7 +215,7 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .hero-stage .collector { width: 165%; max-width: none; margin-left: -32.5%; object-fit: contain; }
   .hero-stage .chip { font-size: 9px; padding: .65em .9em; gap: 5px; border-radius: 10px; }
   .hero-stage .chip-a { left: 5%; top: 6%; }
-  .hero-stage .chip-b { right: 4%; top: 63%; }
+  .hero-stage .chip-b { right: 4%; top: 6%; }
   .hero-bar { width: calc(100% - 32px); padding: 13px 3px; margin-top: 0; border-radius: 18px; grid-template-columns: repeat(4, 1fr); }
   .hero-bar-item { font-size: 9px; padding-inline: 5px; flex-direction: column; gap: 3px; }
   .hero-bar-item > span { font-size: 17px; }
