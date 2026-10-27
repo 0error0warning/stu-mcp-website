@@ -18,7 +18,7 @@ export function mountPhoenix() {
     if(button.dataset.phxPart==='body')parent.prepend(button);else parent.append(button);
   });
   const byPart=new Map(phoenixParts.map(part=>[part.id,part]));
-  
+
   let visible=false, sleeping=false, frame=0, idleTimer=0, pointer=null;
   let lastInput=performance.now();
   const recentIdle=[];
@@ -124,5 +124,3 @@ export function mountPhoenix() {
     lifecycle.abort();observer.disconnect();engine.destroy();clearTimeout(idleTimer);cancelAnimationFrame(frame);
   });
 }
-
-

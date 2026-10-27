@@ -103,5 +103,3 @@ export function createPhoenixMotion(scene,{canMove,canPlay}) {
   function destroy(){stopAll();for(const joint of joints.values())for(const wrapper of joint.elements){wrapper.replaceWith(...wrapper.childNodes);}}
   return {play,stop,stopAll,stopIdle,destroy};
 }
-
-
