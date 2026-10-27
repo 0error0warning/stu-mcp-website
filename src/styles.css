@@ -34,7 +34,7 @@ button:disabled { cursor: wait; }
 .hero-stage .collector { height: 100%; width: 100%; object-fit: contain; position: relative; pointer-events: none; z-index: 2; }
 #rd-physics { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .hero-stage .chip { z-index: 3; font-size: 13px; pointer-events: none; }
-.hero-stage .chip-a { left: 17%; top: 16%; }
+.hero-stage .chip-a { left: 17%; top: 6%; }
 .hero-stage .chip-b { right: 12%; top: 51%; }
 .hero-bar { width: min(1120px, calc(100% - 64px)); margin-top: -2px; border-radius: 24px; padding-block: 17px; }
 .hero-bar-item { font-size: 13px; gap: 10px; }
@@ -330,6 +330,9 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .idea-description { font-size: 13px; min-height: auto; margin-top: 12px; }
   .copy-prompt { font-size: 12px; margin-top: 20px; padding-top: 14px; }
   .copy-prompt > span:last-child { width: 29px; height: 29px; }
+}
+@media (max-width: 480px) {
+  .hero-stage .chip-b { top: 6%; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -1,110 +1,195 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" fill="none" role="img" aria-labelledby="title desc">
-  <title id="title">纸页收集员</title>
-  <desc id="desc">原创纸页小角色站在蓝紫色工作台上，柔和的圆环把左右散落的纸张与信号连接起来。</desc>
-  <defs>
-    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f8ff"/><stop offset="1" stop-color="#d4deef"/></linearGradient>
-    <linearGradient id="butter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#bdcaff"/><stop offset="1" stop-color="#8195db"/></linearGradient>
-    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#cedaff"/><stop offset="1" stop-color="#91a4d7"/></linearGradient>
-    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e5eff6"/><stop offset="1" stop-color="#a6c8d6"/></linearGradient>
-    <linearGradient id="ring" x1="500" y1="40" x2="730" y2="285" gradientUnits="userSpaceOnUse"><stop stop-color="#d7e7ff"/><stop offset=".5" stop-color="#a9c1ec"/><stop offset="1" stop-color="#708bbc"/></linearGradient>
-    <linearGradient id="mint" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c8e7e7"/><stop offset="1" stop-color="#86b8ca"/></linearGradient>
-    <filter id="shadow" x="-50%" y="-100%" width="200%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" fill="none" data-theme="dark" role="img" aria-labelledby="title desc">
+  <title id="title">把散落的信息，连接起来</title>
+  <desc id="desc">纸页小角色站在淡紫色连接环前，通知、附件、课程日程与讨论沿着细线汇聚。奶油色纸张、折角和层叠边缘组成一个轻盈的纸艺世界。</desc>
+  <!-- Theme variants share this geometry. Run node scripts/sync-hero-art.mjs after editing. -->
   <style>
-    .ink{stroke:#29405e;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
-    .fine{stroke:#29405e;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-    .float-a{animation:float 6s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
-    .float-b{animation:float 7s -3s ease-in-out infinite alternate-reverse;transform-box:fill-box;transform-origin:center}
-    .wave{animation:wave 4s ease-in-out infinite;transform-origin:665px 180px}
-    .signal{stroke-dasharray:6 13;animation:signal 14s linear infinite}
-    @keyframes float{to{transform:translateY(-9px) rotate(2deg)}}
-    @keyframes wave{0%,50%,100%{transform:rotate(0)}60%,80%{transform:rotate(-9deg)}70%,90%{transform:rotate(2deg)}}
-    @keyframes signal{to{stroke-dashoffset:-190}}
-    @media(prefers-reduced-motion:reduce){.float-a,.float-b,.wave,.signal{animation:none}}
+    :root {
+      --ink:#2b3d49; --detail:#77858a; --paper-top:#fffef5; --paper-bottom:#ece5cf;
+      --paper-edge:#c9bfaa; --paper-line:#d7ceba; --highlight:#fffef9;
+      --lilac-top:#eee6ff; --lilac-mid:#cdbce9; --lilac-bottom:#a692c7; --lilac-edge:#9581b5;
+      --mint-top:#e8f2dc; --mint-bottom:#b5ceb4; --mint-edge:#8fae99;
+      --blue-top:#edf5f5; --blue-bottom:#c0d8df; --blue-edge:#8daebb;
+      --gold-top:#fff3b5; --gold-bottom:#eed17a; --gold-edge:#c9ad68;
+      --ring-wash:#fff9dd; --route:#998da5; --route-light:#fffdf1; --rose:#e8b69f;
+      --shadow:#7e654a; --halo:#fffbed;
+    }
+    :root[data-theme="dark"] {
+      --ink:#2b3e60; --detail:#7b8eab; --paper-top:#f4f6ff; --paper-bottom:#d8dfef;
+      --paper-edge:#a9b7d1; --paper-line:#becae0; --highlight:#f4f6ff;
+      --lilac-top:#e2e7ff; --lilac-mid:#b4c4f1; --lilac-bottom:#849bd4; --lilac-edge:#637cbb;
+      --mint-top:#d8f3ee; --mint-bottom:#9ecdd2; --mint-edge:#729fad;
+      --blue-top:#e7f2ff; --blue-bottom:#a9c7e2; --blue-edge:#7796bc;
+      --gold-top:#e5e9ff; --gold-bottom:#adbbef; --gold-edge:#7b90c8;
+      --ring-wash:#1e315b; --route:#a6b7dc; --route-light:#dfeaff; --rose:#d8b4cc;
+      --shadow:#080f25; --halo:#8cb8f3;
+    }
+    .outline{stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+    .fine{stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .detail{stroke:var(--detail);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .edge-light{stroke:var(--highlight);stroke-width:2;stroke-linecap:round;opacity:.85}
+    .ink-fill{fill:var(--ink)}
+    .float-page,.float-note,.float-chat{transform-box:fill-box;transform-origin:center}
+    .float-page{animation:float-page 7s ease-in-out infinite}
+    .float-note{animation:float-note 8s -2s ease-in-out infinite}
+    .float-chat{animation:float-note 8s -4s ease-in-out infinite}
+    .wave{transform-origin:649px 189px;animation:wave 9s ease-in-out infinite}
+    .signal{stroke-dasharray:2 18;animation:signal 18s linear infinite}
+    .compact-route{display:none}
+    @media(max-width:680px){
+      .source-position{transform:translateX(115px)}
+      .chat-position{transform:translateX(-90px)}
+      .calendar-position{transform:translateX(-14px)}
+      .wide-route,.wide-detail{display:none}
+      .compact-route{display:inline}
+    }
+    @keyframes float-page{50%{transform:translateY(-5px) rotate(1deg)}}
+    @keyframes float-note{50%{transform:translateY(-4px) rotate(-1deg)}}
+    @keyframes wave{0%,68%,100%{transform:rotate(0)}76%,88%{transform:rotate(-7deg)}82%,94%{transform:rotate(2deg)}}
+    @keyframes signal{to{stroke-dashoffset:-200}}
+    @media(prefers-reduced-motion:reduce){.float-page,.float-note,.float-chat,.wave,.signal{animation:none}}
   </style>
-  <!-- A low, wide paper workbench. -->
-  <ellipse cx="600" cy="339" rx="472" ry="12" fill="#4f6fae" opacity=".15" filter="url(#shadow)"/>
-  <path d="M92 316q508-16 1016 0l-47 25H141Z" fill="#657ec1" stroke="#29405e" stroke-width="3"/>
-  <path d="M92 305q508-21 1016 0v12q-508-17-1016 0Z" fill="url(#butter)" stroke="#29405e" stroke-width="3"/>
-  <path d="M114 305q486-17 972 0" stroke="#cfe7ff" stroke-width="4" stroke-linecap="round"/>
-  <!-- Hand-drawn routes deliberately stay light behind the character. -->
-  <path d="M225 142C336 81 374 224 493 174M277 248C368 292 403 189 495 203M710 170c120-81 141 21 254-23M711 210c111 76 172-3 224 42" stroke="#9d8ca1" stroke-width="2" opacity=".45"/>
-  <path class="signal" d="M225 142C336 81 374 224 493 174M277 248C368 292 403 189 495 203M710 170c120-81 141 21 254-23M711 210c111 76 172-3 224 42" stroke="#705e83" stroke-width="2.5" opacity=".6"/>
-  <!-- Abstract book-ring: a little device rather than a literal landmark. -->
-  <ellipse cx="614" cy="162" rx="115" ry="113" fill="#879fce" stroke="#29405e" stroke-width="4"/>
-  <ellipse cx="605" cy="155" rx="115" ry="113" fill="url(#ring)" stroke="#29405e" stroke-width="4"/>
-  <ellipse cx="605" cy="155" rx="91" ry="89" fill="#1a2c50" stroke="#29405e" stroke-width="3.5"/>
-  <path d="M528 74c19-17 44-27 72-28" stroke="#fff4ff" stroke-width="5" stroke-linecap="round"/>
-  <path d="m677 73 13-8m5 28 14-6m-7 29 15-3m-13 30 17 1m-18 27 16 4m-23 23 16 7m-26 20 13 10m-30 12 10 13m-32 5 6 15m-33-3 2 16" class="fine" opacity=".25"/>
-  <ellipse cx="607" cy="292" rx="110" ry="12" fill="#554937" opacity=".15" filter="url(#shadow)"/>
-  <!-- The paper collector: layered paper body, a folded ear, tab arms and ink boots. -->
-  <path d="m548 196-31 15-16-17" class="ink" stroke-width="10"/>
-  <path d="m548 196-31 15-16-17" stroke="#dce8ff" stroke-width="5" stroke-linecap="round"/>
-  <path d="M557 246v36l-14 11" class="ink" stroke-width="12"/>
-  <path d="M633 246v37l16 10" class="ink" stroke-width="12"/>
-  <path d="M537 289c-10 0-18 5-18 11h41v-11Z" fill="#29405e"/>
-  <path d="M638 289c12-2 27 4 27 11h-39v-9Z" fill="#29405e"/>
-  <path d="M548 102h84l28 29v115a13 13 0 0 1-13 13h-99a13 13 0 0 1-13-13V115a13 13 0 0 1 13-13Z" fill="#c8c0ac" class="ink"/>
-  <path d="M540 96h84l28 29v115a13 13 0 0 1-13 13h-99a13 13 0 0 1-13-13V109a13 13 0 0 1 13-13Z" fill="url(#paper)" class="ink"/>
-  <path d="M624 96v21a8 8 0 0 0 8 8h20Z" fill="url(#butter)" class="ink"/>
-  <path d="M537 111v112" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
-  <path d="M548 123h53M548 136h38" class="fine" opacity=".38"/>
-  <circle cx="565" cy="170" r="6" fill="#29405e"/>
-  <circle cx="609" cy="170" r="6" fill="#29405e"/>
-  <circle cx="561" cy="167" r="1.7" fill="#fff"/>
-  <circle cx="605" cy="167" r="1.7" fill="#fff"/>
-  <ellipse cx="550" cy="183" rx="9" ry="5" fill="#e6b59d" opacity=".6"/>
-  <ellipse cx="624" cy="183" rx="9" ry="5" fill="#e6b59d" opacity=".6"/>
-  <path d="M574 189q13 16 27 0" class="ink"/>
-  <path d="M550 216h76M550 229h51" class="fine" opacity=".25"/>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="var(--paper-top)"/><stop offset="1" stop-color="var(--paper-bottom)"/></linearGradient>
+    <linearGradient id="lilac" x1=".15" y1="0" x2=".8" y2="1"><stop stop-color="var(--lilac-top)"/><stop offset=".54" stop-color="var(--lilac-mid)"/><stop offset="1" stop-color="var(--lilac-bottom)"/></linearGradient>
+    <linearGradient id="mint" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="var(--mint-top)"/><stop offset="1" stop-color="var(--mint-bottom)"/></linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="var(--blue-top)"/><stop offset="1" stop-color="var(--blue-bottom)"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2=".3" y2="1"><stop stop-color="var(--gold-top)"/><stop offset="1" stop-color="var(--gold-bottom)"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="var(--halo)" stop-opacity=".32"/><stop offset="1" stop-color="var(--halo)" stop-opacity="0"/></radialGradient>
+    <linearGradient id="route" x1="200" y1="0" x2="1010" y2="0" gradientUnits="userSpaceOnUse"><stop stop-color="var(--lilac-bottom)"/><stop offset=".45" stop-color="var(--route)"/><stop offset="1" stop-color="var(--mint-edge)"/></linearGradient>
+    <filter id="ground-shadow" x="-10%" y="-100%" width="120%" height="300%"><feGaussianBlur stdDeviation="4"/></filter>
+    <path id="source-route" d="M236 146C342 146 355 196 482 179"/>
+    <path id="note-route" d="M337 254C406 254 400 221 489 221"/>
+    <path id="chat-route" d="M718 174C801 132 847 135 932 142"/>
+    <path id="calendar-route" d="M716 216C788 216 783 257 877 257"/>
+    <path id="source-compact" d="M343 146C400 155 416 190 482 179"/>
+    <path id="chat-compact" d="M718 174C768 142 798 137 847 142"/>
+    <path id="spark" d="m0-12 3.5 8.5L12 0 3.5 3.5 0 12-3.5 3.5-12 0l8.5-3.5Z"/>
+  </defs>
+
+  <!-- An open stage, with a fine paper edge rather than a heavy slab. -->
+  <ellipse cx="600" cy="178" rx="231" ry="168" fill="url(#halo)"/>
+  <ellipse cx="600" cy="337" rx="455" ry="7" fill="var(--shadow)" opacity=".14" filter="url(#ground-shadow)"/>
+  <path d="M105 315Q600 299 1095 315L1069 333Q600 320 131 333Z" fill="var(--gold-edge)" class="fine"/>
+  <path d="M105 307Q600 287 1095 307V315Q600 301 105 315Z" fill="url(#gold)" class="outline"/>
+  <path d="M123 307Q600 290 1077 307" class="edge-light"/>
+  <path d="M144 326Q600 314 1056 326" stroke="var(--highlight)" stroke-width="1" opacity=".35"/>
+  <ellipse cx="601" cy="298" rx="92" ry="6" fill="var(--shadow)" opacity=".16"/>
+
+  <!-- Four quiet routes connect distinct sources. -->
+  <g stroke="url(#route)" stroke-width="1.7" opacity=".68">
+    <use class="wide-route" href="#source-route"/><use class="compact-route" href="#source-compact"/><use href="#note-route"/><use class="wide-route" href="#chat-route"/><use class="compact-route" href="#chat-compact"/><use href="#calendar-route"/>
+  </g>
+  <g class="signal" stroke="var(--route-light)" stroke-width="3" stroke-linecap="round" opacity=".9">
+    <use class="wide-route" href="#source-route"/><use class="compact-route" href="#source-compact"/><use href="#note-route"/><use class="wide-route" href="#chat-route"/><use class="compact-route" href="#chat-compact"/><use href="#calendar-route"/>
+  </g>
+  <g fill="var(--paper-top)" stroke="var(--lilac-bottom)" stroke-width="1.5">
+    <circle cx="370" cy="173" r="3.5"/><circle cx="422" cy="233" r="3.5"/>
+    <circle cx="806" cy="145" r="3.5"/><circle cx="791" cy="238" r="3.5"/>
+  </g>
+
+  <!-- A layered lilac connector, with an inner bevel and engraved details. -->
+  <circle cx="610" cy="162" r="121" fill="var(--lilac-edge)" class="outline"/>
+  <path d="M712 107a121 121 0 0 1-72 172" stroke="var(--highlight)" stroke-width="1.3" opacity=".3"/>
+  <circle cx="601" cy="155" r="121" fill="url(#lilac)" class="outline"/>
+  <circle cx="601" cy="155" r="112.5" stroke="var(--highlight)" stroke-width="1" opacity=".44"/>
+  <circle cx="601" cy="155" r="97" fill="var(--lilac-edge)" class="fine"/>
+  <circle cx="604" cy="159" r="92.5" fill="var(--ring-wash)" stroke="var(--ink)" stroke-width="1.4"/>
+  <path d="M503 96a115 115 0 0 1 98-56" stroke="var(--highlight)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M616 41a115 115 0 0 1 30 8" stroke="var(--highlight)" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+  <path d="M658 251a110 110 0 0 1-44 14" stroke="var(--lilac-edge)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+  <g stroke="var(--ink)" stroke-width="1.3" opacity=".28">
+    <path d="m704 105 7-3m-1 19 8-2m-5 20 8-1m-8 20h8m-10 20 7 2m-14 18 7 3m-17 16 6 4"/>
+  </g>
+  <g fill="var(--paper-top)" stroke="var(--lilac-edge)" stroke-width="1.5">
+    <circle cx="498" cy="185" r="3.5"/><circle cx="681" cy="83" r="3.5"/><circle cx="674" cy="236" r="3.5"/>
+  </g>
+
+  <!-- Paper collector: visible page layers and a small natural smile. -->
+  <path d="m542 198-26 13-17-17" stroke="var(--ink)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m542 198-26 13-17-17" stroke="var(--paper-bottom)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="m557 250-2 35-14 8m91-43 5 36 14 7" stroke="var(--ink)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M539 289c-9 1-17 5-17 10h37v-11ZM637 289c12-1 25 4 27 10h-38v-10Z" class="ink-fill"/>
+  <path d="m532 294 17-1m90 1 14 1" stroke="var(--highlight)" stroke-width="1.5" stroke-linecap="round" opacity=".35"/>
+  <path d="M548 103h80l31 31v112a15 15 0 0 1-15 15h-96a15 15 0 0 1-15-15V118a15 15 0 0 1 15-15Z" fill="var(--paper-edge)" class="outline"/>
+  <path d="M543 99h80l31 31v112a15 15 0 0 1-15 15h-96a15 15 0 0 1-15-15V114a15 15 0 0 1 15-15Z" fill="var(--paper-bottom)" class="fine"/>
+  <path d="M538 95h80l31 31v112a15 15 0 0 1-15 15h-96a15 15 0 0 1-15-15V110a15 15 0 0 1 15-15Z" fill="url(#paper)" class="outline"/>
+  <path d="M529 237V111a10 10 0 0 1 10-10h71" class="edge-light"/>
+  <path d="M618 98v24a9 9 0 0 0 9 9h21" stroke="var(--paper-edge)" stroke-width="4" opacity=".45"/>
+  <path d="M618 95v23a8 8 0 0 0 8 8h23Z" fill="url(#gold)" class="outline"/>
+  <path d="m623 106 14 14h-9q-5 0-5-5Z" fill="var(--highlight)" opacity=".6"/>
+  <path d="M545 123h46M545 135h30" class="detail" opacity=".65"/>
+  <g class="ink-fill"><ellipse cx="563" cy="172" rx="5.1" ry="5.7"/><ellipse cx="608" cy="172" rx="5.1" ry="5.7"/></g>
+  <g fill="var(--highlight)"><circle cx="561.5" cy="170" r="1.5"/><circle cx="606.5" cy="170" r="1.5"/></g>
+  <g fill="var(--rose)" opacity=".65"><ellipse cx="549" cy="185" rx="7.5" ry="4"/><ellipse cx="623" cy="185" rx="7.5" ry="4"/></g>
+  <path d="M574 188c6 8 17 8 24 0" stroke="var(--ink)" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M545 214h39M545 225h28" class="detail" opacity=".45"/>
+  <path d="M544 238h83" stroke="var(--paper-line)" stroke-width="1"/>
+  <g transform="translate(612 221)"><circle r="10" fill="url(#mint)" stroke="var(--mint-edge)" stroke-width="1"/><path d="m-4 0 3 3 5-6" class="fine"/></g>
   <g class="wave">
-    <path d="m652 182 29 2 12-30" class="ink" stroke-width="10"/>
-    <path d="m652 182 29 2 12-30" stroke="#dce8ff" stroke-width="5" stroke-linecap="round"/>
-    <path d="M691 156c-6-3-9-10-7-13 2-2 5 2 7 3l-1-13c0-5 5-5 6-1l3 11 2-10c1-4 5-3 5 1l-1 14 5-5c3-2 6 1 3 5l-8 11q-8 6-14-3Z" fill="url(#paper)" class="fine"/>
+    <path d="m649 189 23 1 16-29" stroke="var(--ink)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="m649 189 23 1 16-29" stroke="var(--paper-bottom)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M686 163c-6-4-11-11-8-14 2-2 5 2 8 4l-3-17c-1-5 4-6 5-1l4 13 1-15c0-4 5-4 5 0v16l4-9c2-4 6-2 4 2l-5 18c-2 8-9 9-15 3Z" fill="url(#paper)" class="fine"/>
+    <path d="m688 158 4 3" stroke="var(--paper-edge)" stroke-width="1.5" stroke-linecap="round"/>
   </g>
-  <!-- Upper left: a source page with a tiny folded corner. -->
-  <g class="float-a">
-    <g transform="rotate(-12 213 135)">
-      <path d="M184 77h47l19 19v91a8 8 0 0 1-8 8h-58a8 8 0 0 1-8-8V85a8 8 0 0 1 8-8Z" fill="#beb29c" class="ink"/>
-      <path d="M178 71h47l19 19v91a8 8 0 0 1-8 8h-58a8 8 0 0 1-8-8V79a8 8 0 0 1 8-8Z" fill="url(#paper)" class="ink"/>
-      <path d="M225 71v19h19" fill="url(#blue)" class="ink"/>
-      <path d="M184 105h45M184 117h33M184 129h41" class="fine" opacity=".55"/>
-      <circle cx="193" cy="154" r="3.5" fill="#29405e"/><circle cx="216" cy="154" r="3.5" fill="#29405e"/>
-      <path d="M199 164q6 5 12 0" class="fine"/>
-    </g>
+
+  <!-- Source document: lavender tab, folded corner and fine print. -->
+  <g class="source-position"><g class="float-page"><g transform="rotate(-10 218 135)">
+    <path d="M183 77h52l19 20v88a10 10 0 0 1-10 10h-61a10 10 0 0 1-10-10V87a10 10 0 0 1 10-10Z" fill="var(--paper-edge)" class="outline"/>
+    <path d="M178 72h52l19 20v88a10 10 0 0 1-10 10h-61a10 10 0 0 1-10-10V82a10 10 0 0 1 10-10Z" fill="url(#paper)" class="outline"/>
+    <path d="M174 174V84a6 6 0 0 1 6-6h43" class="edge-light"/>
+    <path d="M230 72v15a5 5 0 0 0 5 5h14" fill="url(#blue)" class="fine"/>
+    <rect x="180" y="67" width="29" height="11" rx="4" fill="url(#lilac)" class="fine"/>
+    <path d="M187 72h15" stroke="var(--highlight)" stroke-width="1.2" stroke-linecap="round"/>
+    <path d="M182 104h47M182 115h36M182 126h42" class="detail" opacity=".75"/>
+    <g class="ink-fill"><circle cx="193" cy="152" r="3.1"/><circle cx="217" cy="152" r="3.1"/></g>
+    <path d="M199 162q6 5 12 0" class="fine"/>
+    <path d="M182 178h40" stroke="var(--paper-line)" stroke-width="1.2"/>
+  </g></g></g>
+
+  <!-- An attachment arriving in an envelope. -->
+  <g class="float-note"><g transform="rotate(8 309 245)">
+    <path d="M267 226h75a8 8 0 0 1 8 8v47a8 8 0 0 1-8 8h-75a8 8 0 0 1-8-8v-47a8 8 0 0 1 8-8Z" fill="var(--lilac-edge)" class="fine"/>
+    <rect x="255" y="222" width="89" height="62" rx="8" fill="url(#lilac)" class="outline"/>
+    <path d="M269 233v-36a7 7 0 0 1 7-7h47a7 7 0 0 1 7 7v36" fill="url(#paper)" class="outline"/>
+    <path d="M275 225v-25q0-4 4-4h44" class="edge-light"/>
+    <path d="M281 206h36M281 217h24" class="detail" opacity=".7"/>
+    <path d="m259 229 40 28 41-28" fill="var(--lilac-mid)" class="fine"/>
+    <path d="m258 279 29-24m54 24-29-24" class="fine" opacity=".65"/>
+    <path d="M264 278h69" stroke="var(--highlight)" stroke-width="1.4" opacity=".45"/>
+    <circle cx="299" cy="255" r="10" fill="url(#gold)" class="fine"/>
+    <path d="m295 255 3 3 6-6" class="fine"/>
+  </g></g>
+
+  <!-- Mint discussion bubble with a layered paper edge. -->
+  <g class="chat-position"><g class="float-chat"><g transform="rotate(7 970 140)">
+    <path d="M928 98h76a13 13 0 0 1 13 13v45a13 13 0 0 1-13 13h-38l-23 19 3-19h-18a13 13 0 0 1-13-13v-45a13 13 0 0 1 13-13Z" fill="var(--mint-edge)" class="outline"/>
+    <path d="M922 92h76a13 13 0 0 1 13 13v45a13 13 0 0 1-13 13h-38l-23 19 3-19h-18a13 13 0 0 1-13-13v-45a13 13 0 0 1 13-13Z" fill="url(#mint)" class="outline"/>
+    <path d="M916 139v-32a8 8 0 0 1 8-8h69" class="edge-light"/>
+    <g class="ink-fill"><circle cx="944" cy="126" r="3.8"/><circle cx="973" cy="126" r="3.8"/></g>
+    <path d="M950 139q9 8 18 0" class="fine"/>
+    <path d="m943 172 13-13h38" stroke="var(--mint-edge)" stroke-width="1.2" stroke-linecap="round"/>
+  </g></g></g>
+
+  <!-- Calendar: a distinct course / assignment cue. -->
+  <g class="calendar-position"><g transform="rotate(-7 910 260)">
+    <rect x="869" y="233" width="90" height="61" rx="7" fill="var(--blue-edge)" class="fine"/>
+    <rect x="865" y="228" width="90" height="61" rx="7" fill="url(#paper)" class="outline"/>
+    <path d="M872 228h76a7 7 0 0 1 7 7v10h-90v-10a7 7 0 0 1 7-7Z" fill="url(#blue)"/>
+    <path d="M866 245h88" class="fine" opacity=".65"/>
+    <path d="M882 224v9m56-9v9" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M886 224v7m56-7v7" stroke="var(--highlight)" stroke-width="1" stroke-linecap="round"/>
+    <g fill="var(--paper-line)"><rect x="879" y="253" width="13" height="8" rx="2"/><rect x="903" y="253" width="13" height="8" rx="2"/><rect x="927" y="253" width="13" height="8" rx="2"/><rect x="879" y="269" width="13" height="8" rx="2"/><rect x="927" y="269" width="13" height="8" rx="2"/></g>
+    <rect x="902" y="267" width="15" height="12" rx="3" fill="var(--lilac-mid)"/>
+    <path d="m906 273 2 2 5-5" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g></g>
+
+  <!-- A few stationery details; no texture filter or raster artwork. -->
+  <g transform="rotate(25 407 253)">
+    <path d="M415 228v35a11 11 0 0 1-22 0v-32a7 7 0 0 1 14 0v30a3 3 0 0 1-6 0v-27" stroke="var(--lilac-edge)" stroke-width="5" stroke-linecap="round"/>
+    <path d="M414 231v32a10 10 0 0 1-13 10" stroke="var(--lilac-top)" stroke-width="1.4" stroke-linecap="round"/>
   </g>
-  <!-- Lower left: an envelope and a fresh note. -->
-  <g class="float-b">
-    <g transform="rotate(9 306 245)">
-      <rect x="259" y="222" width="87" height="63" rx="8" fill="url(#violet)" class="ink"/>
-      <path d="M273 226v-36a6 6 0 0 1 6-6h49a6 6 0 0 1 6 6v36" fill="url(#paper)" class="ink"/>
-      <path d="M285 199h36M285 211h25" class="fine" opacity=".5"/>
-      <path d="m261 230 41 29 42-29M260 281l29-23M345 281l-28-23" class="fine"/>
-      <circle cx="302" cy="259" r="11" fill="url(#butter)" class="fine"/>
-      <path d="m297 259 4 4 7-8" class="fine"/>
-    </g>
-  </g>
-  <!-- Right: an open, friendly discussion bubble. -->
-  <g class="float-b">
-    <g transform="rotate(8 967 137)">
-      <path d="M923 97h80a12 12 0 0 1 12 12v50a12 12 0 0 1-12 12h-40l-23 19 4-19h-21a12 12 0 0 1-12-12v-50a12 12 0 0 1 12-12Z" fill="#9db69a" class="ink"/>
-      <path d="M916 90h80a12 12 0 0 1 12 12v50a12 12 0 0 1-12 12h-40l-23 19 4-19h-21a12 12 0 0 1-12-12v-50a12 12 0 0 1 12-12Z" fill="url(#mint)" class="ink"/>
-      <path d="M918 99h75" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/>
-      <circle cx="941" cy="125" r="4" fill="#29405e"/><circle cx="971" cy="125" r="4" fill="#29405e"/>
-      <path d="M947 138q9 8 18 0" class="fine"/>
-    </g>
-  </g>
-  <!-- A small stack of source slips on the other side of the workbench. -->
-  <g transform="rotate(-7 911 275)">
-    <path d="m861 255 85 9 12 28-94-8Z" fill="#bea57d" class="ink"/>
-    <path d="m860 247 85 9 12 28-94-8Z" fill="url(#paper)" class="ink"/>
-    <path d="m865 237 85 9 12 28-94-8Z" fill="url(#blue)" class="ink"/>
-    <path d="m876 248 61 6M881 257l33 3" class="fine" opacity=".45"/>
-  </g>
-  <!-- Paperclip, curved signal and foil stars. -->
-  <g transform="rotate(23 414 250)"><path d="M415 218v49a13 13 0 0 1-26 0v-42a9 9 0 0 1 18 0v39a5 5 0 0 1-10 0v-34" stroke="#7e7096" stroke-width="5" stroke-linecap="round"/></g>
-  <path d="M800 221a17 17 0 0 1 17 17m-17-30a30 30 0 0 1 30 30" class="fine"/><circle cx="800" cy="238" r="4" fill="#29405e"/>
-  <g fill="url(#paper)" class="fine"><path d="m376 90 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"/><path d="m822 61 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z"/><path d="m1057 217 3 7 7 3-7 3-3 7-3-7-7-3 7-3Z"/></g>
-  <path d="m144 243 3 6 6 3-6 3-3 6-3-6-6-3 6-3ZM755 268l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#29405e"/>
-  <circle cx="323" cy="66" r="3" fill="#29405e" opacity=".6"/><circle cx="1060" cy="110" r="3" fill="#29405e" opacity=".6"/>
+  <g transform="translate(796 208)" class="fine" opacity=".7"><path d="M0 0a28 28 0 0 1 28 28M0 11a17 17 0 0 1 17 17"/><circle cy="28" r="2.6" class="ink-fill" stroke="none"/></g>
+  <g fill="url(#paper)" class="fine"><use class="wide-detail" href="#spark" transform="translate(364 100)"/><use href="#spark" transform="translate(822 71) scale(.9)"/><use href="#spark" transform="translate(1040 222) scale(.65)"/></g>
+  <g class="ink-fill" opacity=".8"><use href="#spark" transform="translate(151 250) scale(.5)"/><use href="#spark" transform="translate(755 281) scale(.55)"/></g>
+  <g fill="var(--route)"><circle cx="320" cy="69" r="2.4"/><circle cx="1053" cy="121" r="2.4"/></g>
 </svg>

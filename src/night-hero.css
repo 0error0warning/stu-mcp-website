@@ -7,7 +7,8 @@
 .night-gradient-layer .gradient-ascii-container { position:absolute; inset:0; opacity:0; transition:opacity 350ms ease; }
 .night-gradient-layer:has(canvas[data-renderer="webgl"]) .gradient-ascii-container { opacity:.85; }
 .night-gradient-layer:has(canvas[data-renderer="webgl"]) .night-ascii-still { opacity:.14; }
-.hero-stage .collector-night { display:none; position:absolute; inset:0; width:100%; height:100%; object-fit:contain; pointer-events:none; }
+/* Share .collector's responsive dimensions and offset with the light artwork. */
+.hero-stage .collector-night { display:none; position:absolute; inset:0; pointer-events:none; }
 html[data-theme="dark"] .hero-full {
   --color-text:#edf2ff; --color-text-soft:#c3cee3; --color-muted:#a8b8d2; --color-accent:#9eb9ef;
   color:var(--color-text); background:#0b1223;
