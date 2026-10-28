@@ -23,3 +23,9 @@ Chrome / Playwright CLI，本地 Vite 开发服务与最终生产构建 preview�
 - `node --test tests/*.test.mjs`：11/11 通过；最终 `npm run build` 通过。
 
 阶段截图存于 `docs/qa/axis/`，包含修改前手机图、修改后两种主题的桌面/手机图、流程图、手机统计栏。动态截图的具体姿态会随时间变化；外框居中不表示所有三分之四侧脸的轮廓都完全对称。
+
+## 正式站发布复核
+
+已发布静态版本 `31d81b3` 至 https://stu-mcp.com，服务器 current 指向 `/opt/stu-mcp-site/releases/31d81b3`。归档 SHA-256：`c106b314647d78dcddd838cade0280494ad09e7a9a65fda6c0c746f709a87c5a`。旧版本 `198d729` 保留；Caddy 配置哈希未变，API 源码 diff 一致，caddy / stu-site-activity / stu-site-guard 均 active。
+
+正式域名 Chrome 实测 HTTP 200，加载 `/assets/index-DgUd615I.css`，新的插画外层存在；1440px 流程图中心偏差 0px。390px 触摸上下文按钮宽度均 145px、间隙中点偏差 0px、无横向溢出、竖屏导航 Dock 隐藏；主题切换保持同一 SVG。检查过程中 console error / pageerror 均 0。`/api/activity` 返回 200，repository 为 `0error0warning/stu-mcp`，delivery 为 `live`。正式站截图 `live-desktop.png`、`live-mobile-light.png`、`live-mobile-dark.png` 已保存，手机深浅两图已视觉复核。
