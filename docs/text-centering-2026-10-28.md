@@ -17,3 +17,7 @@
 - Chrome 1280px：大标题、副标题、脚注各 -0.008px，说明 0px。
 - 截图 `docs/qa/text-centering/tablet-webkit.png` 和 `tablet-webkit-guide.png` 已视觉检查；蓝线仅临时注入浏览器用于验收，不进入产品代码。
 - `npm run build` 通过。这次只改 HTML/CSS，不增加模拟实现逻辑的单元测试。
+
+## 发布结果
+
+正式站 https://stu-mcp.com 已更新至 `ff3a25f`，加载 `/assets/index-CKaZjM3o.css`。WebKit 1194×700 横屏平板尺寸实测：Dock 中点 597px，大标题文字行偏差 0px、副标题 -0.01px、说明 0px、脚注 0px；四者均为 block + text-align:center。零宽标点包装数量 0，无横向溢出，无 console error / pageerror，HTTP 200。截图 `live-tablet-webkit.png` 留档。服务器旧版 `31d81b3` 保留，API 源码与 Caddy 配置保持一致，三个现有服务 active。
