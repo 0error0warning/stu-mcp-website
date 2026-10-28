@@ -1,3 +1,4 @@
+import { renderProduct } from './src/product-data.js';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { activityApi } from './server/activity.mjs';
@@ -51,7 +52,7 @@ function developmentFirstPaintStyles() {
 }
 
 export default defineConfig({
-  plugins: [nightAsciiFirstPaint(), phoenixFirstPaint(), developmentFirstPaintStyles(), react(), activityApi()],
+  plugins: [{name: 'product-snapshot', transformIndexHtml: {order: 'pre', handler: html => renderProduct(html, JSON.parse(readFileSync(new URL('./public/data/product.json', import.meta.url), 'utf8'))) }}, nightAsciiFirstPaint(), phoenixFirstPaint(), developmentFirstPaintStyles(), react(), activityApi()],
   server: { host: '127.0.0.1', port: 5173, strictPort: true },
   preview: { host: '127.0.0.1', port: 4173, strictPort: true },
   build: { sourcemap: false },

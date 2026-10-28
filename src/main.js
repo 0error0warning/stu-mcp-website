@@ -1,3 +1,4 @@
+import './product.js';
 import './fonts.css';
 import './side-quest.css';
 import './styles.css';

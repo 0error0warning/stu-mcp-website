@@ -1,0 +1,15 @@
+[Unit]
+Description=Sync public STU release facts for the introduction website
+ConditionPathExists=!/var/lib/stu-site-cost-watch/hold.json
+After=network-online.target
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/stu-mcp-site/product-sync/sync-product.py --output /opt/stu-mcp-site/current/dist/data/product.json --html /opt/stu-mcp-site/current/dist/index.html
+TimeoutStartSec=150
+MemoryMax=96M
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ReadWritePaths=/opt/stu-mcp-site/releases
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
