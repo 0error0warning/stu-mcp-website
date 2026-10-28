@@ -13,16 +13,18 @@ button:disabled { cursor: wait; }
 .quest-link::before { content: none; }
 .hero-full { padding-top: 122px; overflow: clip; }
 #rd-topography { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.hero-copy { position: relative; z-index: 3; }
+.hero-copy { position: relative; z-index: 3; text-align: center; }
+/* Center each complete text line, including punctuation. Keep paragraph
+   alignment explicit instead of relying on centered flex/item wrappers. */
+.hero-copy h1, .hero-product, .hero-sentence, .hero-copy > .lede,
+.hero-copy > .hero-footnote { text-align: center; text-indent: 0; }
+.hero-copy > .hero-footnote { display: block; margin-inline: auto; }
 .open-sign { font-size: 12px; letter-spacing: .015em; }
 .sign-version { padding-left: 9px; margin-left: 3px; border-left: 1px solid var(--color-line); font-size: 11px; }
 .hero-full h1 { margin-top: 24px; -webkit-text-stroke: 0; line-height: 1; letter-spacing: -.045em; font-weight: 400; }
 .hero-product { display: block; font-size: clamp(80px, 8.8vw, 126px); }
 .hero-sentence { display: block; margin-top: 20px; font-family: var(--font-heading); font-size: clamp(26px, 3.2vw, 46px); line-height: 1.35; letter-spacing: -.025em; }
 .hero-sentence em { white-space: nowrap; }
-/* Hang the final punctuation outside the centered words, keeping it in the
-   accessible heading. On mobile each phrase gets its own centered line. */
-.hero-sentence em > .hero-punctuation { display: inline-block; width: 0; }
 .hero-sentence .brush { top: 28%; height: 100%; left: -2%; width: 104%; }
 .hero-sentence .brush .b1 { stroke-width: 10px; }
 .hero-sentence .brush .b2 { stroke-width: 6px; }
@@ -207,7 +209,6 @@ dialog textarea { width: 100%; min-height: 170px; resize: vertical; margin: 20px
   .hero-sentence { font-size: clamp(24px, 5.5vw, 36px); margin-top: 18px; line-height: 1.5; }
   .hero-sentence em { display: block !important; width: fit-content; margin-inline: auto; }
   .hero-phrase { display: block; }
-  .hero-phrase > .hero-punctuation { display: inline-block; width: 0; }
   .hero-full .lede { font-size: 13px; line-height: 1.9; max-width: 27ch; margin-top: 22px; }
   .hero-actions { gap: 21px; margin-top: 22px; }
   .hero-actions .text-link { font-size: 11px; }
