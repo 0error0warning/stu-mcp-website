@@ -28,3 +28,9 @@
 截图及测试脚本保存在 `docs/qa/automatic-materials/`，user-before-* 为用户本次原始截图，auto-* 为独立测试浏览器结果。尚未在用户当前 Firefox 158.0.1 配置下现场验收，不把推测的显卡、隐私扩展或合成器原因写成已确认根因。
 
 技术边界参考：[WebGL Drawing Buffer规范](https://registry.khronos.org/webgl/specs/1.0.3/#5.2)：WebGL绘制缓冲与呈现给页面合成器是不同阶段，成功读回像素不等于最终画面已验证。这是本次兼容路径选择的理由，不是对用户环境根因的证明。
+
+## 正式站复核
+
+已发布3f76032，current=/opt/stu-mcp-site/releases/3f76032；旧6421cde保留。归档SHA-256：8ec1a151b7b50f9f31fcaed2056451895097879b8789696583d98bc79533b1a9。Caddy配置哈希与API server/src未变，caddy/activity/guard/product timer均active；即时产品同步Result=success / ExecMainStatus=0。
+
+独立Firefox从 https://stu-mcp.com/ 普通入口加载新index-rYpYAPQT.js；首页胶囊和安装区圆形按钮renderer=image、Canvas各0，材质可见；背景SVG已加载。两WebP和SVG均HTTP200，深浅主题无横向溢出，console error/pageerror均0。正式站三张live-auto-*截图已保存，安装区截图视觉复核通过。源材质首帧与压缩WebP在不透明区域的RGB平均绝对误差分别0.745/0.849（0–255范围）。未改变用户浏览器配置。
