@@ -4,12 +4,12 @@ import { ArrowUpRight, Bot, Code2, Copy, FileSearch, Fingerprint } from 'lucide-
 import { fitGalleryCardWidth } from './gallery-fit.js';
 import { heroGroundGeometry, heroGroundY } from './hero-physics-layout.js';
 import { heroCharactersEnabled, subscribeHeroCharacters } from './hero-characters.js';
+import { staticEffectsRequested } from './rendering-preference.js';
 import './reactdrops.css';
 
 // ReactDrops source: b3924b92ebfce15152cf6f04ad85301c9f343672.
 // Islands retain the original Side Quest document and its native interactions.
 const component = (loader, name) => lazy(() => loader().then((module) => ({ default: module[name] })));
-const TopographicFlow = component(() => import('./components/reactdrops/topographic-flow.tsx'), 'TopographicFlow');
 const ShapePhysics = component(() => import('./components/reactdrops/shape-physics.tsx'), 'ShapePhysics');
 const FanGallery = component(() => import('./components/reactdrops/fan-gallery.tsx'), 'FanGallery');
 const LiquidGlassOrb = component(() => import('./components/reactdrops/liquid-glass-orb.tsx'), 'LiquidGlassOrb');
@@ -44,7 +44,7 @@ function usePlayback() {
     document.addEventListener('visibilitychange', update);
     return () => document.removeEventListener('visibilitychange', update);
   }, []);
-  const constrained = mobile || navigator.connection?.saveData || (navigator.hardwareConcurrency || 8) <= 4;
+  const constrained = staticEffectsRequested() || mobile || navigator.connection?.saveData || (navigator.hardwareConcurrency || 8) <= 4;
   const active = visible && foreground && !reduced;
   useEffect(() => { if (active) setStarted(true); }, [active]);
   return { host, active, started, reduced, mobile, constrained };
@@ -57,11 +57,10 @@ function StillContours() {
 }
 
 function TopographyIsland() {
-  const { host, started, reduced, constrained } = usePlayback();
-  return <div ref={host} className="rd-island rd-topography-island" data-reactdrops="topographic-flow">
-    <Suspense fallback={<StillContours />}>
-      {started && !reduced && !constrained ? <TopographicFlow preset="paper" height="100%" backgroundColor="#fff6ce" backgroundImage="none" lineColor="#71602e" accentColor="#71602e" scale={560} density={4} opacity={0.25} speed={0} paused={true} distortion={0.9} lineWidth={0.8} grain={0} hover={0} animateEntrance={false} /> : <StillContours />}
-    </Suspense>
+  // This texture has always been paused with speed=0. Keep the existing SVG
+  // presentation at all sizes so an opaque GPU surface cannot tint the hero.
+  return <div className="rd-island rd-topography-island" data-render-mode="svg">
+    <StillContours />
   </div>;
 }
 

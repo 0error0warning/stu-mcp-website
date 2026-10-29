@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { staticEffectsRequested } from './rendering-preference.js';
 
 const GradientASCII = lazy(() => import('./components/reactbits/GradientASCII.jsx'));
 const PALETTE = ['#172c66', '#7386ce', '#8bc9dd', '#4e5497'];
@@ -12,7 +13,7 @@ function NightHero() {
   const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [mobile, setMobile] = useState(() => matchMedia('(max-width:760px)').matches);
   const [started, setStarted] = useState(false);
-  const constrained = mobile || navigator.connection?.saveData || (navigator.hardwareConcurrency || 8) <= 4;
+  const constrained = staticEffectsRequested() || mobile || navigator.connection?.saveData || (navigator.hardwareConcurrency || 8) <= 4;
   const active = dark && visible && foreground && !reduced && !constrained;
   useEffect(() => {
     const theme = new MutationObserver(() => setDark(document.documentElement.dataset.theme === 'dark'));

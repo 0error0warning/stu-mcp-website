@@ -212,11 +212,15 @@ export function ChromaticSurface({
   useEffect(() => {
     const canvas = canvasRef.current!;
     const button = canvas.parentElement instanceof HTMLButtonElement ? canvas.parentElement : null;
-    const gl = canvas.getContext('webgl', {
-      alpha: true,
-      premultipliedAlpha: true,
-      antialias: false,
-    });
+    const gl = (() => {
+      try {
+        return canvas.getContext('webgl', {
+          alpha: true,
+          premultipliedAlpha: true,
+          antialias: false,
+        });
+      } catch { return null; }
+    })();
     if (!gl) return;
     let program: WebGLProgram | null = null;
     let buffer: WebGLBuffer | null = null;
@@ -235,10 +239,20 @@ export function ChromaticSurface({
     let hoverPosition: [number, number] = [0, 0];
     let visible = true;
     let lost = false;
+    let failed = false;
+    let nextFrameCheck = 0;
+    const pixel = new Uint8Array(4);
     let mipmaps = false;
     let width = 1;
     let height = 1;
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const fallback = () => {
+      failed = true;
+      delete canvas.dataset.renderer;
+      canvas.dataset.fallback = 'render-failed';
+      cancelAnimationFrame(frame);
+      frame = 0;
+    };
     const compile = (type: number, source: string) => {
       const shader = gl.createShader(type)!;
       gl.shaderSource(shader, source);
@@ -343,13 +357,14 @@ export function ChromaticSurface({
     const canAnimate = () =>
       !!program &&
       !lost &&
+      !failed &&
       visible &&
       !document.hidden &&
       !motion.matches &&
       ((!settings.current.paused && settings.current.speed !== 0) ||
         Math.abs(hoverTarget - hover) > 0.001);
-    const draw = () => {
-      if (!program || lost) return;
+    const drawFrame = () => {
+      if (!program || lost || failed) return;
       const s = settings.current;
       const gridX = Math.round(finite(s.columns, 1, 1, 24));
       const gridY = Math.round(finite(s.rows, 1, 1, 24));
@@ -390,11 +405,39 @@ export function ChromaticSurface({
       gl.bindTexture(gl.TEXTURE_2D, texture);
       gl.uniform1i(uniforms.field, 0);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      // Reveal only a successfully drawn frame. The CSS fallback also handles
-      // Chrome configurations that block canvas or fail shader initialization.
-      if (!canvas.dataset.renderer && !gl.isContextLost() && gl.getError() === gl.NO_ERROR) {
+      // A successful draw call can still produce an empty/black surface. Read
+      // this component's own frame immediately, before the browser discards
+      // its non-preserved buffer. Never retry blocked pixel access.
+      if (width < 2 || height < 2) return;
+      const now = performance.now();
+      if (!canvas.dataset.renderer || now >= nextFrameCheck) {
+        if (gl.isContextLost() || gl.getError() !== gl.NO_ERROR) {
+          fallback();
+          return;
+        }
+        // The product's bright material has a guaranteed value floor. Default
+        // dark materials must not be rejected merely for being dark.
+        if (finite(s.brightnessFloor, 0, 0, .95) >= .5) {
+          const paletteValue = Math.min(...[s.color, s.color2, s.color3].map(c => Math.max(...parseColor(c))));
+          const minimumValue = finite(s.brightnessFloor, 0, 0, .95) * paletteValue * 255 * .5;
+          for (const position of [.3, .5, .7]) {
+            gl.readPixels(
+              Math.floor(canvas.width / gridX * position),
+              Math.floor(canvas.height / gridY * .5),
+              1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel,
+            );
+            if (gl.getError() !== gl.NO_ERROR || pixel[3] < 128 || Math.max(pixel[0], pixel[1], pixel[2]) < minimumValue) {
+              fallback();
+              return;
+            }
+          }
+        }
+        nextFrameCheck = now + 1000;
         canvas.dataset.renderer = 'webgl';
       }
+    };
+    const draw = () => {
+      try { drawFrame(); } catch { fallback(); }
     };
     const tick = (now: number) => {
       frame = 0;
@@ -473,6 +516,7 @@ export function ChromaticSurface({
       if (canAnimate()) frame = requestAnimationFrame(tick);
     };
     const resize = () => {
+      nextFrameCheck = 0;
       // Use layout dimensions so entrance/press transforms do not lower the resolution.
       width = Math.max(1, canvas.clientWidth);
       height = Math.max(1, canvas.clientHeight);
@@ -489,8 +533,11 @@ export function ChromaticSurface({
     };
     const onRestored = () => {
       lost = false;
+      failed = false;
+      nextFrameCheck = 0;
+      delete canvas.dataset.fallback;
       release();
-      initialize();
+      try { initialize(); } catch { fallback(); }
       resize();
     };
     function uploadField() {
@@ -514,7 +561,7 @@ export function ChromaticSurface({
       }
       refresh();
     }
-    initialize();
+    try { initialize(); } catch { fallback(); }
     button?.addEventListener('pointerenter', onEnter);
     button?.addEventListener('pointerleave', onLeave);
     button?.addEventListener('pointercancel', onLeave);
