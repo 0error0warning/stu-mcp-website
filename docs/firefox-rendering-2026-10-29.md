@@ -16,3 +16,9 @@
 独立 Chrome 检查 1440×1000 桌面、390×844 触摸手机、减少动态、兼容模式；深浅主题均无横向溢出，console error/pageerror 均 0，主按钮通过键盘或模拟触摸跳转。手机、减少动态、兼容模式深浅主题 Canvas 数量均为 0；正常桌面按钮 renderer=webgl。截图视觉复核通过。
 
 截图保存于 `docs/qa/firefox-rendering/`：none-after / black-after / static-dark 来自 Firefox；chrome-* 来自 Chrome。兼容模式规避 Canvas 渲染，但不证明用户浏览器扩展、显卡或强制配色的根因已经查明。
+
+## 正式站发布复核
+
+已发布 6421cde，服务器 current=/opt/stu-mcp-site/releases/6421cde；保留 ce57de0。归档 SHA-256：5351167e868719ae01e2ae4fe21ebd561b59f26085e4ff1895f594c0041b64a4。Caddy 配置哈希、API server/src 与上一发行一致；caddy、activity、guard、product timer 均 active。主动产品同步 Result=success / ExecMainStatus=0。
+
+正式域名独立 Firefox 156：普通入口和 ?effects=static 均 HTTP 200，加载 index-ZQsjHgoz.js。普通入口按钮 renderer=webgl，背景 SVG；兼容入口深浅主题 Canvas 数均 0。两种入口键盘 Enter 均跳至 #install，深浅主题无横向溢出、console error/pageerror 均 0。四张线上截图 live-*.png 已归档，兼容浅色截图已视觉复核。本地 Chrome 版本为 156.0.8078.48。未在用户 Firefox 158.0.1 的现有配置下确认原始问题消失。
