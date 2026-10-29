@@ -1,0 +1,23 @@
+/* Product adaptation: frames generated from the licensed ChromaticSurface.
+   Keep the material and movement without attaching a WebGL canvas in Gecko. */
+.chromatic-material {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-repeat: no-repeat;
+  background-size: 800% 800%;
+  background-position: 0 0;
+  animation: chromatic-material-frames 12s steps(1, end) infinite paused;
+  transition: filter 220ms ease;
+}
+[data-compatible-material='pill'] > .chromatic-material { background-image: url('/materials/chromatic-pill.webp'); }
+[data-compatible-material='circle'] > .chromatic-material { background-image: url('/materials/chromatic-circle.webp'); }
+.chromatic-button:has([data-renderer='webgl']) > .chromatic-material { visibility: hidden; }
+.chromatic-button[data-material-paused='false']:not(:disabled):is(:hover, :focus-visible) > .chromatic-material {
+  animation-play-state: running;
+  filter: brightness(1.045);
+}
+@media (prefers-reduced-motion: reduce) {
+  .chromatic-button > .chromatic-material { animation: none; transition: none; }
+}

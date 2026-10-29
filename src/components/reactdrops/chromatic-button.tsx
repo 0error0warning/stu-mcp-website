@@ -112,12 +112,17 @@ import {
   type ChromaticHoverEffect,
 } from './chromatic-surface';
 import './chromatic-button.css';
+import { imageMaterialsPreferred } from '../../rendering-preference.js';
+import './chromatic-compatible.css';
+import './chromatic-compatible-frames.css';
 
 export const chromaticButtonEntrances = ['blur-up', 'zoom', 'none'] as const;
 export type ChromaticButtonEntrance = (typeof chromaticButtonEntrances)[number];
 
 export type ChromaticButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   ChromaticMaterialProps & {
+    /** Product-specific material frames, generated from this same shader. */
+    compatibleMaterial?: 'pill' | 'circle';
     /** Circular corner radius as a percentage of the shorter side. Defaults to 50. */
     borderRadius?: number;
     /** Hover or keyboard focus effect. Defaults to brighten with a subtle upward lift. */
@@ -170,6 +175,7 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
     {
       children = 'Get started',
       className = '',
+      compatibleMaterial,
       type = 'button',
       color = chromaticButtonDefaults.color,
       colorMode,
@@ -198,6 +204,7 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
     ref,
   ) {
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const imageMaterial = compatibleMaterial && imageMaterialsPreferred();
     useImperativeHandle(ref, () => buttonRef.current!, []);
     useEffect(() => {
       const button = buttonRef.current!;
@@ -342,6 +349,9 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
         type={type}
         data-hover-effect={hoverEffect}
         data-entrance={entrance}
+        data-compatible-material={compatibleMaterial}
+        data-material-renderer={imageMaterial ? 'image' : undefined}
+        data-material-paused={paused || speed === 0 ? 'true' : 'false'}
         className={`chromatic-button ${className}`.trim()}
         style={
           {
@@ -355,7 +365,8 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
           } as CSSProperties
         }
       >
-        <ChromaticSurface
+        {compatibleMaterial && <span className="chromatic-material" aria-hidden="true" />}
+        {!imageMaterial && <ChromaticSurface
           {...{
             color,
             colorMode,
@@ -379,7 +390,7 @@ export const ChromaticButton = forwardRef<HTMLButtonElement, ChromaticButtonProp
             grain,
             seed,
           }}
-        />
+        />}
         <span className="chromatic-button-content">{children}</span>
       </button>
     );

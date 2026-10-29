@@ -173,7 +173,7 @@ function SendButton({ active, visible, reduced, disabled, onClick, copied }) {
   return <div className="liquid-send-wrap" onPointerEnter={event => { if (event.pointerType !== 'touch') setEngaged(true); }}
     onPointerLeave={() => setEngaged(false)} onPointerCancel={() => setEngaged(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={() => setFocused(false)}>
     <Suspense fallback={fallback}>
-      {loaded && !reduced && !constrained ? <ChromaticButton {...common} colorMode="gradient-3" color="#c5b8f0" color2="#a9cfea" color3="#ead9f1"
+      {loaded && !reduced && !constrained ? <ChromaticButton {...common} compatibleMaterial="circle" colorMode="gradient-3" color="#c5b8f0" color2="#a9cfea" color3="#ead9f1"
         brightnessFloor={.76} speed={.22} paused={!active || !(engaged || focused)} intensity={1.08} grain={.018} hoverEffect="brighten" entrance="none">{glyph}</ChromaticButton> : fallback}
     </Suspense>
   </div>;

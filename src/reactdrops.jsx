@@ -51,14 +51,12 @@ function usePlayback() {
 }
 
 function StillContours() {
-  return <svg className="rd-still-contours" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    {Array.from({ length: 12 }, (_, i) => <path key={i} d={`M-150 ${460 + i * 24} C80 ${80 + i * 25}, 340 ${750 - i * 10}, 610 ${345 + i * 23} S1040 ${70 + i * 28}, 1380 ${250 + i * 31}`} />)}
-  </svg>;
+  return <img className="rd-original-contours" src="/materials/hero-contours.svg" width="2560" height="1400" alt="" aria-hidden="true" />;
 }
 
 function TopographyIsland() {
-  // This texture has always been paused with speed=0. Keep the existing SVG
-  // presentation at all sizes so an opaque GPU surface cannot tint the hero.
+  // Export of the original seed/scale/density, which always used speed=0.
+  // SVG keeps the same terrain without a browser canvas presentation layer.
   return <div className="rd-island rd-topography-island" data-render-mode="svg">
     <StillContours />
   </div>;
@@ -200,7 +198,7 @@ function ProductButtonIsland({ install = false }) {
   const fallback = <button type="button" className="product-chromatic rd-install-static" onClick={onClick}>{content}</button>;
   return <div ref={host} className={`rd-island rd-install-island ${install ? 'rd-install-cta' : 'rd-hero-cta'}`} data-reactdrops="chromatic-button" onPointerEnter={event => { if (event.pointerType !== 'touch') setHovered(true); }} onPointerLeave={() => setHovered(false)} onPointerCancel={() => setHovered(false)} onFocusCapture={() => setFocused(true)} onBlurCapture={() => setFocused(false)}>
     <Suspense fallback={fallback}>
-      {started && !reduced && !constrained ? <ChromaticButton className="rd-install-button product-chromatic" colorMode="gradient-3" color="#c5b8f0" color2="#a9cfea" color3="#ead9f1" brightnessFloor={0.76} speed={0.22} paused={!active || !engaged} intensity={1.08} grain={0.018} hoverEffect="brighten" entrance="none" onClick={onClick}>{content}</ChromaticButton> : fallback}
+      {started && !reduced && !constrained ? <ChromaticButton compatibleMaterial="pill" className="rd-install-button product-chromatic" colorMode="gradient-3" color="#c5b8f0" color2="#a9cfea" color3="#ead9f1" brightnessFloor={0.76} speed={0.22} paused={!active || !engaged} intensity={1.08} grain={0.018} hoverEffect="brighten" entrance="none" onClick={onClick}>{content}</ChromaticButton> : fallback}
     </Suspense>
   </div>;
 }
